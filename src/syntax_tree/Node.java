@@ -21,5 +21,9 @@ public class Node {
 	public void setOp(String op) {
 		this.op = op;
 	}
+	
+	public String toString() {
+		return "\n\t -> <"+ this.getOp() + " >\t";
+	}
 
 }

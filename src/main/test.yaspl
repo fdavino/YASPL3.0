@@ -2,5 +2,6 @@ head
 
 
 start
-
-	i=i-1;
+	multy(12,a);
+	a,b <-;
+	true,false,i+1 ->;

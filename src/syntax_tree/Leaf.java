@@ -17,6 +17,10 @@ public class Leaf extends Node {
 		this.value = value;
 	}
 	
+	public String toString() {
+		return "\n\t -> <"+ this.getOp() + " _ " + this.getValue() + " >\t";
+	}
+	
 	
 
 }
