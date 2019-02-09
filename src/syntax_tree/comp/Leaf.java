@@ -1,4 +1,4 @@
-package syntax_tree;
+package syntax_tree.comp;
 
 public class Leaf extends Node {
 
@@ -18,7 +18,7 @@ public class Leaf extends Node {
 	}
 	
 	public String toString() {
-		return "\n\t -> <"+ this.getOp() + " _ " + this.getValue() + " >\t";
+		return "\n<"+ this.getOp() + " value=\"" + this.getValue() + "\">\n</"+this.getOp()+">\n";
 	}
 	
 	

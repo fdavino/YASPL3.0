@@ -1,7 +1,9 @@
 package visitor;
 import syntax_tree.*;
+import syntax_tree.comp.Node;
 
-public interface Visitor {
-
-	Object visit(Node n);
+public interface Visitor<E> {
+	
+	E visit(Node n);
+	
 }

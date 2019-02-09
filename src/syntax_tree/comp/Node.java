@@ -1,17 +1,11 @@
-package syntax_tree;
+package syntax_tree.comp;
 
-import visitor.Visitor;
-
-public class Node {
+public class Node{
 	
 	private String op;
 	
 	public Node(String op) {
 		this.op = op; 
-	}
-	
-	public Object accept(Visitor v) {
-		return v.visit(this);
 	}
 	
 	public String getOp() {
@@ -23,7 +17,7 @@ public class Node {
 	}
 	
 	public String toString() {
-		return "\n\t -> <"+ this.getOp() + " >\t";
+		return "\n<"+ this.getOp() + "\\>\n";
 	}
 
 }

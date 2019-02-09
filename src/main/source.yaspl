@@ -1,5 +1,6 @@
 head
 
+char alla = 'b';
 double sommagrande, sommapiccola;
 int i;
 double x, y, risultato;

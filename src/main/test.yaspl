@@ -1,7 +1,25 @@
 head
 
+double sommagrande, sommapiccola;
+int i;
+double x, y, risultato;
+bool grande;
+char alla = 'b';
 
-start
-	multy(12,a);
-	a,b <-;
-	true,false,i+1 ->;
+def moltiplicazione(in double x, in double y, out double res, out bool grande)
+{
+	double risultato = x*y;
+	if ((x*y) >= 100) then {
+		grande = true;
+	}
+	else{ 
+		grande = false;
+	}
+	res = risultato;
+}
+
+
+start 
+
+sommagrande = 0;
+sommapiccola = 0;

@@ -83,8 +83,8 @@ whitespace = [ \r\n\t\f]
 "/"				{ return new Symbol(LexerSym.DIV); }
 {intConst}		{ return new Symbol(LexerSym.INT_CONST, yytext()); }
 {doubleConst}	{ return new Symbol(LexerSym.DOUBLE_CONST, yytext()); }
-{stringConst}	{ return new Symbol(LexerSym.STRING_CONST, yytext()); }
-{charConst}		{ return new Symbol(LexerSym.CHAR_CONST, yytext()); }
+{stringConst}	{ return new Symbol(LexerSym.STRING_CONST, yytext().substring(1,yytext().length()-1)); }
+{charConst}		{ return new Symbol(LexerSym.CHAR_CONST, ""+yytext().charAt(1)); }
 "true"			{ return new Symbol(LexerSym.TRUE); }
 "false"			{ return new Symbol(LexerSym.FALSE); }
 "="				{ return new Symbol(LexerSym.ASSIGN); }
