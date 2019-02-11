@@ -46,7 +46,7 @@ import static lexer.LexerSym.*;
 %}
 
 %eofval{
-    return symbol(ParserSym.EOF);
+    return new Symbol(LexerSym.EOF);
 %eofval}
 
 id 			= [:jletter:]([:jletter:]|[:jdigit:])*
@@ -107,4 +107,3 @@ whitespace = [ \r\n\t\f]
 {id}			{ return new Symbol(LexerSym.ID, yytext()); }
 
 [^]				{ return new Symbol(LexerSym.error);}
-<<EOF>> 		{ return new Symbol(LexerSym.EOF); }

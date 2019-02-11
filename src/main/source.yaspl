@@ -1,6 +1,5 @@
 head
 
-char alla = 'b';
 double sommagrande, sommapiccola;
 int i;
 double x, y, risultato;
@@ -8,14 +7,14 @@ bool grande;
 
 def moltiplicazione(in double x, in double y, out double res, out bool grande)
 {
-	double risultato = x*y;
-	if ((x*y) >= 100) then {
-		grande = true;
-	}
-	else{ 
-		grande = false;
-	}
-	res = risultato;
+double risultato = x*y;
+if ((x*y) >= 100) then {
+grande = true;
+}
+else{ 
+grande = false;
+}
+res = risultato;
 }
 
 
@@ -29,29 +28,29 @@ sommapiccola = 0;
 
 i = -1;
 while (i <= 0) do{
-	"Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)"->;
-	i <-;
+"Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)"->;
+i <-;
 }
 
 while (i > 0) do{
-	
-	x = -1; 
-	y = -1;
 
-	while (not(x > 0 and y >0)) do
-	{
-		"Moltiplicazione " + i + ": inserisci due numeri positivi" ->;
-		x, y <-;
-	}
-	
-	moltiplicazione(x, y , risultato, grande);
+x = -1; 
+y = -1;
 
-	if(grande) then{ 
-		sommagrande = sommagrande + risultato;
-	}else{
-		sommapiccola = sommapiccola + risultato;
-	}
-	i = i-1;
+while (not(x > 0 and y >0)) do
+{
+"Moltiplicazione " + i + ": inserisci due numeri positivi" ->;
+x, y <-;
+}
+
+moltiplicazione(x, y , risultato, grande);
+
+if(grande) then{ 
+sommagrande = sommagrande + risultato;
+}else{
+sommapiccola = sommapiccola + risultato;
+}
+i = i-1;
 }
 
 "Valore di sommagrande: " + sommagrande ->;
