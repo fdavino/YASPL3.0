@@ -2,6 +2,7 @@ package syntaxTree;
 
 import java.util.ArrayList;
 import syntaxTree.comp.Internal;
+import syntaxTree.comp.Node;
 import visitor.Visitable;
 import visitor.Visitor;
 
@@ -20,9 +21,12 @@ public class Args extends Internal implements Visitable {
 	}
 
 	@Override
-	public Args accept(Visitor<?> visitor) {
+	public Object accept(Visitor<?> visitor) {
 		// TODO Auto-generated method stub
-		return (Args) visitor.visit(this);
+		return visitor.visit(this);
 	}
-
+	
+	public ArrayList<Expr> getChildList(){
+		return childList;
+	}
 }

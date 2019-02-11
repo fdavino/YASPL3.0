@@ -18,7 +18,6 @@ public class DeclsWrapper extends Internal implements Visitable {
 		super(op, id, pd, b);
 	}
 	
-	//Definizione senza parametri
 	public DeclsWrapper(String op, Leaf id, Body b) {
 		super(op, id, b);
 	}
@@ -28,9 +27,9 @@ public class DeclsWrapper extends Internal implements Visitable {
 	}
 
 	@Override
-	public DeclsWrapper accept(Visitor<?> visitor) {
+	public Object accept(Visitor<?> visitor) {
 		// TODO Auto-generated method stub
-		return (DeclsWrapper) visitor.visit(this);
+		return visitor.visit(this);
 	}
 
 }

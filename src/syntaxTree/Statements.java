@@ -21,9 +21,16 @@ public class Statements extends Internal implements Visitable {
 	}
 
 	@Override
-	public Statements accept(Visitor<?> visitor) {
-		// TODO Auto-generated method stub
-		return (Statements) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		return visitor.visit(this);
 	}
+
+	public ArrayList<Stat> getChildList() {
+		return childList;
+	}
+	
+	
+	
+	
 
 }

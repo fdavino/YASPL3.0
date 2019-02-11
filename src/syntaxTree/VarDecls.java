@@ -21,8 +21,13 @@ public class VarDecls extends Internal implements Visitable {
 	}	
 
 	@Override
-	public VarDecls accept(Visitor<?> visitor) {
-		return (VarDecls) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		return visitor.visit(this);
 	}
 
+	public ArrayList<VarDecl> getChildList() {
+		return childList;
+	}
+
+	
 }

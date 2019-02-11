@@ -21,8 +21,12 @@ public class ParDecls extends Internal implements Visitable {
 	}
 
 	@Override
-	public ParDecls accept(Visitor<?> visitor) {
-		return (ParDecls) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		return visitor.visit(this);
+	}
+
+	public ArrayList<ParDeclSon> getChildList() {
+		return childList;
 	}
 
 }

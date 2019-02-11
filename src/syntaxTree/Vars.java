@@ -22,8 +22,14 @@ public class Vars extends Internal implements Visitable {
 	}
 
 	@Override
-	public Vars accept(Visitor<?> visitor) {
-		return (Vars) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		return visitor.visit(this);
 	}
+
+	public ArrayList<Leaf> getChildList() {
+		return childList;
+	}
+	
+	
 
 }

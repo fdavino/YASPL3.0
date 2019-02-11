@@ -13,6 +13,7 @@ import syntaxTree.logicOp.*;
 import syntaxTree.relOp.*;
 import syntaxTree.statOp.*;
 import syntaxTree.wrapper.*;
+import visitor.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -379,7 +380,8 @@ class CUP$ParserCup$actions {
 		int sright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
 		Statements s = (Statements)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
 		 RESULT = new Programma("Programma", decls, s);
-																				System.out.println(RESULT.toString()); 
+																				TreePrinterVisitor tpv = new TreePrinterVisitor();
+																				System.out.println(tpv.visit(RESULT)); 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("Programma",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;

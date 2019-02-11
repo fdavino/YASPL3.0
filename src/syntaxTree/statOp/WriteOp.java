@@ -7,15 +7,30 @@ import visitor.Visitor;
 
 public class WriteOp extends Stat implements Visitable {
 
-
+	private String op;
+	private Args a;
+	
 	public WriteOp(String op, Args a) {
 		super(op, a);
+		this.op = op;
+		this.a = a;
 	}
 
 	@Override
-	public WriteOp accept(Visitor<?> visitor) {
-		return (WriteOp) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		// TODO Auto-generated method stub
+		return visitor.visit(this);
 	}
+
+	public String getOp() {
+		return op;
+	}
+
+	public Args getA() {
+		return a;
+	}
+	
+	
 
 
 

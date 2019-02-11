@@ -21,9 +21,14 @@ public class Decls extends Internal implements Visitable {
 	}
 	
 	@Override
-	public Decls accept(Visitor<?> visitor) {
-		// TODO Auto-generated method stub
-		return (Decls) visitor.visit(this);
+	public Object accept(Visitor<?> visitor) {
+		return visitor.visit(this);
 	}
+
+	public ArrayList<DeclsWrapper> getChildList() {
+		return childList;
+	}
+	
+	
 
 }

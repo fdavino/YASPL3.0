@@ -6,14 +6,28 @@ import visitor.Visitor;
 
 public class UminusOp extends Expr implements Visitable {
 
+	private String op;
+	private Expr e;
+	
 	public UminusOp(String op, Expr e) {
 		super(op, e);
-		// TODO Auto-generated constructor stub
+		this.e = e;
+		this.op = op;
 	}
 
 	@Override
-	public UminusOp accept(Visitor<?> visitor) {
+	public Object accept(Visitor<?> visitor) {
 		// TODO Auto-generated method stub
-		return (UminusOp) visitor.visit(this);
+		return visitor.visit(this);
 	}
+
+	public String getOp() {
+		return op;
+	}
+
+	public Expr getE() {
+		return e;
+	}
+	
+	
 }

@@ -23,9 +23,15 @@ public class VarDeclsInit extends Internal implements Visitable {
 	
 
 	@Override
-	public VarDeclsInit accept(Visitor<?> visitor) {
+	public Object accept(Visitor<?> visitor) {
 		// TODO Auto-generated method stub
-		return (VarDeclsInit) visitor.visit(this);
+		return visitor.visit(this);
 	}
+
+	public ArrayList<VarDeclsInitWrapper> getChildList() {
+		return childList;
+	}
+	
+	
 
 }

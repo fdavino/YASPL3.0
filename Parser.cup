@@ -9,6 +9,7 @@ import syntaxTree.logicOp.*;
 import syntaxTree.relOp.*;
 import syntaxTree.statOp.*;
 import syntaxTree.wrapper.*;
+import visitor.*;
 
 /*List of terminals*/
 terminal HEAD;
@@ -86,7 +87,8 @@ precedence left UMINUS, NOT, COMMA;
 
 /*Grammar*/												
 Programma 	::= HEAD Decls:decls START Statements:s							{: RESULT = new Programma("Programma", decls, s);
-																				System.out.println(RESULT.toString()); :}
+																				TreePrinterVisitor tpv = new TreePrinterVisitor();
+																				System.out.println(tpv.visit(RESULT)); :}
 			; 
 																
 Decls 		::= Var_decl:var Decls:decls									{: RESULT = decls.addChild(var); :}
