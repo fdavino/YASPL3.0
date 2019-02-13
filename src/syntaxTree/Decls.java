@@ -16,7 +16,7 @@ public class Decls extends Internal implements Visitable {
 	}
 	
 	public Decls addChild(DeclsWrapper dw){
-		childList.add(dw);
+		childList.add(0,dw);
 		return this;
 	}
 	

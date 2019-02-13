@@ -22,12 +22,7 @@ public class Leaf extends Node implements Visitable{
 	}
 	
 	public Object accept(Visitor<?> visitor) {
-		return "_"+value+"_\n";
-	}
-
-	@Override
-	public String toString() {
-		return "<"+this.getOp()+"=\""+this.getValue()+"\">\n</"+this.getOp()+">\n";
+		return visitor.visit(this);
 	}
 	
 	

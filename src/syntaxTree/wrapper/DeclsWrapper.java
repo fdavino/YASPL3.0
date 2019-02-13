@@ -5,31 +5,25 @@ import syntaxTree.ParDecls;
 import syntaxTree.VarDeclsInit;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
+import syntaxTree.leaf.IdConst;
+import syntaxTree.leaf.TypeLeaf;
 import visitor.Visitable;
 import visitor.Visitor;
 
-public class DeclsWrapper extends Internal implements Visitable {
-
-	public DeclsWrapper(String op) {
-		super(op);
-	}
+public abstract class DeclsWrapper extends Internal{
 	
-	public DeclsWrapper(String op, Leaf id, ParDecls pd, Body b) {
+	public DeclsWrapper(String op, IdConst id, ParDecls pd, Body b) {
 		super(op, id, pd, b);
 	}
 	
-	public DeclsWrapper(String op, Leaf id, Body b) {
+	public DeclsWrapper(String op, IdConst id, Body b) {
 		super(op, id, b);
 	}
 
-	public DeclsWrapper(String op,  Leaf t, VarDeclsInit vdi) {
+	public DeclsWrapper(String op, TypeLeaf t, VarDeclsInit vdi) {
 		super(op, t, vdi);
 	}
 
-	@Override
-	public Object accept(Visitor<?> visitor) {
-		// TODO Auto-generated method stub
-		return visitor.visit(this);
-	}
+	public abstract Object accept(Visitor<?> visitor);
 
 }

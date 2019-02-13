@@ -2,6 +2,7 @@ package syntaxTree;
 
 import java.util.ArrayList;
 import syntaxTree.comp.Internal;
+import syntaxTree.declsOp.VarDecl;
 import visitor.Visitable;
 import visitor.Visitor;
 
@@ -16,7 +17,7 @@ public class VarDecls extends Internal implements Visitable {
 	}
 	
 	public VarDecls addChild(VarDecl n){
-		this.childList.add(n);
+		this.childList.add(0,n);
 		return this;
 	}	
 

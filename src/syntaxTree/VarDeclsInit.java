@@ -17,7 +17,7 @@ public class VarDeclsInit extends Internal implements Visitable {
 	}
 
 	public VarDeclsInit addChild (VarDeclsInitWrapper vdiw){
-		this.childList.add(vdiw);
+		this.childList.add(0,vdiw);
 		return this;
 	}
 	

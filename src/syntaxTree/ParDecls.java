@@ -2,7 +2,7 @@ package syntaxTree;
 
 import java.util.ArrayList;
 import syntaxTree.comp.Internal;
-import syntaxTree.wrapper.ParDeclSon;
+import syntaxTree.utils.ParDeclSon;
 import visitor.Visitable;
 import visitor.Visitor;
 
@@ -16,7 +16,7 @@ public class ParDecls extends Internal implements Visitable {
 	}
 	
 	public ParDecls addChild(ParDeclSon pd){
-		this.childList.add(pd);
+		this.childList.add(0,pd);
 		return this;
 	}
 

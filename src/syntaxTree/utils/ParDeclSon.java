@@ -1,18 +1,21 @@
-package syntaxTree.wrapper;
+package syntaxTree.utils;
 
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
+import syntaxTree.leaf.IdConst;
+import syntaxTree.leaf.ParTypeLeaf;
+import syntaxTree.leaf.TypeLeaf;
 import visitor.Visitable;
 import visitor.Visitor;
 
 public class ParDeclSon extends Internal implements Visitable {
 	
 	private String op;
-	private Leaf parType;
-	private Leaf type;
-	private Leaf id;
+	private ParTypeLeaf parType;
+	private TypeLeaf type;
+	private IdConst id;
 
-	public ParDeclSon(String op, Leaf parType, Leaf type, Leaf id) {
+	public ParDeclSon(String op, ParTypeLeaf parType, TypeLeaf type, IdConst id) {
 		super(op, parType, type, id);
 		this.op = op;
 		this.parType = parType;
@@ -30,15 +33,15 @@ public class ParDeclSon extends Internal implements Visitable {
 		return op;
 	}
 
-	public Leaf getParType() {
+	public ParTypeLeaf getParType() {
 		return parType;
 	}
 
-	public Leaf getType() {
+	public TypeLeaf getType() {
 		return type;
 	}
 
-	public Leaf getId() {
+	public IdConst getId() {
 		return id;
 	}
 	

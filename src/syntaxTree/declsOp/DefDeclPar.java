@@ -1,31 +1,26 @@
-package syntaxTree;
+package syntaxTree.declsOp;
 
+import syntaxTree.Body;
+import syntaxTree.ParDecls;
 import syntaxTree.comp.Leaf;
+import syntaxTree.leaf.IdConst;
+import syntaxTree.leaf.TypeLeaf;
 import syntaxTree.wrapper.DeclsWrapper;
 import visitor.Visitable;
 import visitor.Visitor;
 
-public class DefDecl extends DeclsWrapper implements Visitable {
+public class DefDeclPar extends DeclsWrapper implements Visitable {
 
 	private String op;
-	private Leaf id;
+	private IdConst id;
 	private ParDecls pd;
 	private Body b;
 	
-	//Definizione con parametri
-	public DefDecl(String op, Leaf id, ParDecls pd, Body b) {
+	public DefDeclPar(String op, IdConst id, ParDecls pd, Body b) {
 		super(op, id, pd, b);
 		this.op = op;
 		this.id = id;
 		this.pd = pd;
-		this.b = b;
-	}
-	
-	//Definizione senza parametri
-	public DefDecl(String op, Leaf id, Body b) {
-		super(op, id, b);
-		this.op = op;
-		this.id = id;
 		this.b = b;
 	}
 	
@@ -38,7 +33,7 @@ public class DefDecl extends DeclsWrapper implements Visitable {
 		return op;
 	}
 
-	public Leaf getId() {
+	public IdConst getId() {
 		return id;
 	}
 

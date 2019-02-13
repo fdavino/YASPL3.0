@@ -1,14 +1,12 @@
 head
 
-double sommagrande, sommapiccola;
+double sommagrande = 3.0, sommapiccola;
 int i;
-double x, y, risultato;
-bool grande;
-char alla = 'b';
 
 def moltiplicazione(in double x, in double y, out double res, out bool grande)
 {
 	double risultato = x*y;
+	int var = 5;
 	if ((x*y) >= 100) then {
 		grande = true;
 	}

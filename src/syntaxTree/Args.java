@@ -16,7 +16,7 @@ public class Args extends Internal implements Visitable {
 	}
 	
 	public Args addChild(Expr e){
-		this.childList.add(e);
+		this.childList.add(0,e);
 		return this;
 	}
 

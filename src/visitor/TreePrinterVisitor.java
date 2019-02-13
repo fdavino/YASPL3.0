@@ -4,13 +4,11 @@ import syntaxTree.Args;
 import syntaxTree.Body;
 import syntaxTree.CompStat;
 import syntaxTree.Decls;
-import syntaxTree.DefDecl;
 import syntaxTree.Expr;
 import syntaxTree.ParDecls;
 import syntaxTree.Programma;
 import syntaxTree.Stat;
 import syntaxTree.Statements;
-import syntaxTree.VarDecl;
 import syntaxTree.VarDecls;
 import syntaxTree.VarDeclsInit;
 import syntaxTree.VarInitValue;
@@ -21,6 +19,17 @@ import syntaxTree.arithOp.MultOp;
 import syntaxTree.arithOp.SubOp;
 import syntaxTree.arithOp.UminusOp;
 import syntaxTree.comp.Leaf;
+import syntaxTree.declsOp.DefDeclNoPar;
+import syntaxTree.declsOp.DefDeclPar;
+import syntaxTree.declsOp.VarDecl;
+import syntaxTree.leaf.BoolConst;
+import syntaxTree.leaf.CharConst;
+import syntaxTree.leaf.DoubleConst;
+import syntaxTree.leaf.IdConst;
+import syntaxTree.leaf.IntConst;
+import syntaxTree.leaf.ParTypeLeaf;
+import syntaxTree.leaf.StringConst;
+import syntaxTree.leaf.TypeLeaf;
 import syntaxTree.logicOp.AndOp;
 import syntaxTree.logicOp.NotOp;
 import syntaxTree.logicOp.OrOp;
@@ -36,376 +45,400 @@ import syntaxTree.statOp.IfThenOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
+import syntaxTree.utils.ParDeclSon;
+import syntaxTree.varDeclInitOp.VarInit;
+import syntaxTree.varDeclInitOp.VarNotInit;
 import syntaxTree.wrapper.DeclsWrapper;
-import syntaxTree.wrapper.ParDeclSon;
 import syntaxTree.wrapper.VarDeclsInitWrapper;
 
 public class TreePrinterVisitor implements Visitor<String> {
 	
 	@Override
 	public String visit(Args n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		for(Expr e: n.getChildList())
 			toReturn += e.accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(Body n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		toReturn += n.getVd().accept(this);
 		toReturn += n.getS().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(CompStat n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		toReturn += n.getS().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(Decls n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		for(DeclsWrapper e: n.getChildList()) {
-			if(e instanceof VarDecl)
-				toReturn += ((VarDecl)e).accept(this);
-			if(e instanceof DefDecl)
-				toReturn += ((DefDecl)e).accept(this);
-		}
+		String toReturn = "<"+n.getOp()+">\n";
+		for(DeclsWrapper e: n.getChildList()) 
+			toReturn += e.accept(this);
 			
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
-	public String visit(DefDecl n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		toReturn += n.getB().accept(this);
+	public String visit(DefDeclNoPar n) {
+		String toReturn = "<"+n.getOp()+">\n";
 		toReturn += n.getId().accept(this);
-		toReturn += (n.getPd()!=null)?n.getPd().accept(this):"";
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += n.getB().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
-
 	
 	@Override
+	public String visit(DefDeclPar n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getId().accept(this);
+		toReturn += n.getB().accept(this);
+		toReturn += n.getPd().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	/*
+	@Override
 	public String visit(Expr n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "";
 		
 		if(n instanceof AndOp)
 			toReturn += ((AndOp)n).accept(this);
-		if(n instanceof NotOp)
+		else if(n instanceof NotOp)
 			toReturn += ((NotOp)n).accept(this);
-		if(n instanceof OrOp)
+		else if(n instanceof OrOp)
 			toReturn += ((OrOp)n).accept(this);
 		
-		if(n instanceof EqOp)
+		else if(n instanceof EqOp)
 			toReturn += ((EqOp)n).accept(this);
-		if(n instanceof GeOp)
+		else if(n instanceof GeOp)
 			toReturn += ((GeOp)n).accept(this);
-		if(n instanceof GtOp)
+		else if(n instanceof GtOp)
 			toReturn += ((GtOp)n).accept(this);
-		if(n instanceof LeOp)
+		else if(n instanceof LeOp)
 			toReturn += ((LeOp)n).accept(this);
-		if(n instanceof LtOp)
+		else if(n instanceof LtOp)
 			toReturn += ((LtOp)n).accept(this);
 		
-		if(n instanceof AddOp)
+		else if(n instanceof AddOp)
 			toReturn += ((AddOp)n).accept(this);
-		if(n instanceof DivOp)
+		else if(n instanceof DivOp)
 			toReturn += ((DivOp)n).accept(this);
-		if(n instanceof MultOp)
+		else if(n instanceof MultOp)
 			toReturn += ((MultOp)n).accept(this);
-		if(n instanceof SubOp)
+		else if(n instanceof SubOp)
 			toReturn += ((SubOp)n).accept(this);
 		
-		
-		toReturn += "</"+n.getOp()+">\n ";
+		else if(n instanceof BoolConst)
+			toReturn += ((BoolConst)n).accept(this);
+		else if(n instanceof CharConst)
+			toReturn += ((CharConst)n).accept(this);
+		else if(n instanceof DoubleConst)
+			toReturn += ((DoubleConst)n).accept(this);
+		else if(n instanceof IdConst)
+			toReturn += ((IdConst)n).accept(this);
+		else if(n instanceof IntConst)
+			toReturn += ((IntConst)n).accept(this);
+		else if(n instanceof StringConst)
+			toReturn += ((StringConst)n).accept(this);
+
 		return toReturn;
 	}
 	
+	*/
+	
 	@Override
 	public String visit(ParDecls n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		for(ParDeclSon e: n.getChildList())
 			toReturn += e.accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(Programma n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		toReturn += n.getD().accept(this);
 		toReturn += n.getS().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	/*
 	@Override
-	public String visit(Stat n) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+	public String visit(Stat e) {
+		String toReturn = "";
+		
+		if(e instanceof AssignOp)
+			toReturn += ((AssignOp)e).accept(this);
+		else if(e instanceof CallOp)
+			toReturn += ((CallOp)e).accept(this);
+		else if(e instanceof IfThenElseOp)
+			toReturn += ((IfThenElseOp)e).accept(this);
+		else if(e instanceof IfThenOp)
+			toReturn += ((IfThenOp)e).accept(this);
+		else if(e instanceof ReadOp)
+			toReturn += ((ReadOp)e).accept(this);
+		else if(e instanceof WhileOp)
+			toReturn += ((WhileOp)e).accept(this);
+		else if(e instanceof WriteOp)
+			toReturn += ((WriteOp)e).accept(this);
+
+		return toReturn;
+	}
+	
+	*/
 	
 	@Override
 	public String visit(Statements n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		for(Stat e: n.getChildList()) {
-			if(e instanceof AssignOp)
-				toReturn += ((AssignOp)e).accept(this);
-			if(e instanceof CallOp)
-				toReturn += ((CallOp)e).accept(this);
-			if(e instanceof IfThenElseOp)
-				toReturn += ((IfThenElseOp)e).accept(this);
-			if(e instanceof IfThenOp)
-				toReturn += ((IfThenOp)e).accept(this);
-			if(e instanceof ReadOp)
-				toReturn += ((ReadOp)e).accept(this);
-			if(e instanceof WhileOp)
-				toReturn += ((WhileOp)e).accept(this);
-			if(e instanceof WriteOp)
-				toReturn += ((WriteOp)e).accept(this);
-		}
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		for(Stat e: n.getChildList())
+			toReturn += e.accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(VarDecl n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		toReturn += n.getT().accept(this);
 		toReturn += n.getVdi().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(VarDecls n) {
-		String toReturn = "<"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
 		for(VarDecl e: n.getChildList())
 			toReturn += e.accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(VarDeclsInit n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		for(VarDeclsInitWrapper e: n.getChildList()) {
-			toReturn += e.getId().accept(this);
-			if(e.getOp().equals("VarInitOp"))
-				toReturn += e.getViv().accept(this);
-		}
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		for(VarDeclsInitWrapper e: n.getChildList())
+			toReturn += e.accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(VarInitValue n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(Vars n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		for(Leaf e: n.getChildList())
+		String toReturn = "<"+n.getOp()+">\n";
+		for(IdConst e: n.getChildList())
 			toReturn += e.accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(AddOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(DivOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(MultOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(SubOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(UminusOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(AndOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(NotOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(OrOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(EqOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(GeOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(GtOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(LeOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(LtOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(AssignOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getId().accept(this);
-		n.getE().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getId().accept(this);
+		toReturn += n.getE().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(CallOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getId().accept(this);
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getId().accept(this);
 		if(n.getOp().equals("CallOpWithArgs"))
-			n.getA().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+			toReturn += n.getA().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(IfThenElseOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE().accept(this);
-		n.getCs1().accept(this);
-		n.getCs2().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += n.getCs1().accept(this);
+		toReturn += n.getCs2().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(IfThenOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE().accept(this);
-		n.getCs1().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += n.getCs().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(ReadOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getV().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getV().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(WhileOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getE().accept(this);
-		n.getCs1().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getE().accept(this);
+		toReturn += n.getCs().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
 	@Override
 	public String visit(WriteOp n) {
-		String toReturn = "<"+n.getOp()+">\n ";
-		n.getA().accept(this);
-		toReturn += "</"+n.getOp()+">\n ";
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += n.getA().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 
-	/*
-	public String visit(DeclsWrapper n) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
+	
+	public String visit(Leaf n) {
+		String toReturn = "";
+		toReturn += ""+n.getValue()+"\n";
+		toReturn += "";
+		return toReturn;
+	}
 
 	@Override
 	public String visit(ParDeclSon n) {
@@ -417,13 +450,87 @@ public class TreePrinterVisitor implements Visitor<String> {
 	}
 
 	@Override
-	public String visit(VarDeclsInitWrapper n) {
+	public String visit(VarInit n) {
 		String toReturn = "";
 		toReturn += n.getId().accept(this);
-		if(n.getOp().equals("VarInit"))
-			toReturn += n.getViv().accept(this);
+		toReturn += n.getViv().accept(this);
 		return toReturn;
 	}
+	
+	@Override
+	public String visit(VarNotInit n) {
+		String toReturn = "";
+		toReturn += n.getId().accept(this);
+		return toReturn;
+	}
+
+	@Override
+	public String visit(BoolConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(IdConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(IntConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(DoubleConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(CharConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(StringConst n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getId().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(TypeLeaf n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getValue()+"\n";
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(ParTypeLeaf n) {
+		String toReturn = "<"+n.getOp()+">\n";
+		toReturn += ""+n.getValue()+"\n";
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+
+
+	
+	
 	
 	
 
