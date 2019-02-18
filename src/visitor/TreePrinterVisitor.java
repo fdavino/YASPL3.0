@@ -19,6 +19,7 @@ import syntaxTree.arithOp.MultOp;
 import syntaxTree.arithOp.SubOp;
 import syntaxTree.arithOp.UminusOp;
 import syntaxTree.comp.Leaf;
+import syntaxTree.comp.Node;
 import syntaxTree.declsOp.DefDeclNoPar;
 import syntaxTree.declsOp.DefDeclPar;
 import syntaxTree.declsOp.VarDecl;
@@ -444,7 +445,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	public String visit(ParDeclSon n) {
 		String toReturn = "";
 		toReturn += n.getParType().accept(this);
-		toReturn += n.getType().accept(this);
+		toReturn += n.getTypeLeaf().accept(this);
 		toReturn += n.getId().accept(this);
 		return toReturn;
 	}
@@ -526,6 +527,13 @@ public class TreePrinterVisitor implements Visitor<String> {
 		toReturn += ""+n.getValue()+"\n";
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
+	}
+	
+	private String addComment(Node n) {
+		if(n!=null)
+			return "<!-- tab:"+((n.getSymTableRef()!=null)?n.getSymTableRef().hashCode():"null")+" type:"+n.getType()+" -->\n";
+		else
+			return "<!-- *n null* -->\n";
 	}
 
 
