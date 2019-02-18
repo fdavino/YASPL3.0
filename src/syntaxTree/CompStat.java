@@ -17,7 +17,7 @@ public class CompStat extends Internal implements Visitable {
 	}
 
 	@Override
-	public Object accept(Visitor<?> visitor) {
+	public Object accept(Visitor<?> visitor){
 		return visitor.visit(this);
 	}
 

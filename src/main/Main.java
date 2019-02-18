@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import lexer.*;
 import parser.*;
 import syntaxTree.Programma;
+import visitor.SymbolTableFillerVisitor;
 import visitor.TreePrinterVisitor;
 import java_cup.runtime.Symbol;
 
@@ -28,6 +29,9 @@ public class Main {
 			FileWriter fw = new FileWriter("src/main/ast.xml");
 		    fw.write(r);
 		    fw.close();
+		    
+		    SymbolTableFillerVisitor stfv = new SymbolTableFillerVisitor();
+		    stfv.visit(p);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Add argoment");

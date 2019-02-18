@@ -13,12 +13,16 @@ public class Leaf extends Node implements Visitable{
 		this.value = value;
 	}
 
-	public String getValue() {
+	public String string() {
 		return value;
 	}
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+	
+	public String getValue() {
+		return value;
 	}
 	
 	public Object accept(Visitor<?> visitor) {
