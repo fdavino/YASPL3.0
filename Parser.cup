@@ -84,9 +84,11 @@ non terminal	Expr				Expr;
 /*List of precedences*/ 
 
 precedence nonassoc  ELSE; 
+precedence nonassoc GT, GE, LT, LE, EQ; /* prima era sotto plus minus or 
+l'ho messo qui perchè nel caso if ((x+y) >= 7+7) viene visto come un
+booleano +7 così è visto come ci si aspetta*/
 precedence left PLUS,MINUS,OR;
 precedence left TIMES,DIV,AND;
-precedence nonassoc GT, GE, LT, LE, EQ; 
 precedence left UMINUS, NOT, COMMA;	
 
 /*Grammar*/												

@@ -73,7 +73,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	};
 
 	private SymbolTable.Type[][] arithOpCompTable = {
-			{Type.INT, null, Type.DOUBLE, null, null, null},
+			{Type.DOUBLE, null, Type.DOUBLE, null, null, null},
 			{null, null, null, null, null, null},
 			{Type.DOUBLE, null, Type.DOUBLE, null, null, null},
 			{null, null, null, null, null, null},
@@ -145,42 +145,48 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	@Override
 	public Object visit(Body n) throws RuntimeException {
 		n.getS().accept(this);
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(CompStat n) throws RuntimeException {
 		n.getS().accept(this);
 		n.setType(Type.VOID);
-		return null;
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(Decls n) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		for(DeclsWrapper dw : n.getChildList()) {
+			dw.accept(this);
+		}
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(DefDeclNoPar n) throws RuntimeException {
 		stack.push(n.getSymTableRef());
 		currentST = stack.top();
-		n.getB().accept(this);
 		n.getId().accept(this);
+		n.getB().accept(this);
 		stack.pop();
 		currentST = stack.top();
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(DefDeclPar n) throws RuntimeException {
 		stack.push(n.getSymTableRef());
 		currentST = stack.top();
-		n.getB().accept(this);
 		n.getId().accept(this);
+		n.getB().accept(this);
 		stack.pop();
 		currentST = stack.top();
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
@@ -192,8 +198,9 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	public Object visit(Programma n) throws RuntimeException {
 		stack.push(n.getSymTableRef());
 		currentST = stack.top();
-		n.getS().accept(this);
 		n.getD().accept(this);
+		n.getS().accept(this);
+		n.setType(Type.VOID);
 		return n;
 	}
 
@@ -202,13 +209,15 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		for(Stat s : n.getChildList()) {
 			s.accept(this);
 		}
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(VarDecl n) throws RuntimeException {
 		n.getVdi().accept(this);
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
@@ -216,7 +225,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		for(DeclsWrapper dw : n.getChildList()) {
 			dw.accept(this);
 		}
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
@@ -224,14 +234,14 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		for(VarDeclsInitWrapper vdiw : n.getChildList()) {
 			vdiw.accept(this);
 		}
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(VarInitValue n) throws RuntimeException {
-		n.getE().accept(this);
-		n.setType(n.getE().getType());
-		return null;
+		n.setType((Type)n.getE().accept(this));
+		return n.getType();
 	}
 
 	@Override
@@ -239,15 +249,14 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		for(IdConst id : n.getChildList()) {
 			id.accept(this);
 		}
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(AddOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type) n.getE1().accept(this);
+		Type t2 = (Type) n.getE2().accept(this);
 		Type tt = sumCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -259,10 +268,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(DivOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type) n.getE1().accept(this);
+		Type t2 = (Type) n.getE2().accept(this);
 		Type tt = arithOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -274,10 +281,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(MultOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type) n.getE1().accept(this);
+		Type t2 = (Type) n.getE2().accept(this);
 		Type tt = arithOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -289,10 +294,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(SubOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type) n.getE1().accept(this);
+		Type t2 = (Type) n.getE2().accept(this);
 		Type tt = arithOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -304,8 +307,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(UminusOp n) throws RuntimeException {
-		n.getE().accept(this);
-		Type t1 = n.getE().getType();
+		Type t1 = (Type) n.getE().accept(this);
 		Type tt = uminusCompTable[gIFT(t1)];
 		if(tt != null) {
 			n.setType(tt);
@@ -317,10 +319,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(AndOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = (t1 == t2)&&(t2 == Type.BOOL)?Type.BOOL:null;
 		if(tt != null) {
 			n.setType(tt);
@@ -332,8 +332,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(NotOp n) throws RuntimeException {
-		n.getE().accept(this);
-		Type t1 = n.getE().getType();
+		Type t1 = (Type) n.getE().accept(this);
 		Type tt = (t1 == Type.BOOL)?Type.BOOL:null;
 		if(tt != null) {
 			n.setType(tt);
@@ -345,10 +344,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(OrOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = (t1 == t2)&&(t2 == Type.BOOL)?Type.BOOL:null;
 		if(tt != null) {
 			n.setType(tt);
@@ -360,10 +357,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(EqOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = equityOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -375,10 +370,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(GeOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = compareOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -390,10 +383,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(GtOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = compareOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -405,10 +396,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(LeOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = compareOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -420,10 +409,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(LtOp n) throws RuntimeException {
-		n.getE1().accept(this);
-		n.getE2().accept(this);
-		Type t1 = n.getE1().getType();
-		Type t2 = n.getE2().getType();
+		Type t1 = (Type)n.getE1().accept(this);
+		Type t2 = (Type)n.getE2().accept(this);
 		Type tt = compareOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
@@ -447,7 +434,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		else 
 			n.setType(t.getType());
 		
-		return null;
+		return n.getType();
 	}
 
 	@Override
@@ -476,15 +463,13 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(AssignOp n) throws RuntimeException {
-		n.getE().accept(this);
-		n.getId().accept(this);
-		Type t1 = n.getId().getType();
-		Type t2 = n.getE().getType();
+		Type t1 = (Type) n.getE().accept(this);
+		Type t2 = (Type) n.getId().accept(this);
 		if(assignOpCompTable[gIFT(t1)][gIFT(t2)]!=null)
 			n.setType(Type.VOID);
 		else
 			throw new TypeMismatchException(n.getOp(), t1, t2);
-		return null;
+		return n.getType();
 	}
 
 	@Override
@@ -495,48 +480,50 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(IfThenElseOp n) throws RuntimeException {
-		n.getE().accept(this);
+		Type expr = (Type) n.getE().accept(this);
 		n.getCs1().accept(this);
 		n.getCs2().accept(this);
-		if(n.getE().getType() == Type.BOOL)
+		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), n.getE().getType());
-		return null;
+			throw new TypeMismatchException(n.getOp(), expr);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(IfThenOp n) throws RuntimeException {
-		n.getE().accept(this);
+		Type expr = (Type) n.getE().accept(this);
 		n.getCs().accept(this);
-		if(n.getE().getType() == Type.BOOL)
+		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), n.getE().getType());
-		return null;
+			throw new TypeMismatchException(n.getOp(), expr);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(ReadOp n) throws RuntimeException {
 		n.getV().accept(this);
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(WhileOp n) throws RuntimeException {
-		n.getE().accept(this);
+		Type expr = (Type) n.getE().accept(this);
 		n.getCs().accept(this);
-		if(n.getE().getType() == Type.BOOL)
+		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
 			throw new TypeMismatchException(n.getOp(), n.getE().getType());
-		return null;
+		return n.getType();
 	}
 
 	@Override
 	public Object visit(WriteOp n) throws RuntimeException {
 		n.getA().accept(this);
-		return null;
+		n.setType(Type.VOID);
+		return n.getType();
 	}
 
 	@Override
@@ -552,24 +539,21 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(VarInit n) throws RuntimeException {
-		n.getViv().accept(this);
-		n.getId().accept(this);
-		Type t1 = n.getId().getType();
-		Type t2 = n.getViv().getType();
+		Type t1 = (Type)n.getViv().accept(this);
+		Type t2 = (Type)n.getId().accept(this);
 		Type tt = assignOpCompTable[gIFT(t1)][gIFT(t2)]; 
 		if(tt != null) {
 			n.setType(tt);
+			return tt;
 		}else {
 			throw new TypeMismatchException(n.getOp(), t1, t2);
 		}
-		return null;
 	}
 
 	@Override
 	public Object visit(VarNotInit n) throws RuntimeException {
-		n.getId().accept(this);
-		n.setType(n.getId().getType());
-		return null;
+		n.setType((Type) n.getId().accept(this));
+		return n.getType();
 	}
 
 	@Override

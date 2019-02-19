@@ -56,7 +56,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	
 	@Override
 	public String visit(Args n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(Expr e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -65,7 +65,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(Body n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getVd().accept(this);
 		toReturn += n.getS().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -74,7 +74,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(CompStat n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getS().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -82,7 +82,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(Decls n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(DeclsWrapper e: n.getChildList()) 
 			toReturn += e.accept(this);
 			
@@ -92,7 +92,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(DefDeclNoPar n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getId().accept(this);
 		toReturn += n.getB().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -101,7 +101,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	
 	@Override
 	public String visit(DefDeclPar n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getId().accept(this);
 		toReturn += n.getB().accept(this);
 		toReturn += n.getPd().accept(this);
@@ -161,7 +161,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	
 	@Override
 	public String visit(ParDecls n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(ParDeclSon e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -170,7 +170,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(Programma n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getD().accept(this);
 		toReturn += n.getS().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -204,7 +204,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	
 	@Override
 	public String visit(Statements n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(Stat e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -213,7 +213,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(VarDecl n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getT().accept(this);
 		toReturn += n.getVdi().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -222,7 +222,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(VarDecls n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(VarDecl e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -231,7 +231,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(VarDeclsInit n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(VarDeclsInitWrapper e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -240,7 +240,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(VarInitValue n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -248,7 +248,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(Vars n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(IdConst e: n.getChildList())
 			toReturn += e.accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -257,7 +257,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(AddOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -266,7 +266,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(DivOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -275,7 +275,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(MultOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -284,7 +284,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(SubOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -293,7 +293,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(UminusOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -301,7 +301,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(AndOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -310,7 +310,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(NotOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -318,7 +318,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(OrOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -327,7 +327,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(EqOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -336,7 +336,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(GeOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -345,7 +345,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(GtOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -354,7 +354,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(LeOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -363,7 +363,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(LtOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE1().accept(this);
 		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -372,7 +372,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(AssignOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getId().accept(this);
 		toReturn += n.getE().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -381,7 +381,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(CallOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getId().accept(this);
 		if(n.getOp().equals("CallOpWithArgs"))
 			toReturn += n.getA().accept(this);
@@ -391,7 +391,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(IfThenElseOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += n.getCs1().accept(this);
 		toReturn += n.getCs2().accept(this);
@@ -401,7 +401,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(IfThenOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += n.getCs().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -410,7 +410,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(ReadOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getV().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -418,7 +418,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(WhileOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += n.getCs().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
@@ -427,7 +427,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(WriteOp n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getA().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -467,7 +467,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(BoolConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -475,7 +475,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(IdConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -483,7 +483,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(IntConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -491,7 +491,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(DoubleConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -499,7 +499,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(CharConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -507,7 +507,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(StringConst n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getId().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -515,7 +515,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(TypeLeaf n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getValue()+"\n";
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
@@ -523,17 +523,16 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 	@Override
 	public String visit(ParTypeLeaf n) {
-		String toReturn = "<"+n.getOp()+">\n";
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += ""+n.getValue()+"\n";
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
 	
-	private String addComment(Node n) {
-		if(n!=null)
-			return "<!-- tab:"+((n.getSymTableRef()!=null)?n.getSymTableRef().hashCode():"null")+" type:"+n.getType()+" -->\n";
-		else
-			return "<!-- *n null* -->\n";
+	private String addAttr(Node n) {
+		String op1 = (n.getSymTableRef()!=null)?String.format("symTab=\"%d\" ", n.getSymTableRef().hashCode()):"";
+		String op2 = (n.getType()!=null)?String.format("type=\"%s\"", n.getType()):"";
+		return op1 + op2;
 	}
 
 

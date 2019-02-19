@@ -11,6 +11,7 @@ package exception;
 public class NotDefinedElementException extends RuntimeException {
 
 	public NotDefinedElementException(String id) {
-		super(String.format("Variabile %s non definita", id));
+		System.err.println(String.format("Variabile %s non definita\n", id));
+		System.exit(1);
 	}
 }
