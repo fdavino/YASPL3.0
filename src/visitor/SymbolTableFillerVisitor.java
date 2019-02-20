@@ -3,11 +3,14 @@ package visitor;
 import java.util.ArrayList;
 
 import exception.AlreadyDeclaredException;
+import semantic.DefTuple;
+import semantic.ParTuple;
 import semantic.SymbolTable;
 import semantic.SymbolTable.Kind;
 import semantic.SymbolTable.ParType;
 import semantic.SymbolTable.Type;
 import semantic.Tuple;
+import semantic.VarTuple;
 import syntaxTree.Args;
 import syntaxTree.Body;
 import syntaxTree.CompStat;
@@ -88,7 +91,7 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 	public Object visit(DefDeclNoPar n) {
 		SymbolTable nst = new SymbolTable();
 		
-		Tuple t = new Tuple(Kind.DEFDECL);
+		Tuple t = new DefTuple(Kind.DEFDECL);
 		actualST.put((String)n.getId().accept(this), t);
 		
 		stack.push(nst);
@@ -104,14 +107,15 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 	public Object visit(DefDeclPar n) {
 		SymbolTable nst = new SymbolTable();
 		
-		Tuple t = new Tuple(Kind.DEFDECL);
+		Tuple t = new DefTuple(Kind.DEFDECL);
+		DefTuple dt = (DefTuple) t;
 		actualST.put((String)n.getId().accept(this), t);
 		
 		stack.push(nst);
 		actualST = stack.top();
 		n.setSymTableRef(actualST);
 
-		n.getPd().accept(this);
+		dt.setParam((ArrayList<ParTuple>) n.getPd().accept(this));
 		n.getB().accept(this);
 
 		return null;
@@ -119,10 +123,11 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(ParDecls n) {
+		ArrayList<ParTuple> param = new ArrayList<>();
 		for(ParDeclSon pd : n.getChildList()) {
-			pd.accept(this);
+			param.add((ParTuple)pd.accept(this));
 		}
-		return null;
+		return param;
 	}
 
 	@Override
@@ -143,7 +148,7 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 		ArrayList<String> listOfId = (ArrayList<String>) n.getVdi().accept(this);
 		for(String s: listOfId) {
 			if(!actualST.containsKey(s)) {
-				Tuple t = new Tuple(Kind.VARDECL, getTypeFromLeaf(n.getT()));
+				Tuple t = new VarTuple(Kind.VARDECL, getTypeFromLeaf(n.getT()));
 				actualST.put(s, t);
 			}
 			else {
@@ -178,9 +183,9 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(ParDeclSon n) {
-		Tuple t = new Tuple(Kind.VARDECL, getTypeFromLeaf(n.getTypeLeaf()), getParTypeFromLeaf((String) n.getParType().accept(this)));
+		Tuple t = new ParTuple(Kind.VARDECL, getParTypeFromLeaf((String) n.getParType().accept(this)), getTypeFromLeaf(n.getTypeLeaf()));
 		actualST.put((String) n.getId().accept(this), t);
-		return null;
+		return t;
 	}
 
 	@Override

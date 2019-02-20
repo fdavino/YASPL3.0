@@ -1,10 +1,16 @@
 package visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import exception.NotDefinedElementException;
 import exception.TypeMismatchException;
+import exception.WrongArgumentException;
+import semantic.DefTuple;
+import semantic.ParTuple;
+import semantic.VarTuple;
 import semantic.SymbolTable;
+import semantic.SymbolTable.ParType;
 import semantic.SymbolTable.Type;
 import semantic.Tuple;
 import syntaxTree.Args;
@@ -136,10 +142,12 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(Args n) throws RuntimeException {
+		ArrayList<Type> parType = new ArrayList<>();
 		for(Expr e : n.getChildList()) {
-			e.accept(this);
+			parType.add((Type)e.accept(this));
 		}
-		return null;
+		n.setType(Type.VOID);
+		return parType;
 	}
 
 	@Override
@@ -431,8 +439,14 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		Tuple t = lookup(n.getId().getValue());
 		if(t == null)
 			throw new NotDefinedElementException(n.getId().getValue());
-		else 
-			n.setType(t.getType());
+		else {
+			if(t instanceof DefTuple)
+				n.setType(Type.VOID);
+			else if(t instanceof ParTuple)
+				n.setType(((ParTuple)t).getType());
+			else
+				n.setType(((VarTuple)t).getType());
+		}
 		
 		return n.getType();
 	}
@@ -474,7 +488,34 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(CallOp n) throws RuntimeException {
-		// TODO Auto-generated method stub
+		n.setType(Type.VOID);
+		n.getId().accept(this);
+		ArrayList<Type> given; 
+		ArrayList<Expr> givenExpr;
+		given = (n.getA()!=null)?(ArrayList<Type>) n.getA().accept(this):new ArrayList<Type>();
+		givenExpr = (n.getA()!=null)?n.getA().getChildList():new ArrayList<Expr>();
+		String id = n.getId().getId().getValue();
+		Tuple t = lookup(id);
+		if(t instanceof DefTuple) {
+			DefTuple dt = (DefTuple) t;
+			if (dt.getNumParam() != given.size())
+				throw new WrongArgumentException(id);
+			else {
+				ArrayList<ParTuple> format = dt.getParam();
+				for(int i = 0; i<format.size(); i++) {
+					if((format.get(i).getParType() == ParType.OUT ||
+							format.get(i).getParType() == ParType.INOUT) &&
+							!(givenExpr.get(i) instanceof IdConst))
+						throw new WrongArgumentException(id, i);
+					
+					if(assignOpCompTable[gIFT(format.get(i).getType())][gIFT(given.get(i))] == null)
+						throw new WrongArgumentException(id, format.get(i).getType(), given.get(i));
+				}
+			}
+		}
+		else
+			throw new NotDefinedElementException(id, t.getKind());
+		
 		return null;
 	}
 

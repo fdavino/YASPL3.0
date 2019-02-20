@@ -15,4 +15,5 @@ public class TypeMismatchException extends RuntimeException {
 		System.err.println(toPrint);
 		System.exit(1);
 	}
+
 }

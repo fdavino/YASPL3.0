@@ -1,4 +1,4 @@
-<Programma symTab="-1491446148" type="VOID">
+<Programma symTab="-1723559673" type="VOID">
 <Decls type="VOID">
 <VarDecl type="VOID">
 <Type >
@@ -24,12 +24,22 @@ INT
 </Type>
 <VarDeclsInit type="VOID">
 <Id type="INT">
+bbb
+</Id>
+</VarDeclsInit>
+</VarDecl>
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
 i
 </Id>
 </VarDeclsInit>
 </VarDecl>
 <DefDecl symTab="-1165933504" type="VOID">
-<Id >
+<Id type="VOID">
 moltiplicazione
 </Id>
 <Body type="VOID">
@@ -98,24 +108,24 @@ y
 <CompStat type="VOID">
 <Statements type="VOID">
 <AssignOp type="VOID">
-<Id type="BOOL">
+<Id type="INT">
 grande
 </Id>
-<BoolConst type="BOOL">
-true
-</BoolConst>
+<IntConst type="INT">
+0
+</IntConst>
 </AssignOp>
 </Statements>
 </CompStat>
 <CompStat type="VOID">
 <Statements type="VOID">
 <AssignOp type="VOID">
-<Id type="BOOL">
+<Id type="INT">
 grande
 </Id>
-<BoolConst type="BOOL">
-false
-</BoolConst>
+<IntConst type="INT">
+1
+</IntConst>
 </AssignOp>
 </Statements>
 </CompStat>
@@ -153,7 +163,7 @@ res
 OUT
 </ParType>
 <Type >
-BOOL
+INT
 </Type>
 <Id >
 grande
@@ -188,5 +198,21 @@ sommapiccola
 0
 </IntConst>
 </AssignOp>
+<CallOpWithArgs type="VOID">
+<Id type="VOID">
+moltiplicazione
+</Id>
+<ArgsOp type="VOID">
+<IntConst type="INT">
+3
+</IntConst>
+<Id type="DOUBLE">
+sommapiccola
+</Id>
+<Id type="INT">
+bbb
+</Id>
+</ArgsOp>
+</CallOpWithArgs>
 </Statements>
 </Programma>

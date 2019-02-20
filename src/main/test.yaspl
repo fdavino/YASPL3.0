@@ -1,17 +1,18 @@
 head
 
 double sommagrande = 3.0, sommapiccola;
+int bbb;
 int i;
 
-def moltiplicazione(in double x, out double res, out bool grande)
+def moltiplicazione(in double x, out double res, out int grande)
 {
 	double risultato = x*y;
 	int var = 5;
 	if ((x+y*7) >= 7+7) then {
-		grande = true;
+		grande = 0;
 	}
 	else{ 
-		grande = false;
+		grande = 1;
 	}
 	res = risultato;
 }
@@ -22,3 +23,4 @@ start
 
 sommagrande = 0;
 sommapiccola = 0;
+moltiplicazione(3, sommapiccola, bbb);
