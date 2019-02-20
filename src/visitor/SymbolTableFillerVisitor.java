@@ -99,7 +99,7 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 		n.setSymTableRef(actualST);
 
 		n.getB().accept(this);
-
+	
 		return null;
 	}
 
@@ -110,7 +110,7 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 		Tuple t = new DefTuple(Kind.DEFDECL);
 		DefTuple dt = (DefTuple) t;
 		actualST.put((String)n.getId().accept(this), t);
-		
+		 
 		stack.push(nst);
 		actualST = stack.top();
 		n.setSymTableRef(actualST);
@@ -183,8 +183,16 @@ public class SymbolTableFillerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(ParDeclSon n) {
-		Tuple t = new ParTuple(Kind.VARDECL, getParTypeFromLeaf((String) n.getParType().accept(this)), getTypeFromLeaf(n.getTypeLeaf()));
-		actualST.put((String) n.getId().accept(this), t);
+		Tuple t;
+		String key = (String)n.getId().accept(this);
+		if(!actualST.containsKey(key)) {
+			t = new ParTuple(Kind.VARDECL, getParTypeFromLeaf((String) n.getParType().accept(this)), getTypeFromLeaf(n.getTypeLeaf()));
+			actualST.put(key, t);
+		}
+		else {
+			throw new AlreadyDeclaredException("Var "+key+" already declared in this scope");
+		}
+		
 		return t;
 	}
 

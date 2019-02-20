@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import lexer.*;
 import parser.*;
 import syntaxTree.Programma;
+import visitor.CLangCodeGenerator;
 import visitor.SymbolTableFillerVisitor;
 import visitor.TreePrinterVisitor;
 import visitor.TypeCheckerVisitor;
@@ -18,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			FileInputStream fs = new FileInputStream(new File("src/main/test.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/source.yaspl"));
 			LexerLex lexer = new LexerLex(fs);
 		   	/*for(int tokenId= lexer.next_token().sym; tokenId != LexerSym.EOF; tokenId  = lexer.next_token().sym) {
 		   		System.out.println("token returned is "+ LexerSym.terminalNames[tokenId] + "\n");
@@ -34,6 +35,8 @@ public class Main {
 			FileWriter fw = new FileWriter("src/main/ast1.xml");
 		    fw.write(r);
 		    fw.close();
+		    CLangCodeGenerator clang = new CLangCodeGenerator();
+		    clang.visit(p);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Add argoment");

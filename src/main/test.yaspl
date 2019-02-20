@@ -23,4 +23,3 @@ start
 
 sommagrande = 0;
 sommapiccola = 0;
-moltiplicazione(3, sommapiccola, bbb);

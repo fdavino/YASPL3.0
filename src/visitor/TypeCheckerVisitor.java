@@ -10,6 +10,7 @@ import semantic.DefTuple;
 import semantic.ParTuple;
 import semantic.VarTuple;
 import semantic.SymbolTable;
+import semantic.SymbolTable.Kind;
 import semantic.SymbolTable.ParType;
 import semantic.SymbolTable.Type;
 import semantic.Tuple;
@@ -486,6 +487,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		return n.getType();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object visit(CallOp n) throws RuntimeException {
 		n.setType(Type.VOID);
@@ -509,12 +511,12 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 						throw new WrongArgumentException(id, i);
 					
 					if(assignOpCompTable[gIFT(format.get(i).getType())][gIFT(given.get(i))] == null)
-						throw new WrongArgumentException(id, format.get(i).getType(), given.get(i));
+						throw new WrongArgumentException(id, i, format.get(i).getType(), given.get(i));
 				}
 			}
 		}
 		else
-			throw new NotDefinedElementException(id, t.getKind());
+			throw new NotDefinedElementException(id, Kind.DEFDECL);
 		
 		return null;
 	}
@@ -574,14 +576,13 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(ParDeclSon n) throws RuntimeException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object visit(VarInit n) throws RuntimeException {
-		Type t1 = (Type)n.getViv().accept(this);
-		Type t2 = (Type)n.getId().accept(this);
+		Type t1 = (Type)n.getId().accept(this);
+		Type t2 = (Type)n.getViv().accept(this);
 		Type tt = assignOpCompTable[gIFT(t1)][gIFT(t2)]; 
 		if(tt != null) {
 			n.setType(tt);
@@ -599,13 +600,11 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(TypeLeaf n) throws RuntimeException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Object visit(ParTypeLeaf n) throws RuntimeException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
