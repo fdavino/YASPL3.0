@@ -1,5 +1,6 @@
 package syntaxTree.logicOp;
 
+import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import visitor.Visitable;
 import visitor.Visitor;
@@ -34,6 +35,7 @@ public class AndOp extends Expr implements Visitable {
 	public Expr getE2() {
 		return e2;
 	}
+
 	
 	
 

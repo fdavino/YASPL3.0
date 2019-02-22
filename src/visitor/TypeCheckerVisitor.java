@@ -153,6 +153,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(Body n) throws RuntimeException {
+		n.getVd().accept(this);
 		n.getS().accept(this);
 		n.setType(Type.VOID);
 		return n.getType();

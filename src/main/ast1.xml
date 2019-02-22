@@ -1,18 +1,88 @@
-<Programma symTab="-1474768400" type="VOID">
+<Programma symTab="1794115968" type="VOID">
 <Decls type="VOID">
-<VarDecl type="VOID">
+<DefDecl symTab="1145467205" type="VOID">
+<Id type="VOID">
+fattoriale
+</Id>
+<Body type="VOID">
+<VarDecls type="VOID">
+</VarDecls>
+<Statements type="VOID">
+<WhileOp type="VOID">
+<GtOp type="BOOL">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+0
+</IntConst>
+</GtOp>
+<CompStat type="VOID">
+<Statements type="VOID">
+<AssignOp type="VOID">
+<Id type="INT">
+f
+</Id>
+<MultOp type="DOUBLE">
+<Id type="INT">
+f
+</Id>
+<Id type="INT">
+i
+</Id>
+</MultOp>
+</AssignOp>
+<AssignOp type="VOID">
+<Id type="INT">
+i
+</Id>
+<SubOp type="DOUBLE">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+1
+</IntConst>
+</SubOp>
+</AssignOp>
+</Statements>
+</CompStat>
+</WhileOp>
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<AddOp type="STRING">
+<Id type="INT">
+f
+</Id>
+<StringConst type="STRING">
+\n
+</StringConst>
+</AddOp>
+</ArgsOp>
+</WriteOp>
+</Statements>
+</Body>
+<ParDeclsOp >
+<ParType >
+IN
+</ParType>
 <Type >
-DOUBLE
+INT
 </Type>
-<VarDeclsInit type="VOID">
-<Id type="DOUBLE">
-sommagrande
+<Id >
+i
 </Id>
-<Id type="DOUBLE">
-sommapiccola
+<ParType >
+OUT
+</ParType>
+<Type >
+INT
+</Type>
+<Id >
+f
 </Id>
-</VarDeclsInit>
-</VarDecl>
+</ParDeclsOp>
+</DefDecl>
 <VarDecl type="VOID">
 <Type >
 INT
@@ -21,21 +91,21 @@ INT
 <Id type="INT">
 i
 </Id>
-</VarDeclsInit>
-</VarDecl>
-<VarDecl type="VOID">
-<Type >
-DOUBLE
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="DOUBLE">
-x
+<VarInitValue type="INT">
+<IntConst type="INT">
+0
+</IntConst>
+</VarInitValue>
+<Id type="INT">
+f
 </Id>
-<Id type="DOUBLE">
-y
-</Id>
-<Id type="DOUBLE">
-risultato
+<VarInitValue type="INT">
+<IntConst type="INT">
+1
+</IntConst>
+</VarInitValue>
+<Id type="INT">
+app
 </Id>
 </VarDeclsInit>
 </VarDecl>
@@ -45,57 +115,61 @@ BOOL
 </Type>
 <VarDeclsInit type="VOID">
 <Id type="BOOL">
-grande
+lettura
 </Id>
-</VarDeclsInit>
-</VarDecl>
-<DefDecl symTab="-1165884012" type="VOID">
-<Id type="VOID">
-moltiplicazione
-</Id>
-<Body type="VOID">
-<VarDecls >
-<VarDecl >
-<Type >
-DOUBLE
-</Type>
-<VarDeclsInit >
-<Id >
-risultato
-</Id>
-<VarInitValue >
-<MultOp >
-<Id >
-x
-</Id>
-<Id >
-y
-</Id>
-</MultOp>
+<VarInitValue type="BOOL">
+<BoolConst type="BOOL">
+false
+</BoolConst>
 </VarInitValue>
 </VarDeclsInit>
 </VarDecl>
-</VarDecls>
+</Decls>
 <Statements type="VOID">
+<WhileOp type="VOID">
+<NotOp type="BOOL">
+<Id type="BOOL">
+lettura
+</Id>
+</NotOp>
+<CompStat type="VOID">
+<Statements type="VOID">
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<StringConst type="STRING">
+Inserisci un numero intero positivo :
+</StringConst>
+</ArgsOp>
+</WriteOp>
+<ReadOp type="VOID">
+<Vars type="VOID">
+<Id type="INT">
+i
+</Id>
+</Vars>
+</ReadOp>
+<AssignOp type="VOID">
+<Id type="INT">
+app
+</Id>
+<Id type="INT">
+i
+</Id>
+</AssignOp>
 <IfThenElseOp type="VOID">
-<GeOp type="BOOL">
-<MultOp type="DOUBLE">
-<Id type="DOUBLE">
-x
+<GtOp type="BOOL">
+<Id type="INT">
+app
 </Id>
-<Id type="DOUBLE">
-y
-</Id>
-</MultOp>
 <IntConst type="INT">
-100
+0
 </IntConst>
-</GeOp>
+</GtOp>
 <CompStat type="VOID">
 <Statements type="VOID">
 <AssignOp type="VOID">
 <Id type="BOOL">
-grande
+lettura
 </Id>
 <BoolConst type="BOOL">
 true
@@ -107,7 +181,7 @@ true
 <Statements type="VOID">
 <AssignOp type="VOID">
 <Id type="BOOL">
-grande
+lettura
 </Id>
 <BoolConst type="BOOL">
 false
@@ -116,312 +190,36 @@ false
 </Statements>
 </CompStat>
 </IfThenElseOp>
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-res
-</Id>
-<Id type="DOUBLE">
-risultato
-</Id>
-</AssignOp>
-</Statements>
-</Body>
-<ParDeclsOp >
-<ParType >
-IN
-</ParType>
-<Type >
-DOUBLE
-</Type>
-<Id >
-x
-</Id>
-<ParType >
-IN
-</ParType>
-<Type >
-DOUBLE
-</Type>
-<Id >
-y
-</Id>
-<ParType >
-OUT
-</ParType>
-<Type >
-DOUBLE
-</Type>
-<Id >
-res
-</Id>
-<ParType >
-OUT
-</ParType>
-<Type >
-BOOL
-</Type>
-<Id >
-grande
-</Id>
-</ParDeclsOp>
-</DefDecl>
-</Decls>
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-sommagrande
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</AssignOp>
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-sommapiccola
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</AssignOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<StringConst type="STRING">
-Questo programma permette di svolgere una serie di moltiplicazioni
-</StringConst>
-</ArgsOp>
-</WriteOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<StringConst type="STRING">
-accumulando i risultati < 100 in sommagrande e quelli < 100 in sommapiccola
-</StringConst>
-</ArgsOp>
-</WriteOp>
-<AssignOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<UminusOp type="INT">
-<IntConst type="INT">
-1
-</IntConst>
-</UminusOp>
-</AssignOp>
-<WhileOp type="VOID">
-<LeOp type="BOOL">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</LeOp>
-<CompStat type="VOID">
-<Statements type="VOID">
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<StringConst type="STRING">
-Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)
-</StringConst>
-</ArgsOp>
-</WriteOp>
-<ReadOp type="VOID">
-<Vars type="VOID">
-<Id type="INT">
-i
-</Id>
-</Vars>
-</ReadOp>
-</Statements>
-</CompStat>
-</WhileOp>
-<WhileOp type="VOID">
-<GtOp type="BOOL">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</GtOp>
-<CompStat type="VOID">
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-x
-</Id>
-<UminusOp type="INT">
-<IntConst type="INT">
-1
-</IntConst>
-</UminusOp>
-</AssignOp>
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-y
-</Id>
-<UminusOp type="INT">
-<IntConst type="INT">
-1
-</IntConst>
-</UminusOp>
-</AssignOp>
-<WhileOp type="VOID">
-<NotOp type="BOOL">
-<AndOp type="BOOL">
-<GtOp type="BOOL">
-<Id type="DOUBLE">
-x
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</GtOp>
-<GtOp type="BOOL">
-<Id type="DOUBLE">
-y
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</GtOp>
-</AndOp>
-</NotOp>
-<CompStat type="VOID">
-<Statements type="VOID">
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<AddOp type="STRING">
-<AddOp type="STRING">
-<StringConst type="STRING">
-Moltiplicazione 
-</StringConst>
-<Id type="INT">
-i
-</Id>
-</AddOp>
-<StringConst type="STRING">
-: inserisci due numeri positivi
-</StringConst>
-</AddOp>
-</ArgsOp>
-</WriteOp>
-<ReadOp type="VOID">
-<Vars type="VOID">
-<Id type="DOUBLE">
-x
-</Id>
-<Id type="DOUBLE">
-y
-</Id>
-</Vars>
-</ReadOp>
 </Statements>
 </CompStat>
 </WhileOp>
 <CallOpWithArgs type="VOID">
 <Id type="VOID">
-moltiplicazione
+fattoriale
 </Id>
 <ArgsOp type="VOID">
-<Id type="DOUBLE">
-x
+<Id type="INT">
+i
 </Id>
-<Id type="DOUBLE">
-y
-</Id>
-<Id type="DOUBLE">
-risultato
-</Id>
-<Id type="BOOL">
-grande
+<Id type="INT">
+f
 </Id>
 </ArgsOp>
 </CallOpWithArgs>
-<IfThenElseOp type="VOID">
-<Id type="BOOL">
-grande
-</Id>
-<CompStat type="VOID">
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-sommagrande
-</Id>
-<AddOp type="DOUBLE">
-<Id type="DOUBLE">
-sommagrande
-</Id>
-<Id type="DOUBLE">
-risultato
-</Id>
-</AddOp>
-</AssignOp>
-</Statements>
-</CompStat>
-<CompStat type="VOID">
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-sommapiccola
-</Id>
-<AddOp type="DOUBLE">
-<Id type="DOUBLE">
-sommapiccola
-</Id>
-<Id type="DOUBLE">
-risultato
-</Id>
-</AddOp>
-</AssignOp>
-</Statements>
-</CompStat>
-</IfThenElseOp>
-<AssignOp type="VOID">
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<StringConst type="STRING">
+Il fattoriale di 
+</StringConst>
 <Id type="INT">
 i
 </Id>
-<EqOp type="DOUBLE">
+<StringConst type="STRING">
+ e' 
+</StringConst>
 <Id type="INT">
-i
+f
 </Id>
-<IntConst type="INT">
-1
-</IntConst>
-</EqOp>
-</AssignOp>
-</Statements>
-</CompStat>
-</WhileOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<AddOp type="STRING">
-<StringConst type="STRING">
-Valore di sommagrande: 
-</StringConst>
-<Id type="DOUBLE">
-sommagrande
-</Id>
-</AddOp>
-</ArgsOp>
-</WriteOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<AddOp type="STRING">
-<StringConst type="STRING">
-Valore di sommapiccola: 
-</StringConst>
-<Id type="DOUBLE">
-sommapiccola
-</Id>
-</AddOp>
-</ArgsOp>
-</WriteOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<StringConst type="STRING">
-ciao
-</StringConst>
 </ArgsOp>
 </WriteOp>
 </Statements>

@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import semantic.SymbolTable;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import visitor.Visitable;

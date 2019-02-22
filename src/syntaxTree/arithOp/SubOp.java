@@ -1,5 +1,6 @@
 package syntaxTree.arithOp;
 
+import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import visitor.Visitable;
 import visitor.Visitor;

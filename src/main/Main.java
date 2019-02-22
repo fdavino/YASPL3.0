@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			FileInputStream fs = new FileInputStream(new File("src/main/source.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/fattoriale.yaspl"));
 			LexerLex lexer = new LexerLex(fs);
 		   	/*for(int tokenId= lexer.next_token().sym; tokenId != LexerSym.EOF; tokenId  = lexer.next_token().sym) {
 		   		System.out.println("token returned is "+ LexerSym.terminalNames[tokenId] + "\n");
@@ -36,7 +36,10 @@ public class Main {
 		    fw.write(r);
 		    fw.close();
 		    CLangCodeGenerator clang = new CLangCodeGenerator();
-		    clang.visit(p);
+		    r = clang.visit(p);
+		    fw = new FileWriter("src/main/intermedio.c");
+		    fw.write(r);
+		    fw.close();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Add argoment");

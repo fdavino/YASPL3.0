@@ -1,5 +1,6 @@
 package syntaxTree.leaf;
 
+import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import syntaxTree.comp.Leaf;
 import visitor.Visitable;
@@ -29,6 +30,7 @@ public class StringConst extends Expr implements Visitable {
 	public Leaf getId() {
 		return id;
 	}
+
 	
 	
 
