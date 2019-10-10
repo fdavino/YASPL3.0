@@ -1,28 +1,21 @@
 head
-def fattoriale(in int i, out int f){
-while(i>0) do{
-	f = f * i;
-	i = i - 1;
-}
-}
+int input, fattoriale;
 
-int i=0,f=1,app;
-bool lettura = false;
+def calcola(){
+    int i = 1;
+    while( i <= input ) do {
+        fattoriale = i*fattoriale;
+        i = i + 1;
+    }
+}
 
 start
-
-while(not lettura)do{
-	"Inserisci un numero intero positivo :"->;
-	i <-;
-	app = i;
-	if(app > 0) then{
-		lettura = true;
-	}
-	else {
-		lettura = false;	
-	}
+fattoriale = 1;
+"Inserisci un intero positivo per calcolare il fattoriale" ->;
+input<-;
+if(input >=1) then {
+    calcola();    
+    "Il fattoriale è "+fattoriale->;
+}else {
+    "Devi inserire un intero positivo!" ->;
 }
-
-
-fattoriale(i,f);
-"Il fattoriale di ", i, " e' ", f, "\n" ->;

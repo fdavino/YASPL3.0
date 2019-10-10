@@ -7,6 +7,7 @@ import syntaxTree.comp.Node;
 public class SymbolTable extends TreeMap<String, Tuple>{
 
 	private static final long serialVersionUID = 1L;
+	private String name;
 	
 	public enum Kind{
 		VARDECL,
@@ -26,13 +27,28 @@ public class SymbolTable extends TreeMap<String, Tuple>{
 		INOUT,
 	}
 	
-	public SymbolTable() {
+	public SymbolTable(String name) {
 		super();
+		this.name = name;
 	}
+	
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
 
 	@Override
 	public String toString() {
-		String toReturn = "SymbolTable__"+ hashCode() +"__\n";
+		String toReturn = "SymbolTable__"+name+"__"+hashCode() +"__\n";
 		for(Map.Entry<String, Tuple> e : this.entrySet()) {
 			toReturn += "<Name:\t"+e.getKey()+"\t\t"+e.getValue()+">\n";
 		}

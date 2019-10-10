@@ -8,8 +8,7 @@ import java.io.FileWriter;
 import lexer.*;
 import parser.*;
 import syntaxTree.Programma;
-import visitor.CLangCodeGenerator;
-import visitor.SymbolTableFillerVisitor;
+import visitor.SymTableVisitor;
 import visitor.TreePrinterVisitor;
 import visitor.TypeCheckerVisitor;
 import java_cup.runtime.Symbol;
@@ -19,15 +18,16 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			FileInputStream fs = new FileInputStream(new File("src/main/fattoriale.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/semanticTest.yaspl"));
 			LexerLex lexer = new LexerLex(fs);
 		   	/*for(int tokenId= lexer.next_token().sym; tokenId != LexerSym.EOF; tokenId  = lexer.next_token().sym) {
 		   		System.out.println("token returned is "+ LexerSym.terminalNames[tokenId] + "\n");
 		   	}*/
 			ParserCup parser = new ParserCup(lexer);
 			Programma p = (Programma) parser.parse().value;
-		    SymbolTableFillerVisitor stfv = new SymbolTableFillerVisitor();
+		    SymTableVisitor stfv = new SymTableVisitor("src/main/scope.log");
 		    stfv.visit(p);
+		    /*
 		    TypeCheckerVisitor tckv = new TypeCheckerVisitor();
 		    tckv.visit(p);
 		    TreePrinterVisitor tpv = new TreePrinterVisitor();
@@ -35,11 +35,8 @@ public class Main {
 			FileWriter fw = new FileWriter("src/main/ast1.xml");
 		    fw.write(r);
 		    fw.close();
-		    CLangCodeGenerator clang = new CLangCodeGenerator();
-		    r = clang.visit(p);
-		    fw = new FileWriter("src/main/intermedio.c");
-		    fw.write(r);
-		    fw.close();
+		    */
+		   
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			System.out.println("Add argoment");

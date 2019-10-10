@@ -24,8 +24,7 @@ public class WrongArgumentException extends RuntimeException {
 	}
 	
 	public WrongArgumentException(String id, int i) {
-		String toPrint = String.format("Non è possibile passare espressioni o costanti alla variabile #%d "
-				+ "di output alla func %s ",i, id);
+		String toPrint = String.format("Non Ã¨ possibile passare espressioni o costanti alle variabili di output alla func %s ", id);
 		System.err.println(toPrint);
 		System.exit(1);
 	}

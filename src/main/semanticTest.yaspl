@@ -1,0 +1,15 @@
+head
+int i;
+int k;
+
+def addizione(in int i, in int z, out int res){
+res = i + z;
+while(z)do{
+	int z;
+	int ft;
+	int abba = 2;
+	z=3;
+}
+}
+
+start

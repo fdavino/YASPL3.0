@@ -1,34 +1,64 @@
-<Programma symTab="1794115968" type="VOID">
+<Programma symTab="-1193903775" type="VOID">
 <Decls type="VOID">
-<DefDecl symTab="1145467205" type="VOID">
-<Id type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+input
+</Id>
+<Id type="INT">
 fattoriale
 </Id>
+</VarDeclsInit>
+</VarDecl>
+<DefDecl symTab="1625635834" type="VOID">
+<Id type="VOID">
+calcola
+</Id>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+i
+</Id>
+<VarInitValue type="INT">
+<IntConst type="INT">
+1
+</IntConst>
+</VarInitValue>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
+<Statements type="VOID">
+<WhileOp type="VOID">
+<LeOp type="BOOL">
+<Id type="INT">
+i
+</Id>
+<Id type="INT">
+input
+</Id>
+</LeOp>
 <Body type="VOID">
 <VarDecls type="VOID">
 </VarDecls>
 <Statements type="VOID">
-<WhileOp type="VOID">
-<GtOp type="BOOL">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</GtOp>
-<CompStat type="VOID">
-<Statements type="VOID">
 <AssignOp type="VOID">
 <Id type="INT">
-f
+fattoriale
 </Id>
 <MultOp type="DOUBLE">
 <Id type="INT">
-f
+i
 </Id>
 <Id type="INT">
-i
+fattoriale
 </Id>
 </MultOp>
 </AssignOp>
@@ -36,191 +66,86 @@ i
 <Id type="INT">
 i
 </Id>
-<SubOp type="DOUBLE">
+<AddOp type="INT">
 <Id type="INT">
 i
 </Id>
 <IntConst type="INT">
 1
 </IntConst>
-</SubOp>
+</AddOp>
 </AssignOp>
 </Statements>
-</CompStat>
+</Body>
 </WhileOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<AddOp type="STRING">
-<Id type="INT">
-f
-</Id>
-<StringConst type="STRING">
-\n
-</StringConst>
-</AddOp>
-</ArgsOp>
-</WriteOp>
 </Statements>
 </Body>
-<ParDeclsOp >
-<ParType >
-IN
-</ParType>
-<Type >
-INT
-</Type>
-<Id >
-i
-</Id>
-<ParType >
-OUT
-</ParType>
-<Type >
-INT
-</Type>
-<Id >
-f
-</Id>
-</ParDeclsOp>
 </DefDecl>
-<VarDecl type="VOID">
-<Type >
-INT
-</Type>
-<VarDeclsInit type="VOID">
+</Decls>
+<Statements type="VOID">
+<AssignOp type="VOID">
 <Id type="INT">
-i
+fattoriale
 </Id>
-<VarInitValue type="INT">
-<IntConst type="INT">
-0
-</IntConst>
-</VarInitValue>
-<Id type="INT">
-f
-</Id>
-<VarInitValue type="INT">
 <IntConst type="INT">
 1
 </IntConst>
-</VarInitValue>
-<Id type="INT">
-app
-</Id>
-</VarDeclsInit>
-</VarDecl>
-<VarDecl type="VOID">
-<Type >
-BOOL
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="BOOL">
-lettura
-</Id>
-<VarInitValue type="BOOL">
-<BoolConst type="BOOL">
-false
-</BoolConst>
-</VarInitValue>
-</VarDeclsInit>
-</VarDecl>
-</Decls>
-<Statements type="VOID">
-<WhileOp type="VOID">
-<NotOp type="BOOL">
-<Id type="BOOL">
-lettura
-</Id>
-</NotOp>
-<CompStat type="VOID">
-<Statements type="VOID">
+</AssignOp>
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
 <StringConst type="STRING">
-Inserisci un numero intero positivo :
+Inserisci un intero positivo per calcolare il fattoriale
 </StringConst>
 </ArgsOp>
 </WriteOp>
 <ReadOp type="VOID">
 <Vars type="VOID">
 <Id type="INT">
-i
+input
 </Id>
 </Vars>
 </ReadOp>
-<AssignOp type="VOID">
-<Id type="INT">
-app
-</Id>
-<Id type="INT">
-i
-</Id>
-</AssignOp>
 <IfThenElseOp type="VOID">
-<GtOp type="BOOL">
+<GeOp type="BOOL">
 <Id type="INT">
-app
+input
 </Id>
 <IntConst type="INT">
-0
+1
 </IntConst>
-</GtOp>
+</GeOp>
 <CompStat type="VOID">
 <Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="BOOL">
-lettura
-</Id>
-<BoolConst type="BOOL">
-true
-</BoolConst>
-</AssignOp>
-</Statements>
-</CompStat>
-<CompStat type="VOID">
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="BOOL">
-lettura
-</Id>
-<BoolConst type="BOOL">
-false
-</BoolConst>
-</AssignOp>
-</Statements>
-</CompStat>
-</IfThenElseOp>
-</Statements>
-</CompStat>
-</WhileOp>
-<CallOpWithArgs type="VOID">
+<CallOp type="VOID">
 <Id type="VOID">
+calcola
+</Id>
+</CallOp>
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<AddOp type="STRING">
+<StringConst type="STRING">
+Il fattoriale è 
+</StringConst>
+<Id type="INT">
 fattoriale
 </Id>
-<ArgsOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<Id type="INT">
-f
-</Id>
+</AddOp>
 </ArgsOp>
-</CallOpWithArgs>
+</WriteOp>
+</Statements>
+</CompStat>
+<CompStat type="VOID">
+<Statements type="VOID">
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
 <StringConst type="STRING">
-Il fattoriale di 
+Devi inserire un intero positivo!
 </StringConst>
-<Id type="INT">
-i
-</Id>
-<StringConst type="STRING">
- e' 
-</StringConst>
-<Id type="INT">
-f
-</Id>
 </ArgsOp>
 </WriteOp>
+</Statements>
+</CompStat>
+</IfThenElseOp>
 </Statements>
 </Programma>
