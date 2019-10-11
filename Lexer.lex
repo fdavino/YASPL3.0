@@ -49,18 +49,22 @@ import static lexer.LexerSym.*;
     return new Symbol(LexerSym.EOF);
 %eofval}
 
-id 			= [:jletter:]([:jletter:]|[:jdigit:])*
+id 			= ([:jletter:] | "_" ) ([:jletterdigit:] | [:jletter:] | "_" )*
 digit 		= [0-9]
 intConst 	= {digit}+
 doubleConst = {intConst}("."{intConst})?
 any			= .
 stringConst = \"~\"
+singleLineComment = "//"~"\n"
+multilineComment = "/*"~"*/"
+comment  = 	{singleLineComment} | {multilineComment}
 charConst	= '({any})?'
 
 
 whitespace = [ \r\n\t\f]
 %%
 {whitespace} 	{ /* ignore */ }
+{comment}		{ /* ignore */ }
 "head"			{ return new Symbol(LexerSym.HEAD); }
 "start"			{ return new Symbol(LexerSym.START); }
 ";"				{ return new Symbol(LexerSym.SEMI); }
@@ -103,7 +107,7 @@ whitespace = [ \r\n\t\f]
 "or"			{ return new Symbol(LexerSym.OR); }
 "in"			{ return new Symbol(LexerSym.IN); }
 "out"			{ return new Symbol(LexerSym.OUT); }
-"intout"		{ return new Symbol(LexerSym.INOUT); }
+"inout"			{ return new Symbol(LexerSym.INOUT); }
 {id}			{ return new Symbol(LexerSym.ID, yytext()); }
 
 [^]				{ return new Symbol(LexerSym.error);}

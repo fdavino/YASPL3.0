@@ -1,21 +1,21 @@
-<Programma symTab="-1193903775" type="VOID">
+<Programma symTab="-164829576" type="VOID">
 <Decls type="VOID">
 <VarDecl type="VOID">
 <Type >
-INT
+DOUBLE
 </Type>
 <VarDeclsInit type="VOID">
-<Id type="INT">
-input
+<Id type="DOUBLE">
+value
 </Id>
-<Id type="INT">
-fattoriale
+<Id type="DOUBLE">
+result
 </Id>
 </VarDeclsInit>
 </VarDecl>
-<DefDecl symTab="1625635834" type="VOID">
+<DefDecl symTab="1075711489" type="VOID">
 <Id type="VOID">
-calcola
+sqrt
 </Id>
 <Body type="VOID">
 <VarDecls type="VOID">
@@ -27,40 +27,66 @@ INT
 <Id type="INT">
 i
 </Id>
-<VarInitValue type="INT">
-<IntConst type="INT">
-1
-</IntConst>
-</VarInitValue>
 </VarDeclsInit>
 </VarDecl>
 </VarDecls>
 <Statements type="VOID">
-<WhileOp type="VOID">
-<LeOp type="BOOL">
+<AssignOp type="VOID">
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
+</Id>
+<IntConst type="INT">
+2
+</IntConst>
+</DivOp>
+</AssignOp>
+<AssignOp type="VOID">
 <Id type="INT">
 i
 </Id>
+<IntConst type="INT">
+0
+</IntConst>
+</AssignOp>
+<WhileOp symTab="0" type="VOID">
+<LtOp type="BOOL">
 <Id type="INT">
-input
+i
 </Id>
-</LeOp>
+<IntConst type="INT">
+64
+</IntConst>
+</LtOp>
 <Body type="VOID">
 <VarDecls type="VOID">
 </VarDecls>
 <Statements type="VOID">
 <AssignOp type="VOID">
-<Id type="INT">
-fattoriale
+<Id type="DOUBLE">
+result
 </Id>
-<MultOp type="DOUBLE">
-<Id type="INT">
-i
+<DivOp type="DOUBLE">
+<AddOp type="DOUBLE">
+<Id type="DOUBLE">
+result
 </Id>
-<Id type="INT">
-fattoriale
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
 </Id>
-</MultOp>
+<Id type="DOUBLE">
+result
+</Id>
+</DivOp>
+</AddOp>
+<IntConst type="INT">
+2
+</IntConst>
+</DivOp>
 </AssignOp>
 <AssignOp type="VOID">
 <Id type="INT">
@@ -80,72 +106,201 @@ i
 </WhileOp>
 </Statements>
 </Body>
+<ParDeclsOp >
+<ParType >
+IN
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+value
+</Id>
+<ParType >
+OUT
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+result
+</Id>
+</ParDeclsOp>
 </DefDecl>
-</Decls>
+<DefDecl symTab="-1738910765" type="VOID">
+<Id type="VOID">
+sqrt2
+</Id>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+i
+</Id>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
 <Statements type="VOID">
 <AssignOp type="VOID">
-<Id type="INT">
-fattoriale
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
 </Id>
 <IntConst type="INT">
-1
+2
+</IntConst>
+</DivOp>
+</AssignOp>
+<AssignOp type="VOID">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+0
 </IntConst>
 </AssignOp>
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
+<AddOp type="STRING">
 <StringConst type="STRING">
-Inserisci un intero positivo per calcolare il fattoriale
+ciao
+</StringConst>
+<Id type="INT">
+i
+</Id>
+</AddOp>
+</ArgsOp>
+</WriteOp>
+<WhileOp symTab="793589600" type="VOID">
+<LeOp type="BOOL">
+<StringConst type="STRING">
+c
+</StringConst>
+<StringConst type="STRING">
+coap
+</StringConst>
+</LeOp>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+i
+</Id>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
+<Statements type="VOID">
+<AssignOp type="VOID">
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<AddOp type="DOUBLE">
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
+</Id>
+<Id type="DOUBLE">
+result
+</Id>
+</DivOp>
+</AddOp>
+<IntConst type="INT">
+2
+</IntConst>
+</DivOp>
+</AssignOp>
+<AssignOp type="VOID">
+<Id type="INT">
+i
+</Id>
+<AddOp type="INT">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+1
+</IntConst>
+</AddOp>
+</AssignOp>
+</Statements>
+</Body>
+</WhileOp>
+</Statements>
+</Body>
+<ParDeclsOp >
+<ParType >
+IN
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+value
+</Id>
+<ParType >
+INOUT
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+result
+</Id>
+</ParDeclsOp>
+</DefDecl>
+</Decls>
+<Statements type="VOID">
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<StringConst type="STRING">
+Inserisci il valore di cui vuoi calcolare la radice quadrata
 </StringConst>
 </ArgsOp>
 </WriteOp>
 <ReadOp type="VOID">
 <Vars type="VOID">
-<Id type="INT">
-input
+<Id type="DOUBLE">
+value
 </Id>
 </Vars>
 </ReadOp>
-<IfThenElseOp type="VOID">
-<GeOp type="BOOL">
-<Id type="INT">
-input
+<CallOpWithArgs type="VOID">
+<Id >
+sqrt
 </Id>
-<IntConst type="INT">
-1
-</IntConst>
-</GeOp>
-<CompStat type="VOID">
-<Statements type="VOID">
-<CallOp type="VOID">
-<Id type="VOID">
-calcola
-</Id>
-</CallOp>
-<WriteOp type="VOID">
 <ArgsOp type="VOID">
-<AddOp type="STRING">
-<StringConst type="STRING">
-Il fattoriale è 
-</StringConst>
-<Id type="INT">
-fattoriale
+<Id type="DOUBLE">
+value
 </Id>
-</AddOp>
+<Id type="DOUBLE">
+result
+</Id>
 </ArgsOp>
-</WriteOp>
-</Statements>
-</CompStat>
-<CompStat type="VOID">
-<Statements type="VOID">
+</CallOpWithArgs>
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
 <StringConst type="STRING">
-Devi inserire un intero positivo!
+Il valore della radice quadrata è
 </StringConst>
+<Id type="DOUBLE">
+result
+</Id>
 </ArgsOp>
 </WriteOp>
-</Statements>
-</CompStat>
-</IfThenElseOp>
 </Statements>
 </Programma>

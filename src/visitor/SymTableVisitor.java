@@ -73,7 +73,7 @@ public class SymTableVisitor implements Visitor<Object> {
 		n.getVd().accept(this);
 		n.getS().accept(this);
 		if(pathToPrintScope.equals("")) {
-			this.stack.pop();
+			System.out.println(this.stack.pop().toString());
 		}else {
 			logger.info(this.stack.pop().toString());
 		}
@@ -171,7 +171,7 @@ public class SymTableVisitor implements Visitor<Object> {
 		n.getD().accept(this);
 		n.getS().accept(this);
 		if(pathToPrintScope.equals("")) {
-			this.stack.top();
+			System.out.println(this.stack.top().toString());
 		}else {
 			logger.info(this.stack.top().toString());
 		}
@@ -469,7 +469,6 @@ public class SymTableVisitor implements Visitor<Object> {
 	}
 
 	
-
 	@Override
 	public Object visit(ParTypeLeaf n) {
 		return n.getValue();
@@ -497,10 +496,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	
 	private void checkAlreadyDeclared(String id) throws AlreadyDeclaredException {
 		if(this.actualScope.containsKey(id)) {
-			throw new AlreadyDeclaredException(String.format("%s già dichiarata in %s",
-															  id,
-															  this.actualScope.getName()
-												));
+			throw new AlreadyDeclaredException(id, this.actualScope.getName());
 		}
 	}
 	
@@ -518,10 +514,7 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 		
 		if(!find)
-				throw new NotDeclaredException(String.format("%s NON dichiarata in %s",
-															  id,
-															  this.actualScope.getName()
-												));
+				throw new NotDeclaredException(id, this.actualScope.getName());
 	}
 	
 	private boolean checkExpr(Expr e) {
@@ -529,7 +522,6 @@ public class SymTableVisitor implements Visitor<Object> {
 		if(e instanceof IdConst) {
 			String id = ""+e.accept(this);
 			checkNotDeclared(id);
-			this.actualScope.get(id).setUsed(true);
 			flag = false;
 		}
 		return flag;
