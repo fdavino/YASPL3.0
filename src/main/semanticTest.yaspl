@@ -4,8 +4,11 @@ def sqrt(in double value, out double result) {
 	int i;
 	result = value / 2;
 	i = 0;
+	//result = result + 2;
 	while(i < 64) do {
-		result = (result + (value / result)) / 2;
+		int value;
+		value = 5;
+		//result = (result + (value / result)) / 2;
 		i = i + 1;
 	}
 } 
@@ -19,7 +22,7 @@ def sqrt2(in double value, inout double result) {
 	"ciao"+i->;
 	while("c" <= "coap") do {
 	int i;
-		result = (result + (value / result)) / 2;
+		//result = (result + (value / result)) / 2;
 		i = i + 1;
 	}
 } 

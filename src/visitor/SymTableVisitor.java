@@ -217,8 +217,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	}
 
 	@Override
-	public Object visit(AddOp n) {
-		
+	public Object visit(AddOp n) {	
 		if(checkExpr(n.getE1())) {
 			n.getE1().accept(this);
 		}
@@ -391,7 +390,11 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(AssignOp n) {
-		checkNotDeclared((String)n.getId().accept(this));
+		String id = (String)n.getId().accept(this);
+		Tuple t = checkNotDeclared(id);
+		
+		checkInOutProp(id, t, ParType.IN);		
+		
 		if(checkExpr(n.getE()))
 			n.getE().accept(this);
 		return null;
@@ -426,8 +429,10 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(ReadOp n) {
 		ArrayList<String> list = (ArrayList<String>) n.getV().accept(this);
+		Tuple t = null;
 		for(String s: list) {
-			checkNotDeclared(s);
+			t = checkNotDeclared(s);
+			checkInOutProp(s, t, ParType.IN);
 		}
 		return null;
 	}
@@ -500,31 +505,47 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 	}
 	
-	private void checkNotDeclared(String id) throws NotDeclaredException {
+	private Tuple checkNotDeclared(String id) throws NotDeclaredException {
 		
 		ArrayList<SymbolTable> temp = (ArrayList<SymbolTable>) stack.getStack(); 
 		int index = temp.indexOf(actualScope);
 		boolean find = false;
 		int i = index;
 		
+		SymbolTable sb = temp.get(i);
 		while(!find && i >= 0) {
-			SymbolTable sb = temp.get(i);
+			sb = temp.get(i);
 			find = sb.containsKey(id);
 			i--;
 		}
 		
 		if(!find)
-				throw new NotDeclaredException(id, this.actualScope.getName());
+			throw new NotDeclaredException(id, this.actualScope.getName());
+		else 
+			return sb.get(id);
+	}
+	
+	private void checkInOutProp(String id, Tuple t, ParType p) {
+		if(t instanceof ParTuple) {
+			if(((ParTuple) t).getParType() == p && p == ParType.IN)
+				throw new SemanticException(
+					String.format("Scrittura non permessa sulla variabile di input %s", id));
+			if(((ParTuple) t).getParType() == p && p == ParType.OUT)
+				throw new SemanticException(
+						String.format("Lettura non permessa dalla variabile di output %s", id));
+		}
 	}
 	
 	private boolean checkExpr(Expr e) {
 		boolean flag = true;
 		if(e instanceof IdConst) {
 			String id = ""+e.accept(this);
-			checkNotDeclared(id);
+			Tuple t = checkNotDeclared(id);
+			checkInOutProp(id, t, ParType.OUT);
 			flag = false;
 		}
 		return flag;
 	}
+
 
 }
