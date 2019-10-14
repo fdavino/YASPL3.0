@@ -14,10 +14,10 @@ public class TypeMismatchException extends RuntimeException {
 		System.exit(1);
 	}
 	
-	public TypeMismatchException(String op, Type t1, Type t2) {
+	public TypeMismatchException(String op, Type richiesto, Type fornito) {
 		String toPrint = String.format("Conflitto di tipo in %s, richiesto %s fornito %s", op, 
-				t1.toString(),
-				t2.toString());
+				richiesto.toString(),
+				fornito.toString());
 		System.err.println(toPrint);
 		System.exit(1);
 	}

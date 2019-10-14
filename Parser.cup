@@ -181,5 +181,5 @@ Expr		::=	Expr:e1 MINUS Expr:e2		{: RESULT = new SubOp("SubOp", e1, e2); :}
 			|	INT_CONST:intConst 			{: RESULT = new IntConst("IntConst", new Leaf("Value", intConst)); :}	
 			|	DOUBLE_CONST:doubleConst	{: RESULT = new DoubleConst("DoubleConst", new Leaf("Value", doubleConst)); :}	
 			|	CHAR_CONST:charConst		{: RESULT = new CharConst("CharConst", new Leaf("Value", charConst)); :}
-			|	STRING_CONST:stringConst 	{: RESULT = new StringConst("StringConst", new Leaf("Value", stringConst)); :}	
+			|	STRING_CONST:stringConst 	{: RESULT = new StringConst("StringConst", new Leaf("Value", stringConst));  :}	
 			;

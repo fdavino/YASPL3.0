@@ -3,6 +3,10 @@ package syntaxTree.comp;
 import semantic.SymbolTable;
 import semantic.Tuple;
 
+/**
+ * @author ferdi
+ *
+ */
 public class Node {
 	
 	private String op;
@@ -52,6 +56,8 @@ public class Node {
 	public void setSymTableRef(SymbolTable symTableRef) {
 		this.symTableRef = symTableRef;
 	}
+	
+	
 	
 	
 	

@@ -8,18 +8,18 @@ def sqrt(in double value, out double result) {
 	while(i < 64) do {
 		int value;
 		value = 5;
-		//result = (result + (value / result)) / 2;
 		i = i + 1;
 	}
+
+
 } 
 
 def sqrt2(in double value, inout double result) {
 	int i;
 	/*string test = "caip"+i+i+i+"kofper";*/
-	test = 110;
 	result = value / 2;
 	i = 0;
-	"ciao"+i->;
+	"ciao",i->;
 	while("c" <= "coap") do {
 	int i;
 		//result = (result + (value / result)) / 2;
@@ -31,5 +31,5 @@ def sqrt2(in double value, inout double result) {
 start
 "Inserisci il valore di cui vuoi calcolare la radice quadrata" ->;
 value <-;
-sqrt(value, result);
+sqrt(5.7, value);
 "Il valore della radice quadrata è", result ->;

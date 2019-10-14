@@ -1180,7 +1180,7 @@ class CUP$ParserCup$actions {
 		int stringConstleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
 		int stringConstright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
 		String stringConst = (String)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
-		 RESULT = new StringConst("StringConst", new Leaf("Value", stringConst)); 
+		 RESULT = new StringConst("StringConst", new Leaf("Value", stringConst));  
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("Expr",16, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;

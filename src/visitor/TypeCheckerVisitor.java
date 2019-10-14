@@ -85,7 +85,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		
 		return -1;
 	}
-	
+/*	
 	private SymbolTable.Type[][] sumCompTable = {
 			{Type.INT, Type.STRING, Type.DOUBLE, null, null, null},
 			{Type.STRING, Type.STRING, Type.STRING, Type.STRING, Type.STRING, null},
@@ -93,7 +93,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			{null, Type.STRING, null, Type.STRING, null, null},
 			{null, Type.STRING, null, null, null, null},
 			{null, null, null, null, null, null}
-	};
+	}; */
 
 	private SymbolTable.Type[][] arithOpCompTable = {
 			{Type.INT, null, Type.DOUBLE, null, null, null},
@@ -303,7 +303,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	public Object visit(AddOp n) throws RuntimeException {
 		Type t1 = (Type) n.getE1().accept(this);
 		Type t2 = (Type) n.getE2().accept(this);
-		Type tt = sumCompTable[gIFT(t1)][gIFT(t2)];
+		Type tt = arithOpCompTable[gIFT(t1)][gIFT(t2)];
 		if(tt != null) {
 			n.setType(tt);
 			return tt;
@@ -512,8 +512,8 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 
 	@Override
 	public Object visit(AssignOp n) throws RuntimeException {
-		Type t1 = (Type) n.getE().accept(this);
-		Type t2 = (Type) n.getId().accept(this);
+		Type t1 = (Type) n.getId().accept(this);
+		Type t2 = (Type) n.getE().accept(this);
 		if(assignOpCompTable[gIFT(t1)][gIFT(t2)]!=null)
 			n.setType(Type.VOID);
 		else
@@ -537,8 +537,10 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		DefTuple def = (DefTuple)lookup(id);
 		ArrayList<ParTuple> par = def.getParam();
 		
-		if(given.size() != par.size())
-			throw new WrongArgumentNumberException(id, par.size(), given.size());
+		//if(given.size() != par.size())
+			//throw new WrongArgumentNumberException(id, par.size(), given.size());
+		// controllo già fatto in analisi semantica
+		
 		int size = par.size();
 		for(int i = 0; i < size; i++) {
 			if(((par.get(i).getParType() == ParType.INOUT || 

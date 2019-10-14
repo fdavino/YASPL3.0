@@ -1,4 +1,4 @@
-<Programma symTab="997619455" type="VOID">
+<Programma symTab="1779752567" type="VOID">
 <Decls type="VOID">
 <VarDecl type="VOID">
 <Type >
@@ -13,7 +13,7 @@ result
 </Id>
 </VarDeclsInit>
 </VarDecl>
-<DefDecl symTab="1075711489" type="VOID">
+<DefDecl symTab="1489516566" type="VOID">
 <Id type="VOID">
 sqrt
 </Id>
@@ -32,6 +32,19 @@ i
 </VarDecls>
 <Statements type="VOID">
 <AssignOp type="VOID">
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
+</Id>
+<IntConst type="INT">
+2
+</IntConst>
+</DivOp>
+</AssignOp>
+<AssignOp type="VOID">
 <Id type="INT">
 i
 </Id>
@@ -39,7 +52,7 @@ i
 0
 </IntConst>
 </AssignOp>
-<WhileOp symTab="0" type="VOID">
+<WhileOp symTab="1587264369" type="VOID">
 <LtOp type="BOOL">
 <Id type="INT">
 i
@@ -50,8 +63,26 @@ i
 </LtOp>
 <Body type="VOID">
 <VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+value
+</Id>
+</VarDeclsInit>
+</VarDecl>
 </VarDecls>
 <Statements type="VOID">
+<AssignOp type="VOID">
+<Id type="INT">
+value
+</Id>
+<IntConst type="INT">
+5
+</IntConst>
+</AssignOp>
 <AssignOp type="VOID">
 <Id type="INT">
 i
@@ -91,6 +122,117 @@ result
 </Id>
 </ParDeclsOp>
 </DefDecl>
+<DefDecl symTab="174901862" type="VOID">
+<Id type="VOID">
+sqrt2
+</Id>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+i
+</Id>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
+<Statements type="VOID">
+<AssignOp type="VOID">
+<Id type="DOUBLE">
+result
+</Id>
+<DivOp type="DOUBLE">
+<Id type="DOUBLE">
+value
+</Id>
+<IntConst type="INT">
+2
+</IntConst>
+</DivOp>
+</AssignOp>
+<AssignOp type="VOID">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+0
+</IntConst>
+</AssignOp>
+<WriteOp type="VOID">
+<ArgsOp type="VOID">
+<StringConst type="STRING">
+ciao
+</StringConst>
+<Id type="INT">
+i
+</Id>
+</ArgsOp>
+</WriteOp>
+<WhileOp symTab="1313922887" type="VOID">
+<LeOp type="BOOL">
+<StringConst type="STRING">
+c
+</StringConst>
+<StringConst type="STRING">
+coap
+</StringConst>
+</LeOp>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+i
+</Id>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
+<Statements type="VOID">
+<AssignOp type="VOID">
+<Id type="INT">
+i
+</Id>
+<AddOp type="INT">
+<Id type="INT">
+i
+</Id>
+<IntConst type="INT">
+1
+</IntConst>
+</AddOp>
+</AssignOp>
+</Statements>
+</Body>
+</WhileOp>
+</Statements>
+</Body>
+<ParDeclsOp >
+<ParType >
+IN
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+value
+</Id>
+<ParType >
+INOUT
+</ParType>
+<Type >
+DOUBLE
+</Type>
+<Id >
+result
+</Id>
+</ParDeclsOp>
+</DefDecl>
 </Decls>
 <Statements type="VOID">
 <WriteOp type="VOID">
@@ -107,6 +249,19 @@ value
 </Id>
 </Vars>
 </ReadOp>
+<CallOpWithArgs type="VOID">
+<Id >
+sqrt
+</Id>
+<ArgsOp type="VOID">
+<DoubleConst type="DOUBLE">
+5.7
+</DoubleConst>
+<Id type="DOUBLE">
+value
+</Id>
+</ArgsOp>
+</CallOpWithArgs>
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
 <StringConst type="STRING">
