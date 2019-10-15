@@ -537,9 +537,9 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		DefTuple def = (DefTuple)lookup(id);
 		ArrayList<ParTuple> par = def.getParam();
 		
-		//if(given.size() != par.size())
-			//throw new WrongArgumentNumberException(id, par.size(), given.size());
-		// controllo già fatto in analisi semantica
+		if(given.size() != par.size())
+			throw new WrongArgumentNumberException(id, par.size(), given.size());
+		
 		
 		int size = par.size();
 		for(int i = 0; i < size; i++) {

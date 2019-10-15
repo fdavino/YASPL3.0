@@ -13,7 +13,22 @@ import syntaxTree.varDeclInitOp.*;
 import syntaxTree.leaf.*;
 import syntaxTree.utils.*;
 import syntaxTree.declsOp.*;
-import visitor.*;
+import exception.*;
+
+parser code{:
+ public void report_error(String msg, Object info){
+  
+   if(info instanceof Symbol && ((Symbol)info).left != -1 && ((Symbol)info).right!=-1){
+    int line = (((Symbol)info).left)+1;
+    int col  = (((Symbol)info).right)+1;
+    String val = (String)((Symbol)info).value;
+    
+    throw new SyntaxError(val, line, col);
+   }
+   
+  }
+ 
+:}
 
 /*List of terminals*/
 terminal HEAD;

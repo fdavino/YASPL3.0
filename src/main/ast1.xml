@@ -1,4 +1,4 @@
-<Programma symTab="1779752567" type="VOID">
+<Programma symTab="-773907840" type="VOID">
 <Decls type="VOID">
 <VarDecl type="VOID">
 <Type >
@@ -13,92 +13,14 @@ result
 </Id>
 </VarDeclsInit>
 </VarDecl>
-<DefDecl symTab="1489516566" type="VOID">
+<DefDecl symTab="493889797" type="VOID">
 <Id type="VOID">
-sqrt
+sqrt2
 </Id>
 <Body type="VOID">
 <VarDecls type="VOID">
-<VarDecl type="VOID">
-<Type >
-INT
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="INT">
-i
-</Id>
-</VarDeclsInit>
-</VarDecl>
 </VarDecls>
 <Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-result
-</Id>
-<DivOp type="DOUBLE">
-<Id type="DOUBLE">
-value
-</Id>
-<IntConst type="INT">
-2
-</IntConst>
-</DivOp>
-</AssignOp>
-<AssignOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</AssignOp>
-<WhileOp symTab="1587264369" type="VOID">
-<LtOp type="BOOL">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-64
-</IntConst>
-</LtOp>
-<Body type="VOID">
-<VarDecls type="VOID">
-<VarDecl type="VOID">
-<Type >
-INT
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="INT">
-value
-</Id>
-</VarDeclsInit>
-</VarDecl>
-</VarDecls>
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="INT">
-value
-</Id>
-<IntConst type="INT">
-5
-</IntConst>
-</AssignOp>
-<AssignOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<AddOp type="INT">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-1
-</IntConst>
-</AddOp>
-</AssignOp>
-</Statements>
-</Body>
-</WhileOp>
 </Statements>
 </Body>
 <ParDeclsOp >
@@ -112,7 +34,7 @@ DOUBLE
 value
 </Id>
 <ParType >
-OUT
+INOUT
 </ParType>
 <Type >
 DOUBLE
@@ -122,91 +44,71 @@ result
 </Id>
 </ParDeclsOp>
 </DefDecl>
-<DefDecl symTab="174901862" type="VOID">
+<DefDecl symTab="-795357826" type="VOID">
 <Id type="VOID">
-sqrt2
+sqrt
 </Id>
 <Body type="VOID">
 <VarDecls type="VOID">
-<VarDecl type="VOID">
-<Type >
-INT
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="INT">
-i
-</Id>
-</VarDeclsInit>
-</VarDecl>
 </VarDecls>
 <Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="DOUBLE">
-result
-</Id>
-<DivOp type="DOUBLE">
-<Id type="DOUBLE">
-value
-</Id>
-<IntConst type="INT">
-2
-</IntConst>
-</DivOp>
-</AssignOp>
-<AssignOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<IntConst type="INT">
-0
-</IntConst>
-</AssignOp>
-<WriteOp type="VOID">
-<ArgsOp type="VOID">
-<StringConst type="STRING">
-ciao
-</StringConst>
-<Id type="INT">
-i
-</Id>
-</ArgsOp>
-</WriteOp>
-<WhileOp symTab="1313922887" type="VOID">
-<LeOp type="BOOL">
-<StringConst type="STRING">
-c
-</StringConst>
-<StringConst type="STRING">
-coap
-</StringConst>
-</LeOp>
-<Body type="VOID">
-<VarDecls type="VOID">
-<VarDecl type="VOID">
-<Type >
-INT
-</Type>
-<VarDeclsInit type="VOID">
-<Id type="INT">
-i
-</Id>
-</VarDeclsInit>
-</VarDecl>
-</VarDecls>
-<Statements type="VOID">
-<AssignOp type="VOID">
-<Id type="INT">
-i
-</Id>
-<AddOp type="INT">
-<Id type="INT">
-i
-</Id>
+<WhileOp symTab="0" type="VOID">
+<LtOp type="BOOL">
 <IntConst type="INT">
 1
 </IntConst>
-</AddOp>
-</AssignOp>
+<IntConst type="INT">
+2
+</IntConst>
+</LtOp>
+<Body type="VOID">
+<VarDecls type="VOID">
+</VarDecls>
+<Statements type="VOID">
+<WhileOp symTab="189568523" type="VOID">
+<LtOp type="BOOL">
+<IntConst type="INT">
+1
+</IntConst>
+<IntConst type="INT">
+2
+</IntConst>
+</LtOp>
+<Body type="VOID">
+<VarDecls type="VOID">
+<VarDecl type="VOID">
+<Type >
+INT
+</Type>
+<VarDeclsInit type="VOID">
+<Id type="INT">
+a
+</Id>
+<VarInitValue type="INT">
+<IntConst type="INT">
+10
+</IntConst>
+</VarInitValue>
+</VarDeclsInit>
+</VarDecl>
+</VarDecls>
+<Statements type="VOID">
+<CallOpWithArgs type="VOID">
+<Id >
+sqrt2
+</Id>
+<ArgsOp type="VOID">
+<Id type="DOUBLE">
+result
+</Id>
+<Id type="DOUBLE">
+result
+</Id>
+</ArgsOp>
+</CallOpWithArgs>
+</Statements>
+</Body>
+</WhileOp>
 </Statements>
 </Body>
 </WhileOp>
@@ -231,6 +133,15 @@ DOUBLE
 <Id >
 result
 </Id>
+<ParType >
+IN
+</ParType>
+<Type >
+INT
+</Type>
+<Id >
+cc
+</Id>
 </ParDeclsOp>
 </DefDecl>
 </Decls>
@@ -249,19 +160,6 @@ value
 </Id>
 </Vars>
 </ReadOp>
-<CallOpWithArgs type="VOID">
-<Id >
-sqrt
-</Id>
-<ArgsOp type="VOID">
-<DoubleConst type="DOUBLE">
-5.7
-</DoubleConst>
-<Id type="DOUBLE">
-value
-</Id>
-</ArgsOp>
-</CallOpWithArgs>
 <WriteOp type="VOID">
 <ArgsOp type="VOID">
 <StringConst type="STRING">

@@ -1,35 +1,21 @@
 head
-double value, result;
-def sqrt(in double value, out double result) {
-	int i;
-	result = value / 2;
-	i = 0;
-	//result = result + 2;
-	while(i < 64) do {
-		int value;
-		value = 5;
-		i = i + 1;
-	}
+double value, result; 
 
-
+def sqrt2(inout double value) {
+	
 } 
 
-def sqrt2(in double value, inout double result) {
-	int i;
-	/*string test = "caip"+i+i+i+"kofper";*/
-	result = value / 2;
-	i = 0;
-	"ciao",i->;
-	while("c" <= "coap") do {
-	int i;
-		//result = (result + (value / result)) / 2;
-		i = i + 1;
+sqrt(in double r1, out double r2, inout int r3) {
+	while(1<2)do{
+		while(1<2)do{
+			int a = 10;
+			sqrt2(r3);
+		}
 	}
-} 
+}
 
 
 start
 "Inserisci il valore di cui vuoi calcolare la radice quadrata" ->;
 value <-;
-sqrt(5.7, value);
 "Il valore della radice quadrata è", result ->;

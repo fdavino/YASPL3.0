@@ -24,13 +24,13 @@ public class Main {
 			Programma p = (Programma) parser.parse().value;
 		    SymTableVisitor stfv = new SymTableVisitor("src/main/scope.log");
 		    stfv.visit(p);
-		    TypeCheckerVisitor tckv = new TypeCheckerVisitor();
+		  /*  TypeCheckerVisitor tckv = new TypeCheckerVisitor();
 		    tckv.visit(p);
 		    TreePrinterVisitor tpv = new TreePrinterVisitor();
 			String r = tpv.visit(p);
 			FileWriter fw = new FileWriter("src/main/ast1.xml");
 		    fw.write(r);
-		    fw.close();
+		    fw.close(); */
 		   
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
