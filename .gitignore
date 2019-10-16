@@ -32,3 +32,5 @@ main/*.yaspl
 main/*.log 
 main/*.log.1
 main/*.log.1.lck
+main/*.c
+main/*.xml

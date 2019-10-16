@@ -67,8 +67,6 @@ public class CLangCodeGenerator implements Visitor<String>{
 	private boolean isWrite;
 	private CustomStack stack;
 	private SymbolTable currentST;
-	
-	private DefTuple def = null;
 
 	public CLangCodeGenerator() {
 		isWrite = false;
@@ -100,17 +98,24 @@ public class CLangCodeGenerator implements Visitor<String>{
 		else {
 			String id;
 			ParTuple pt;
+			boolean b = false;
 			for(int i = 0; i < size; i++) {
 				Expr e = list.get(i);
 				
 				if(e instanceof IdConst) {
 					id = ((IdConst)e).getId().getValue();
 					pt = (ParTuple) lookup(id);
-					if(pt.getParType() != ParType.IN)
-						sb.append("&");
+					if(pt.getParType() != ParType.IN) {
+						sb.append("&(");
+						b = true;
+					}
 				}
 				
 				sb.append(e.accept(this));
+				if(b) {
+					sb.append(")");
+					b = false;
+				}
 				if(i != size-1)
 					sb.append(",");
 			}
@@ -171,41 +176,19 @@ public class CLangCodeGenerator implements Visitor<String>{
 
 	@Override
 	public String visit(DefDeclPar n) throws RuntimeException {
-		SymbolTable tab = n.getSymTableRef();
-		stack.push(tab);
+		stack.push(n.getSymTableRef());
 		currentST = stack.top();
-		ArrayList<String> ids = new ArrayList<>();
-		ArrayList<ParTuple> pars = new ArrayList<>();
-		for(Entry<String, Tuple> entry : tab.entrySet()) {
-			if(entry.getValue() instanceof ParTuple && ((ParTuple)entry.getValue()).getParType() != ParType.IN) {
-				pars.add((ParTuple)entry.getValue());
-				ids.add(entry.getKey());
-			}
-		}
-		
-		int size = pars.size();
 				
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append("void ");
-		String id = n.getId().accept(this).toString(); 
-		sb.append(id);
+		sb.append(n.getId().accept(this).toString());
 		sb.append("(");
 		sb.append(n.getPd().accept(this).toString());
 		sb.append("){\n");
-		String tmp = n.getB().accept(this).toString();
-		String uno = null;
-		String due = tmp;
-		
-		
-		for(int i = 0; i < size; i++) {
-			uno = due.replaceAll(ids.get(i), String.format("(*%s)", ids.get(i)));
-			due = uno;
-		}
-		
-		sb.append(uno);
+		sb.append(n.getB().accept(this).toString());
 		sb.append("}\n");
 		return sb.toString();
+		
 	}
 
 	@Override
@@ -436,7 +419,12 @@ public class CLangCodeGenerator implements Visitor<String>{
 
 	@Override
 	public String visit(IdConst n) throws RuntimeException {
-		return n.getId().accept(this).toString();
+		String id = n.getId().accept(this).toString();
+		Tuple t = lookup(id);
+		if(t instanceof ParTuple && ((ParTuple)t).getParType() != ParType.IN)
+			return String.format("*%s", id);
+		else
+			return id;
 	}
 
 	@Override
@@ -474,16 +462,10 @@ public class CLangCodeGenerator implements Visitor<String>{
 		StringBuilder sb = new StringBuilder();
 		String id = n.getId().accept(this).toString();
 		sb.append(id);
-		Tuple t = lookup(id);
-		if(t instanceof DefTuple) {
-			def = (DefTuple) t;
-			sb.append("(");
-			sb.append(n.getA().accept(this));
-			sb.append(");\n");
-		}
-		
+		sb.append("(");
+		sb.append(n.getA().accept(this));
+		sb.append(");\n");
 		return sb.toString();
-		
 	}
 
 	@Override
@@ -594,7 +576,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 
 	@Override
 	public String visit(ParTypeLeaf n) throws RuntimeException {
-		return (!n.getValue().equalsIgnoreCase("IN"))?"*":"";	
+		return "";	
 	}
 
 	private String escapeC(Type t) {
