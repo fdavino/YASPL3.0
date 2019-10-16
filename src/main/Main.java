@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import lexer.*;
 import parser.*;
 import syntaxTree.Programma;
+import visitor.CLangCodeGenerator;
 import visitor.SymTableVisitor;
 import visitor.TreePrinterVisitor;
 import visitor.TypeCheckerVisitor;
@@ -24,13 +25,18 @@ public class Main {
 			Programma p = (Programma) parser.parse().value;
 		    SymTableVisitor stfv = new SymTableVisitor("src/main/scope.log");
 		    stfv.visit(p);
-		  /*  TypeCheckerVisitor tckv = new TypeCheckerVisitor();
+		    TypeCheckerVisitor tckv = new TypeCheckerVisitor();
 		    tckv.visit(p);
+		    CLangCodeGenerator clcg = new CLangCodeGenerator();
+		    FileWriter fw = new FileWriter("src/main/intermedio.c");
+		    fw.write(clcg.visit(p));
+		    fw.flush();
+		    fw.close();
 		    TreePrinterVisitor tpv = new TreePrinterVisitor();
 			String r = tpv.visit(p);
-			FileWriter fw = new FileWriter("src/main/ast1.xml");
+			fw = new FileWriter("src/main/ast1.xml");
 		    fw.write(r);
-		    fw.close(); */
+		    fw.close();
 		   
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

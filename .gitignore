@@ -28,4 +28,7 @@ hs_err_pid*
 \.classpath
 
 \.project
-main/scope.log main/scope.log.1 main/scope.log.1.lck
+main/*.yaspl
+main/*.log 
+main/*.log.1
+main/*.log.1.lck
