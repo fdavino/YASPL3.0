@@ -23,7 +23,6 @@ public class VarTuple extends Tuple{
 	@Override
 	public String toString() {
 		return "VarTuple [" + (type != null ? "type=" + type : "") + "]";
-	}
-	
+	}	
 	
 }

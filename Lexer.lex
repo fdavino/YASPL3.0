@@ -86,8 +86,8 @@ comment = {traditionalComment} | {endOfLineComment}
 "/"				{ return symbol(LexerSym.DIV); }
 {intConst}		{ return symbol(LexerSym.INT_CONST, yytext()); }
 {doubleConst}	{ return symbol(LexerSym.DOUBLE_CONST, yytext()); }
-{stringConst}	{ return symbol(LexerSym.STRING_CONST, yytext().substring(1,yytext().length()-1)); }
-{charConst}		{ return symbol(LexerSym.CHAR_CONST, ""+yytext().charAt(1)); }
+{stringConst}	{ return symbol(LexerSym.STRING_CONST, yytext()); }
+{charConst}		{ return symbol(LexerSym.CHAR_CONST, yytext()); }
 "true"			{ return symbol(LexerSym.TRUE); }
 "false"			{ return symbol(LexerSym.FALSE); }
 "="				{ return symbol(LexerSym.ASSIGN); }

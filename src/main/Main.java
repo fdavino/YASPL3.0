@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			FileInputStream fs = new FileInputStream(new File("src/main/calcolatrice.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/strcmp.yaspl"));
 			LexerLex lexer = new LexerLex(fs);
 			ParserCup parser = new ParserCup(lexer);
 			Programma p = (Programma) parser.parse().value;

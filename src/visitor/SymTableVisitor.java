@@ -110,15 +110,17 @@ public class SymTableVisitor implements Visitor<Object> {
 			checkAlreadyDeclared(s);
 			VarTuple t = new VarTuple(Kind.VARDECL, this.getValueOfLeaf(n.getT()));
 			this.actualScope.put(s, t);
-		}
+		}	
 		return null;
 	}
 
 	@Override
 	public Object visit(VarDeclsInit n) {
 		ArrayList<String> idList = new ArrayList<>();
+		String id;
 		for (VarDeclsInitWrapper vdiw : n.getChildList()) {
-			idList.add(0, (String) vdiw.accept(this));
+			id = (String) vdiw.accept(this);
+			idList.add(0, id);
 		}
 		return idList;
 	}
@@ -566,6 +568,7 @@ public class SymTableVisitor implements Visitor<Object> {
 			}
 		}
 	}
+
 
 	private boolean checkExpr(Expr e) {
 		boolean flag = true;
