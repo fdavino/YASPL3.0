@@ -50,15 +50,19 @@ intConst 	= {digit}+
 doubleConst = {intConst}("."{intConst})?
 any			= .
 stringConst = \"~\"
-singleLineComment = "//"~"\n"
-multilineComment = "/*"~"*/"
-comment  = 	{singleLineComment} | {multilineComment}
 charConst	= '({any})?'
 
 
-whitespace = [ \r\n\t\f]
+lineTerminator = \r|\n|\r\n
+inputCharacter = [^\r\n]
+whiteSpace     = {lineTerminator} | [ \t\f]
+
+traditionalComment   = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+endOfLineComment     = "//" {inputCharacter}* {lineTerminator}?
+comment = {traditionalComment} | {endOfLineComment}
+
 %%
-{whitespace} 	{ /* ignore */ }
+{whiteSpace} 	{ /* ignore */ }
 {comment}		{ /* ignore */ }
 "head"			{ return symbol(LexerSym.HEAD); }
 "start"			{ return symbol(LexerSym.START); }

@@ -199,8 +199,9 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(VarInitValue n) {
-		if (checkExpr(n.getE()))
-			n.getE().accept(this);
+		Expr e = n.getE();
+			if (checkExpr(e))
+				e.accept(this);
 		return null;
 	}
 

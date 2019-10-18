@@ -2,7 +2,6 @@ package visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import semantic.DefTuple;
 import semantic.ParTuple;
@@ -67,10 +66,13 @@ public class CLangCodeGenerator implements Visitor<String>{
 	private boolean isWrite;
 	private CustomStack stack;
 	private SymbolTable currentST;
+	
+	private DefTuple def;
 
 	public CLangCodeGenerator() {
 		isWrite = false;
 		stack = new CustomStack();
+		def = null;
 	}
 
 	@Override
@@ -96,32 +98,19 @@ public class CLangCodeGenerator implements Visitor<String>{
 			sb.append(value.toString());
 		}
 		else {
-			String id;
-			ParTuple pt;
-			boolean b = false;
-			for(int i = 0; i < size; i++) {
-				Expr e = list.get(i);
-				
-				if(e instanceof IdConst) {
-					id = ((IdConst)e).getId().getValue();
-					pt = (ParTuple) lookup(id);
-					if(pt.getParType() != ParType.IN) {
-						sb.append("&(");
-						b = true;
-					}
-				}
-				
-				sb.append(e.accept(this));
-				if(b) {
+			List<ParTuple> pars = def.getParam();
+			boolean flag = false;
+			for(int i = 0; i < size; i++) { //size di expr è perforza ugule alla size di pars (per controlli precedenti)
+				flag = pars.get(i).getParType() != ParType.IN;
+				if(flag)
+					sb.append("&(");
+				sb.append(needQuotes((Expr)list.get(i)));
+				if(flag)
 					sb.append(")");
-					b = false;
-				}
 				if(i != size-1)
 					sb.append(",");
-			}
+			}		
 		}
-
-
 		return sb.toString();
 	}
 
@@ -213,8 +202,8 @@ public class CLangCodeGenerator implements Visitor<String>{
 		sb.append("#include<stdio.h>\n");
 		sb.append("#include<stdlib.h>\n");
 		sb.append("#include<string.h>\n");
-		sb.append("#define 1 true\n");
-		sb.append("#define 0 false\n");
+		sb.append("#define true 1\n");
+		sb.append("#define false 0\n");
 		sb.append("#define PB(x)((x)?\"true\":\"false\")\n");
 		sb.append("typedef int bool;\n");
 		sb.append("typedef char* string;\n\n");
@@ -272,7 +261,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	public String visit(VarInitValue n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" = ");
-		sb.append(n.getE().accept(this));
+		sb.append(needQuotes(n.getE()));
 		return sb.toString();
 	}
 
@@ -353,8 +342,9 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(NotOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("!");
+		sb.append("!(");
 		sb.append(n.getE().accept(this));
+		sb.append(")");
 		return sb.toString();
 	}
 
@@ -452,7 +442,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 		StringBuilder sb = new StringBuilder();
 		sb.append(n.getId().accept(this));
 		sb.append("=");
-		sb.append(n.getE().accept(this));
+		sb.append(needQuotes(n.getE()));
 		sb.append(";\n");
 		return sb.toString();
 	}
@@ -461,10 +451,13 @@ public class CLangCodeGenerator implements Visitor<String>{
 	public String visit(CallOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		String id = n.getId().accept(this).toString();
+		this.def = (DefTuple)lookup(id);
 		sb.append(id);
 		sb.append("(");
-		sb.append(n.getA().accept(this));
+		if(n.getA() != null)
+			sb.append(n.getA().accept(this));
 		sb.append(");\n");
+		this.def = null;
 		return sb.toString();
 	}
 
@@ -600,10 +593,21 @@ public class CLangCodeGenerator implements Visitor<String>{
 			if(e instanceof CharConst)
 				return (sb.append(String.format("\'%s\'", e.accept(this)))).toString();
 			else
-				if(e instanceof IdConst && ((IdConst)e).getType() == Type.BOOL)
+				if((e instanceof IdConst && ((IdConst)e).getType() == Type.BOOL)|| isLogicOp(e))
 					return (sb.append(String.format("PB(%s)", e.accept(this)))).toString();
 				else
 					return e.accept(this).toString();
+	}
+	
+	private boolean isLogicOp(Expr e) {
+		return (e instanceof AndOp)||
+				(e instanceof NotOp)||
+				(e instanceof OrOp)||
+				(e instanceof EqOp)||
+				(e instanceof GeOp)||
+				(e instanceof GtOp)||
+				(e instanceof LeOp)||
+				(e instanceof LtOp);
 	}
 	
 	private Tuple lookup(String id){

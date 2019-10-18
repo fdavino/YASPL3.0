@@ -170,6 +170,7 @@ Stat		::= Vars:vars READ SEMI											{: RESULT = new ReadOp("ReadOp", vars); 
 			;
 			
 Args		::=	Expr:e COMMA Args:arg		{: RESULT = arg.addChild(e); :}
+			|	ID:id COMMA Args:arg		{: RESULT = arg.addChild(new IdConst("Id", new Leaf("Value", id)));:}
 			|	Expr:e						{: RESULT = new Args("ArgsOp").addChild(e); :}				
 			;
 			

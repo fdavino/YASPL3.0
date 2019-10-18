@@ -19,7 +19,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			FileInputStream fs = new FileInputStream(new File("src/main/semanticTest.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/calcolatrice.yaspl"));
 			LexerLex lexer = new LexerLex(fs);
 			ParserCup parser = new ParserCup(lexer);
 			Programma p = (Programma) parser.parse().value;
@@ -40,7 +40,6 @@ public class Main {
 		   
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Add argoment");
 			e.printStackTrace();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

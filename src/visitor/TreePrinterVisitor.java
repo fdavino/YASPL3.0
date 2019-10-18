@@ -1,5 +1,7 @@
 package visitor;
 
+import java.util.ArrayList;
+
 import syntaxTree.Args;
 import syntaxTree.Body;
 import syntaxTree.CompStat;
