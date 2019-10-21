@@ -394,9 +394,8 @@ public class SymTableVisitor implements Visitor<Object> {
 		Tuple t = checkNotDeclared(id);
 
 		checkInOutProp(id, t, ParType.IN);
-
-		if (checkExpr(n.getE()))
-			n.getE().accept(this);
+		n.getA().accept(this);
+		
 		return null;
 	}
 

@@ -64,14 +64,14 @@ import syntaxTree.varDeclInitOp.VarNotInit;
 import syntaxTree.wrapper.DeclsWrapper;
 import syntaxTree.wrapper.VarDeclsInitWrapper;
 
-public class CLangCodeGenerator implements Visitor<String>{
+public class CLangCodeGenerator implements Visitor<String> {
 
 	private boolean isWrite;
 	private CustomStack stack;
 	private SymbolTable currentST;
 
 	private DefTuple def; // sign of the function in exam
-	private TreeMap<String,String> stringInitValue; //list od init value for string variable
+	private TreeMap<String, String> stringInitValue; // list od init value for string variable
 
 	public CLangCodeGenerator() {
 		isWrite = false;
@@ -86,14 +86,14 @@ public class CLangCodeGenerator implements Visitor<String>{
 
 		List<Expr> list = n.getChildList();
 		int size = list.size();
-		if(isWrite) {
+		if (isWrite) {
 			StringBuilder format = new StringBuilder();
 			StringBuilder value = new StringBuilder();
 
-			for(int i = 0; i < size; i++) {
+			for (int i = 0; i < size; i++) {
 				Expr e = list.get(i);
 				value.append(needQuotes(e));
-				if(i != size-1)
+				if (i != size - 1)
 					value.append(",");
 				format.append(escapeC(e.getType()));
 			}
@@ -101,20 +101,20 @@ public class CLangCodeGenerator implements Visitor<String>{
 			sb.append(format.toString());
 			sb.append("#");
 			sb.append(value.toString());
-		}
-		else {
+		} else {
 			List<ParTuple> pars = def.getParam();
 			boolean flag = false;
-			for(int i = 0; i < size; i++) { //size di expr è perforza ugule alla size di pars (per controlli precedenti)
+			for (int i = 0; i < size; i++) { // size di expr è perforza ugule alla size di pars (per controlli
+												// precedenti)
 				flag = pars.get(i).getParType() != ParType.IN;
-				if(flag)
+				if (flag)
 					sb.append("&(");
 				sb.append(list.get(i).accept(this));
-				if(flag)
+				if (flag)
 					sb.append(")");
-				if(i != size-1)
+				if (i != size - 1)
 					sb.append(",");
-			}		
+			}
 		}
 		return sb.toString();
 	}
@@ -141,13 +141,13 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(Decls n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		for(DeclsWrapper dw : n.getChildList()) {
-			if(dw instanceof VarDecl)
+		for (DeclsWrapper dw : n.getChildList()) {
+			if (dw instanceof VarDecl)
 				sb.append(dw.accept(this));
 		}
 		sb.append("\n");
-		for(DeclsWrapper dw : n.getChildList()) {
-			if(!(dw instanceof VarDecl))
+		for (DeclsWrapper dw : n.getChildList()) {
+			if (!(dw instanceof VarDecl))
 				sb.append(dw.accept(this));
 		}
 		sb.append("\n");
@@ -190,9 +190,9 @@ public class CLangCodeGenerator implements Visitor<String>{
 		StringBuilder sb = new StringBuilder();
 		List<ParDeclSon> list = n.getChildList();
 		int size = list.size();
-		for(int i = 0; i < size ; i++) {
+		for (int i = 0; i < size; i++) {
 			sb.append(list.get(i).accept(this));
-			if(i != size - 1)
+			if (i != size - 1)
 				sb.append(",");
 		}
 		return sb.toString();
@@ -226,7 +226,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(Statements n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		for(Stat s : n.getChildList()) {
+		for (Stat s : n.getChildList()) {
 			sb.append(s.accept(this));
 		}
 		return sb.toString();
@@ -245,7 +245,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(VarDecls n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		for(VarDecl vd : n.getChildList()) {
+		for (VarDecl vd : n.getChildList()) {
 			sb.append(vd.accept(this));
 		}
 		return sb.toString();
@@ -256,9 +256,9 @@ public class CLangCodeGenerator implements Visitor<String>{
 		StringBuilder sb = new StringBuilder();
 		List<VarDeclsInitWrapper> vdiw = n.getChildList();
 		int size = vdiw.size();
-		for(int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			sb.append(vdiw.get(i).accept(this));
-			if(i != size - 1)
+			if (i != size - 1)
 				sb.append(",");
 		}
 		return sb.toString();
@@ -277,10 +277,10 @@ public class CLangCodeGenerator implements Visitor<String>{
 		StringBuilder format = new StringBuilder();
 		StringBuilder value = new StringBuilder();
 		StringBuilder res = new StringBuilder();
-		for(IdConst id : n.getChildList()) {
-			if(id.getType() != null) {
+		for (IdConst id : n.getChildList()) {
+			if (id.getType() != null) {
 				format.append(escapeC(id.getType()));
-				if(!id.getType().equals(Type.STRING))
+				if (!id.getType().equals(Type.STRING))
 					value.append("&");
 				value.append(id.accept(this));
 				value.append(",");
@@ -368,7 +368,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(EqOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		if(n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
+		if (n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
 			sb.append(createStringCompare(n.getE1(), n.getE2(), "=="));
 		else {
 			sb.append(n.getE1().accept(this));
@@ -381,7 +381,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(GeOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		if(n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
+		if (n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
 			sb.append(createStringCompare(n.getE1(), n.getE2(), ">="));
 		else {
 			sb.append(n.getE1().accept(this));
@@ -394,7 +394,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(GtOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		if(n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
+		if (n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
 			sb.append(createStringCompare(n.getE1(), n.getE2(), ">"));
 		else {
 			sb.append(n.getE1().accept(this));
@@ -407,7 +407,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(LeOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		if(n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
+		if (n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
 			sb.append(createStringCompare(n.getE1(), n.getE2(), "<="));
 		else {
 			sb.append(n.getE1().accept(this));
@@ -420,7 +420,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(LtOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		if(n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
+		if (n.getE1().getType() == Type.STRING && n.getE2().getType() == Type.STRING)
 			sb.append(createStringCompare(n.getE1(), n.getE2(), "<"));
 		else {
 			sb.append(n.getE1().accept(this));
@@ -439,7 +439,7 @@ public class CLangCodeGenerator implements Visitor<String>{
 	public String visit(IdConst n) throws RuntimeException {
 		String id = n.getId().accept(this).toString();
 		Tuple t = lookup(id);
-		if(t instanceof ParTuple && ((ParTuple)t).getParType() != ParType.IN)
+		if (t instanceof ParTuple && ((ParTuple) t).getParType() != ParType.IN)
 			return String.format("*%s", id);
 		else
 			return id;
@@ -468,10 +468,28 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(AssignOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		sb.append(n.getId().accept(this));
-		sb.append("=");
-		sb.append(n.getE().accept(this));
-		sb.append(";\n");
+		List<Expr> list = n.getA().getChildList();
+		String id = n.getId().accept(this).toString();
+		if(list.size() == 1) {
+			Expr e = list.get(0);
+			if(e instanceof StringConst || (e instanceof IdConst && e.getType() == Type.STRING)) {
+				sb.append(String.format("strcpy(%s,%s);\n",id, e.accept(this)));
+			}
+			else {
+				sb.append(id);
+				sb.append("=");
+				sb.append(list.get(0).accept(this));
+				sb.append(";\n");
+			}
+		}else {
+			isWrite = true;
+			String[] temp = n.getA().accept(this).toString().split("#");
+			String format = temp[0];
+			String value = temp[1];
+			sb.append(String.format("sprintf(%s,\"%s\",%s);\n", id, format, value));
+			
+			isWrite = false;
+		}
 		return sb.toString();
 	}
 
@@ -479,10 +497,10 @@ public class CLangCodeGenerator implements Visitor<String>{
 	public String visit(CallOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
 		String id = n.getId().accept(this).toString();
-		this.def = (DefTuple)lookup(id);
+		this.def = (DefTuple) lookup(id);
 		sb.append(id);
 		sb.append("(");
-		if(n.getA() != null)
+		if (n.getA() != null)
 			sb.append(n.getA().accept(this));
 		sb.append(");\n");
 		this.def = null;
@@ -580,17 +598,17 @@ public class CLangCodeGenerator implements Visitor<String>{
 	@Override
 	public String visit(VarInit n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		String id = n.getId().accept(this).toString(); 
+		String id = n.getId().accept(this).toString();
 		sb.append(id);
 		String s = n.getViv().accept(this).toString();
-		if(n.getViv().getType() == Type.STRING)
+		if (n.getViv().getType() == Type.STRING)
 			stringInitValue.put(id, s);
 		sb.append(s);
 		return sb.toString();
 	}
 
 	@Override
-	public String visit(VarNotInit n) throws RuntimeException { 
+	public String visit(VarNotInit n) throws RuntimeException {
 		return n.getId().accept(this).toString();
 	}
 
@@ -598,92 +616,89 @@ public class CLangCodeGenerator implements Visitor<String>{
 	public String visit(TypeLeaf n) throws RuntimeException {
 		return String.format("%s%s", n.getValue().toLowerCase(), " ");
 	}
-	
+
 	@Override
 	public String visit(ParTypeLeaf n) throws RuntimeException {
-		return "";	
+		return "";
 	}
 
 	private String escapeC(Type t) {
-		switch(t.toString()) {
-		case "INT": return "%d";
-		case "DOUBLE": return "%lf";
-		case "CHAR": return "%c";
-		case "STRING": return "%s";
-		case "BOOL": return "%s";
-		case "VOID": return "";
+		switch (t.toString()) {
+		case "INT":
+			return "%d";
+		case "DOUBLE":
+			return "%lf";
+		case "CHAR":
+			return "%c";
+		case "STRING":
+			return "%s";
+		case "BOOL":
+			return "%s";
+		case "VOID":
+			return "";
 		}
 		return null;
 	}
 
 	private String needQuotes(Expr e) {
 		StringBuilder sb = new StringBuilder();
-		if(e instanceof BoolConst) {
+		if (e instanceof BoolConst) {
 			sb.append(String.format("\"%s\"", e.accept(this)));
 			return sb.toString();
-		}
+		} else if ((e instanceof IdConst && ((IdConst) e).getType() == Type.BOOL) || isLogicOp(e))
+			return (sb.append(String.format("PB(%s)", e.accept(this)))).toString();
 		else
-			if((e instanceof IdConst && ((IdConst)e).getType() == Type.BOOL)|| isLogicOp(e))
-				return (sb.append(String.format("PB(%s)", e.accept(this)))).toString();
-			else
-				return e.accept(this).toString();
+			return e.accept(this).toString();
 	}
 
 	private boolean isLogicOp(Expr e) {
-		return (e instanceof AndOp)||
-				(e instanceof NotOp)||
-				(e instanceof OrOp)||
-				(e instanceof EqOp)||
-				(e instanceof GeOp)||
-				(e instanceof GtOp)||
-				(e instanceof LeOp)||
-				(e instanceof LtOp);
+		return (e instanceof AndOp) || (e instanceof NotOp) || (e instanceof OrOp) || (e instanceof EqOp)
+				|| (e instanceof GeOp) || (e instanceof GtOp) || (e instanceof LeOp) || (e instanceof LtOp);
 	}
-	
+
 	private String allocateString() {
 		StringBuilder sb = new StringBuilder("");
 		String valore;
-		for(Entry<String, Tuple> e : currentST.entrySet()) {
-			if(e.getValue() instanceof VarTuple && ((VarTuple)e.getValue()).getType() == Type.STRING) {
-				sb.append(String.format("%s = malloc(256*sizeof(char));\n",e.getKey()));
-				if(stringInitValue.containsKey(e.getKey())) {
+		for (Entry<String, Tuple> e : currentST.entrySet()) {
+			if (e.getValue() instanceof VarTuple && ((VarTuple) e.getValue()).getType() == Type.STRING) {
+				sb.append(String.format("%s = malloc(256*sizeof(char));\n", e.getKey()));
+				if (stringInitValue.containsKey(e.getKey())) {
 					valore = stringInitValue.get(e.getKey());
 					valore = valore.replaceFirst(" = ", "");
-					sb.append(String.format("strcpy(%s, %s);\n",e.getKey(), valore));
+					sb.append(String.format("strcpy(%s, %s);\n", e.getKey(), valore));
 					stringInitValue.remove(e.getKey());
 				}
 			}
 		}
 		return sb.toString();
 	}
-	
+
 	private String freeString() {
 		StringBuilder sb = new StringBuilder("");
-		for(Entry<String, Tuple> e : currentST.entrySet()) {
-			if(e.getValue() instanceof VarTuple && ((VarTuple)e.getValue()).getType() == Type.STRING)
+		for (Entry<String, Tuple> e : currentST.entrySet()) {
+			if (e.getValue() instanceof VarTuple && ((VarTuple) e.getValue()).getType() == Type.STRING)
 				sb.append(String.format("free(%s);\n", e.getKey()));
 		}
 		return sb.toString();
 	}
-	
 
 	private String createStringCompare(Expr e1, Expr e2, String op) {
 		return String.format("((strcmp(%s,%s))%s0)?1:0", e1.accept(this), e2.accept(this), op);
 	}
 
-	private Tuple lookup(String id){
-		ArrayList<SymbolTable> temp = (ArrayList<SymbolTable>) stack.getStack(); 
+	private Tuple lookup(String id) {
+		ArrayList<SymbolTable> temp = (ArrayList<SymbolTable>) stack.getStack();
 		int index = temp.indexOf(currentST);
 		boolean find = false;
 		SymbolTable sb = temp.get(index);
 
-		while(!find && index >= 0) {
+		while (!find && index >= 0) {
 			sb = temp.get(index);
 			find = sb.containsKey(id);
 			index--;
 		}
 
-		if(find)
+		if (find)
 			return sb.get(id);
 		else
 			return null;

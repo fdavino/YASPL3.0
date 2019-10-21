@@ -513,7 +513,13 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	@Override
 	public Object visit(AssignOp n) throws RuntimeException {
 		Type t1 = (Type) n.getId().accept(this);
-		Type t2 = (Type) n.getE().accept(this);
+		ArrayList<Type> argsType = (ArrayList<Type>) n.getA().accept(this);
+		Type t2;
+		if(argsType.size() == 1)
+			t2 = argsType.get(0);
+		else
+			t2 = Type.STRING;
+		
 		if(assignOpCompTable[gIFT(t1)][gIFT(t2)]!=null)
 			n.setType(Type.VOID);
 		else

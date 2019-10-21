@@ -376,7 +376,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 	public String visit(AssignOp n) {
 		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getId().accept(this);
-		toReturn += n.getE().accept(this);
+		toReturn += n.getA().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}
