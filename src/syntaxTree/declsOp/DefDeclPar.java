@@ -1,5 +1,6 @@
 package syntaxTree.declsOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Body;
 import syntaxTree.ParDecls;
 import syntaxTree.comp.Leaf;
@@ -16,8 +17,8 @@ public class DefDeclPar extends DeclsWrapper implements Visitable {
 	private ParDecls pd;
 	private Body b;
 	
-	public DefDeclPar(String op, IdConst id, ParDecls pd, Body b) {
-		super(op, id, pd, b);
+	public DefDeclPar(Location left, Location right, String op, IdConst id, ParDecls pd, Body b) {
+		super(left, right, op, id, pd, b);
 		this.op = op;
 		this.id = id;
 		this.pd = pd;

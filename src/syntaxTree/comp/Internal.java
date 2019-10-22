@@ -2,14 +2,15 @@ package syntaxTree.comp;
 
 import java.util.ArrayList;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Node;
 
 public class Internal extends Node {
 	
 	private ArrayList<Node> childList;
 	
-	public Internal(String op, Node...sons) {
-		super(op);
+	public Internal(Location left, Location right, String op, Node...sons) {
+		super(left, right, op);
 		if(childList == null)
 			this.childList = new ArrayList<>();
 		for(Node son : sons) {
@@ -17,10 +18,10 @@ public class Internal extends Node {
 		}
 	}
 	
-	public Internal(String op, String value) {
-		super(op);
+	public Internal(Location left, Location right, String op, String value) {
+		super(left, right, op);
 		if(childList == null)
 			this.childList = new ArrayList<>();
-		childList.add(new Leaf(op, value));
+		childList.add(new Leaf(left, right, op, value));
 	}
 }

@@ -1,5 +1,6 @@
 package syntaxTree.varDeclInitOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.VarInitValue;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
@@ -15,8 +16,8 @@ public class VarInit extends VarDeclsInitWrapper implements Visitable {
 	private VarInitValue viv;
 
 
-	public VarInit(String op, IdConst id, VarInitValue viv) {
-		super(op,id,viv);
+	public VarInit(Location left, Location right, String op, IdConst id, VarInitValue viv) {
+		super(left, right, op,id,viv);
 		this.op = op;
 		this.id = id;
 		this.viv = viv;

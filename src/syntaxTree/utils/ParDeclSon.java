@@ -1,5 +1,6 @@
 package syntaxTree.utils;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import syntaxTree.leaf.IdConst;
@@ -15,8 +16,8 @@ public class ParDeclSon extends Internal implements Visitable {
 	private TypeLeaf type;
 	private IdConst id;
 
-	public ParDeclSon(String op, ParTypeLeaf parType, TypeLeaf type, IdConst id) {
-		super(op, parType, type, id);
+	public ParDeclSon(Location left, Location right, String op, ParTypeLeaf parType, TypeLeaf type, IdConst id) {
+		super(left, right, op, parType, type, id);
 		this.op = op;
 		this.parType = parType;
 		this.type = type;

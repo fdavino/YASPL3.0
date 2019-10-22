@@ -1,5 +1,6 @@
 package syntaxTree.leaf;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import syntaxTree.comp.Leaf;
@@ -11,8 +12,8 @@ public class IntConst extends Expr implements Visitable {
 	private String op;
 	private Leaf id;
 
-	public IntConst(String op, Leaf id) {
-		super(op, id);
+	public IntConst(Location left, Location right, String op, Leaf id) {
+		super(left, right, op, id);
 		this.op = op;
 		this.id = id;
 		// TODO Auto-generated constructor stub

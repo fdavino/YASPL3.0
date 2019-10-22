@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.CompStat;
 import syntaxTree.Expr;
 import syntaxTree.Stat;
@@ -12,8 +13,8 @@ public class IfThenOp extends Stat implements Visitable {
 	private Expr e;
 	private CompStat cs;
 	
-	public IfThenOp(String op, Expr e, CompStat cs) {
-		super(op, e, cs);
+	public IfThenOp(Location left, Location right, String op, Expr e, CompStat cs) {
+		super(left, right, op, e, cs);
 		this.op = op;
 		this.e = e;
 		this.cs = cs;

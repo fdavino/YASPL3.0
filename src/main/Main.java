@@ -12,6 +12,7 @@ import visitor.CLangCodeGenerator;
 import visitor.SymTableVisitor;
 import visitor.TreePrinterVisitor;
 import visitor.TypeCheckerVisitor;
+import java_cup.runtime.ComplexSymbolFactory;
 import java_cup.runtime.Symbol;
 
 public class Main {
@@ -19,9 +20,10 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
+			ComplexSymbolFactory factory = new ComplexSymbolFactory();
 			FileInputStream fs = new FileInputStream(new File("src/main/example/palindormo.yaspl"));
-			LexerLex lexer = new LexerLex(fs);
-			ParserCup parser = new ParserCup(lexer);
+			LexerLex lexer = new LexerLex(factory, fs);
+			ParserCup parser = new ParserCup(lexer, factory);
 			Programma p = (Programma) parser.parse().value;
 		    SymTableVisitor stfv = new SymTableVisitor("src/main/scope.log");
 		    stfv.visit(p);

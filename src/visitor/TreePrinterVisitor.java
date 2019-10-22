@@ -45,6 +45,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
+import syntaxTree.statOp.IncOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -535,6 +536,14 @@ public class TreePrinterVisitor implements Visitor<String> {
 		String op1 = (n.getSymTableRef()!=null)?String.format("symTab=\"%d\" ", n.getSymTableRef().hashCode()):"";
 		String op2 = (n.getType()!=null)?String.format("type=\"%s\"", n.getType()):"";
 		return op1 + op2;
+	}
+
+	@Override
+	public String visit(IncOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" prefix=\""+n.isPrefix()+" "+ addAttr(n)+">\n";
+		toReturn += "" + n.getId() +"\n";
+		toReturn += "</"+ n.getOp()+">\n";
+		return toReturn;
 	}
 
 

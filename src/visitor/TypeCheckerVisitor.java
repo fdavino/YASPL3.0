@@ -57,6 +57,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
+import syntaxTree.statOp.IncOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -273,7 +274,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			n.setType(tt);
 			return tt;
 		}else {
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 		}
 	}
 
@@ -309,7 +310,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -322,7 +323,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -335,7 +336,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -348,7 +349,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -360,7 +361,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1);
+			throw new TypeMismatchException(n.getOp(), t1, n);
 	}
 
 	@Override
@@ -373,7 +374,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -385,7 +386,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1);
+			throw new TypeMismatchException(n.getOp(), t1, n);
 	}
 
 	@Override
@@ -398,7 +399,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -411,7 +412,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -424,7 +425,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -437,7 +438,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -450,7 +451,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -463,7 +464,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return tt;
 		}
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 	}
 
 	@Override
@@ -523,7 +524,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		if(assignOpCompTable[gIFT(t1)][gIFT(t2)]!=null)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), t1, t2);
+			throw new TypeMismatchException(n.getOp(), t1, t2, n);
 		return n.getType();
 	}
 
@@ -544,7 +545,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		ArrayList<ParTuple> par = def.getParam();
 		
 		if(given.size() != par.size())
-			throw new WrongArgumentNumberException(id, par.size(), given.size());
+			throw new WrongArgumentNumberException(id, par.size(), given.size(), n);
 		
 		
 		int size = par.size();
@@ -552,10 +553,10 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			if(((par.get(i).getParType() == ParType.INOUT || 
 					par.get(i).getParType() == ParType.OUT)) &&
 					!(givenExpr.get(i) instanceof IdConst))
-				throw new SemanticException("parametri OUT e INOUT devono essere variabili");
+				throw new SemanticException("parametri OUT e INOUT devono essere variabili", n);
 			
 			if(assignOpCompTable[gIFT(par.get(i).getType())][gIFT(given.get(i))] == null)
-				throw new TypeMismatchException(id, par.get(i).getType(), given.get(i));
+				throw new TypeMismatchException(id, par.get(i).getType(), given.get(i), n);
 		}
 
 		return null;
@@ -569,7 +570,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), Type.BOOL, expr);
+			throw new TypeMismatchException(n.getOp(), Type.BOOL, expr, n);
 		return n.getType();
 	}
 
@@ -580,7 +581,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), Type.BOOL, expr);
+			throw new TypeMismatchException(n.getOp(), Type.BOOL, expr, n);
 		return n.getType();
 	}
 
@@ -600,7 +601,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
-			throw new TypeMismatchException(n.getOp(), Type.BOOL, n.getE().getType());
+			throw new TypeMismatchException(n.getOp(), Type.BOOL, n.getE().getType(), n);
 		return n.getType();
 	}
 
@@ -625,6 +626,18 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	@Override
 	public Object visit(ParTypeLeaf n) throws RuntimeException {
 		return null;
+	}
+
+	@Override
+	public Object visit(IncOp n) throws RuntimeException {
+		n.getId().accept(this);
+		if(!((n.getId().getType() == Type.INT) || (n.getId().getType() == Type.DOUBLE)))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		else {
+			n.setType(n.getId().getType());
+			return null;
+		}
+			
 	}
 
 

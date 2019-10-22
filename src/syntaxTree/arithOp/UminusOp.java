@@ -1,5 +1,6 @@
 package syntaxTree.arithOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import visitor.Visitable;
@@ -10,8 +11,8 @@ public class UminusOp extends Expr implements Visitable {
 	private String op;
 	private Expr e;
 	
-	public UminusOp(String op, Expr e) {
-		super(op, e);
+	public UminusOp(Location left, Location right, String op, Expr e) {
+		super(left, right, op, e);
 		this.e = e;
 		this.op = op;
 	}

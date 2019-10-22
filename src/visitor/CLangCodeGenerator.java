@@ -54,6 +54,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
+import syntaxTree.statOp.IncOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -702,6 +703,22 @@ public class CLangCodeGenerator implements Visitor<String> {
 			return sb.get(id);
 		else
 			return null;
+	}
+
+	@Override
+	public String visit(IncOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		
+		if(n.isPrefix()) { // sembra sbagliato ma per qualche motivo il risultato arriva invertito
+			sb.append(n.getId().accept(this));
+			sb.append("++"); 
+		}
+		else {
+			sb.append("++");
+			sb.append(n.getId().accept(this));
+		}
+		sb.append(";\n");
+		return sb.toString();
 	}
 
 }

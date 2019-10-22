@@ -1,5 +1,7 @@
 package syntaxTree.comp;
 
+import java_cup.runtime.ComplexSymbolFactory;
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import semantic.SymbolTable;
 import semantic.Tuple;
 
@@ -13,24 +15,35 @@ public class Node {
 	private SymbolTable.Type type;
 	private SymbolTable symTableRef;
 	
-	public Node(String op) {
-		this.op = op; 
+	private Location left;
+	private Location right;
+	
+	public Node(Location left, Location right, String op) {
+		this.op = op;
+		this.left = left;
+		this.right = right;
 	}
 	
-	public Node(String op, SymbolTable.Type t) {
+	public Node(Location left, Location right, String op, SymbolTable.Type t) {
 		this.op = op; 
 		this.type = t;
+		this.left = left;
+		this.right = right;
 	}
 	
-	public Node(String op, SymbolTable st) {
+	public Node(Location left, Location right, String op, SymbolTable st) {
 		this.op = op; 
 		this.symTableRef = st;
+		this.left = left;
+		this.right = right;
 	}
 	
-	public Node(String op, SymbolTable.Type t, SymbolTable st) {
+	public Node(Location left, Location right, String op, SymbolTable.Type t, SymbolTable st) {
 		this.op = op; 
 		this.type = t;
 		this.symTableRef = st;
+		this.left = left;
+		this.right = right;
 	}
 	
 	public String getOp() {
@@ -56,6 +69,24 @@ public class Node {
 	public void setSymTableRef(SymbolTable symTableRef) {
 		this.symTableRef = symTableRef;
 	}
+
+	public Location getLeft() {
+		return left;
+	}
+
+	public void setLeft(Location left) {
+		this.left = left;
+	}
+
+	public Location getRight() {
+		return right;
+	}
+
+	public void setRight(Location right) {
+		this.right = right;
+	}
+	
+	
 	
 	
 	

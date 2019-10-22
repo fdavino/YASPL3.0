@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Body;
 import syntaxTree.CompStat;
 import syntaxTree.Expr;
@@ -14,16 +15,16 @@ public class WhileOp extends Stat implements Visitable {
 	private CompStat cs;
 	private Body b;
 	
-	public WhileOp(String op, Expr e, CompStat cs) {
-		super(op, e, cs);
+	public WhileOp(Location left, Location right, String op, Expr e, CompStat cs) {
+		super(left, right, op, e, cs);
 		this.op = op;
 		this.e = e;
 		this.cs = cs;
 		this.b = null;
 	}
 	
-	public WhileOp(String op, Expr e, Body b) {
-		super(op, e, b);
+	public WhileOp(Location left, Location right, String op, Expr e, Body b) {
+		super(left, right, op, e, b);
 		this.op = op;
 		this.e = e;
 		this.b = null;

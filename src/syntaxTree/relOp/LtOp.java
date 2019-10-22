@@ -1,5 +1,6 @@
 package syntaxTree.relOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import semantic.SymbolTable.Type;
 import syntaxTree.Expr;
 import visitor.Visitable;
@@ -11,8 +12,8 @@ public class LtOp extends Expr implements Visitable {
 	private Expr e1;
 	private Expr e2;
 	
-	public LtOp(String op, Expr e1, Expr e2) {
-		super(op, e1, e2);
+	public LtOp(Location left, Location right, String op, Expr e1, Expr e2) {
+		super(left, right, op, e1, e2);
 		this.op = op;
 		this.e1 = e1;
 		this.e2 = e2;

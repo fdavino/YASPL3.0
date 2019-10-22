@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Node;
 import visitor.Visitable;
@@ -11,8 +12,8 @@ public class Programma extends Internal implements Visitable {
 	private Decls d;
 	private Statements s;
 	
-	public Programma(String op, Decls d, Statements s) {
-		super(op, d, s);
+	public Programma(Location left, Location right, String op, Decls d, Statements s) {
+		super(left, right, op, d, s);
 		this.op = op;
 		this.d = d;
 		this.s = s;

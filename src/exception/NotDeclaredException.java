@@ -1,12 +1,16 @@
 package exception;
 
+import syntaxTree.comp.Node;
+
 public class NotDeclaredException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
-	public NotDeclaredException(String id, String scopeName) {
-		System.err.println(String.format("%s non dichiarata nel %s scope",
+	public NotDeclaredException(String id, String scopeName, Node n) {
+		System.err.println(String.format("%s non dichiarata nel %s scope linea <%s> colonna <%s>",
 				  id,
-				  scopeName
+				  scopeName,
+				  n.getLeft().getLine(),
+				  n.getRight().getColumn()
 	));
 		System.exit(1);
 	}

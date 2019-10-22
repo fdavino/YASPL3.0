@@ -56,7 +56,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(Args n) {
 		for (Expr e : n.getChildList()) {
-			if (checkExpr(e))
+			if (checkExpr(e, e))
 				e.accept(this);
 		}
 		return null;
@@ -96,7 +96,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(ParDeclSon n) {
 		String id = (String) n.getId().accept(this);
-		checkAlreadyDeclared(id);
+		checkAlreadyDeclared(id, n);
 		ParType x = this.getValueOfParTypeLeaf((String) n.getParType().accept(this));
 		ParTuple t = new ParTuple(Kind.VARDECL, x, this.getValueOfLeaf(n.getTypeLeaf()));
 		this.actualScope.put(id, t);
@@ -107,7 +107,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(VarDecl n) {
 		ArrayList<String> idList = (ArrayList<String>) n.getVdi().accept(this);
 		for (String s : idList) {
-			checkAlreadyDeclared(s);
+			checkAlreadyDeclared(s, n);
 			VarTuple t = new VarTuple(Kind.VARDECL, this.getValueOfLeaf(n.getT()));
 			this.actualScope.put(s, t);
 		}	
@@ -135,7 +135,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(DefDeclNoPar n) {
 		DefTuple t = new DefTuple(Kind.DEFDECL);
 		String defName = (String) n.getId().accept(this);
-		this.checkAlreadyDeclared(defName);
+		this.checkAlreadyDeclared(defName, n);
 		this.actualScope.put(defName, t);
 		SymbolTable sc = new SymbolTable(defName);
 		this.stack.push(sc);
@@ -149,7 +149,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(DefDeclPar n) {
 		DefTuple t = new DefTuple(Kind.DEFDECL);
 		String defName = (String) n.getId().accept(this);
-		this.checkAlreadyDeclared(defName);
+		this.checkAlreadyDeclared(defName, n);
 		this.actualScope.put(defName, t);
 		SymbolTable sc = new SymbolTable(defName);
 		this.stack.push(sc);
@@ -202,7 +202,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(VarInitValue n) {
 		Expr e = n.getE();
-			if (checkExpr(e))
+			if (checkExpr(e, e))
 				e.accept(this);
 		return null;
 	}
@@ -215,13 +215,19 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 		return list;
 	}
+	
+	@Override
+	public Object visit(IncOp n) throws RuntimeException {
+		checkExpr(n.getId(), n);
+		return null;
+	}
 
 	@Override
 	public Object visit(AddOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -229,10 +235,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(DivOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -240,10 +246,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(MultOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -251,10 +257,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(SubOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -262,7 +268,7 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(UminusOp n) {
-		if (checkExpr(n.getE())) {
+		if (checkExpr(n.getE(), n)) {
 			n.getE().accept(this);
 		}
 		return null;
@@ -270,10 +276,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(AndOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -281,7 +287,7 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(NotOp n) {
-		if (checkExpr(n.getE())) {
+		if (checkExpr(n.getE(), n)) {
 			n.getE().accept(this);
 		}
 		return null;
@@ -289,10 +295,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(OrOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -300,10 +306,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(EqOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -311,10 +317,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(GeOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -322,10 +328,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(GtOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -333,10 +339,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(LeOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -344,10 +350,10 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(LtOp n) {
-		if (checkExpr(n.getE1())) {
+		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
-		if (checkExpr(n.getE2())) {
+		if (checkExpr(n.getE2(), n)) {
 			n.getE2().accept(this);
 		}
 		return null;
@@ -391,9 +397,9 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(AssignOp n) {
 		String id = (String) n.getId().accept(this);
-		Tuple t = checkNotDeclared(id);
+		Tuple t = checkNotDeclared(id, n);
 
-		checkInOutProp(id, t, ParType.IN);
+		checkInOutProp(id, t, ParType.IN, n);
 		n.getA().accept(this);
 		
 		return null;
@@ -402,9 +408,9 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(CallOp n) {
 		String id = (String) n.getId().accept(this);
-		lastCall = (DefTuple) checkNotDeclared(id);
+		lastCall = (DefTuple) checkNotDeclared(id, n);
 		if (n.getA() != null) {
-			checkCallOpInOutProp(id, lastCall, n.getA());
+			checkCallOpInOutProp(id, lastCall, n.getA(), n);
 			n.getA().accept(this);
 		}
 		lastCall = null;
@@ -413,7 +419,7 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(IfThenElseOp n) {
-		if (checkExpr(n.getE()))
+		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
 		n.getCs1().accept(this);
 		n.getCs2().accept(this);
@@ -422,7 +428,7 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(IfThenOp n) {
-		if (checkExpr(n.getE()))
+		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
 		n.getCs().accept(this);
 		return null;
@@ -433,8 +439,8 @@ public class SymTableVisitor implements Visitor<Object> {
 		ArrayList<String> list = (ArrayList<String>) n.getV().accept(this);
 		Tuple t = null;
 		for (String s : list) {
-			t = checkNotDeclared(s);
-			checkInOutProp(s, t, ParType.IN);
+			t = checkNotDeclared(s, n);
+			checkInOutProp(s, t, ParType.IN, n);
 		}
 		return null;
 	}
@@ -442,7 +448,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	// esempio aggiunta scope
 	public Object visit(WhileOp n) {
-		if (checkExpr(n.getE()))
+		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
 		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
 		this.actualScope = this.stack.top();
@@ -508,13 +514,13 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 	}
 
-	private void checkAlreadyDeclared(String id) throws AlreadyDeclaredException {
+	private void checkAlreadyDeclared(String id, Node n) throws AlreadyDeclaredException {
 		if (this.actualScope.containsKey(id)) {
-			throw new AlreadyDeclaredException(id, this.actualScope.getName());
+			throw new AlreadyDeclaredException(id, this.actualScope.getName(), n);
 		}
 	}
 
-	private Tuple checkNotDeclared(String id) throws NotDeclaredException {
+	private Tuple checkNotDeclared(String id, Node n) throws NotDeclaredException {
 
 		ArrayList<SymbolTable> temp = (ArrayList<SymbolTable>) stack.getStack();
 		int index = temp.indexOf(actualScope);
@@ -529,55 +535,57 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 
 		if (!find)
-			throw new NotDeclaredException(id, this.actualScope.getName());
+			throw new NotDeclaredException(id, this.actualScope.getName(), n);
 		else
 			return sb.get(id);
 	}
 
-	private void checkInOutProp(String id, Tuple t, ParType p) {
+	private void checkInOutProp(String id, Tuple t, ParType p, Node n) {
 		if (t instanceof ParTuple) {
 			if (((ParTuple) t).getParType() == p && p == ParType.IN)
-				throw new SemanticException(String.format("Scrittura non permessa sulla variabile di input %s", id));
+				throw new SemanticException(String.format("Scrittura non permessa sulla variabile di input %s", id), n);
 			if (((ParTuple) t).getParType() == p && p == ParType.OUT && lastCall == null)
-				throw new SemanticException(String.format("Lettura non permessa dalla variabile di output %s", id));
+				throw new SemanticException(String.format("Lettura non permessa dalla variabile di output %s", id), n);
 		}
 	}
 	
-	private void checkCallOpInOutProp(String id, DefTuple def, Args a) {
+	private void checkCallOpInOutProp(String id, DefTuple def, Args a, Node n) {
 		Tuple t = null;
 		int i = 0;
 		ArrayList<ParTuple> sign = def.getParam();
 		ArrayList<Expr> exprs = a.getChildList();
 		
 		if(sign.size() != exprs.size())
-			throw new WrongArgumentNumberException(id, sign.size(), exprs.size());
+			throw new WrongArgumentNumberException(id, sign.size(), exprs.size(), n);
 		
 		Expr e = null;
 		for(i = 0; i < sign.size(); i++) {
 			e = exprs.get(i);
 			if(e instanceof IdConst) {
 				id = ((IdConst)e).getId().getValue();
-				t = checkNotDeclared(id);
+				t = checkNotDeclared(id, n);
 				if(t instanceof ParTuple && ((ParTuple)t).getParType() == ParType.OUT && sign.get(i).getParType() != ParType.OUT) 
 					throw new SemanticException(String.format("La variabile %s è del tipo %s, tipo richiesto %s", 
-							id, ((ParTuple)t).getParType().toString(), sign.get(i).getParType().toString()));
+							id, ((ParTuple)t).getParType().toString(), sign.get(i).getParType().toString()), n);
 				if(t instanceof ParTuple && ((ParTuple)t).getParType() == ParType.IN && sign.get(i).getParType() != ParType.IN) 
 					throw new SemanticException(String.format("La variabile %s è del tipo %s, tipo richiesto %s", 
-							id, ((ParTuple)t).getParType().toString(), sign.get(i).getParType().toString()));
+							id, ((ParTuple)t).getParType().toString(), sign.get(i).getParType().toString()), n);
 			}
 		}
 	}
 
 
-	private boolean checkExpr(Expr e) {
+	private boolean checkExpr(Expr e, Node n) {
 		boolean flag = true;
 		if (e instanceof IdConst) {
 			String id = "" + e.accept(this);
-			Tuple t = checkNotDeclared(id);
-			checkInOutProp(id, t, ParType.OUT);
+			Tuple t = checkNotDeclared(id, n);
+			checkInOutProp(id, t, ParType.OUT, n);
 			flag = false;
 		}
 		return flag;
 	}
+
+
 
 }

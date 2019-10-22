@@ -1,5 +1,6 @@
 package syntaxTree.declsOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Body;
 import syntaxTree.ParDecls;
 import syntaxTree.leaf.IdConst;
@@ -14,8 +15,8 @@ public class DefDeclNoPar extends DeclsWrapper implements Visitable {
 	private Body b;
 	
 	//Definizione senza parametri
-	public DefDeclNoPar(String op, IdConst id, Body b) {
-		super(op, id, b);
+	public DefDeclNoPar(Location left, Location right, String op, IdConst id, Body b) {
+		super(left, right, op, id, b);
 		this.op = op;
 		this.id = id;
 		this.b = b;

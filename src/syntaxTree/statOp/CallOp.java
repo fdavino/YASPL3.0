@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Args;
 import syntaxTree.Stat;
 import syntaxTree.comp.Leaf;
@@ -13,15 +14,15 @@ public class CallOp extends Stat implements Visitable {
 	private IdConst id;
 	private Args a;
 	
-	public CallOp(String op, IdConst id, Args a) {
-		super(op, id, a);
+	public CallOp(Location left, Location right, String op, IdConst id, Args a) {
+		super(left, right, op, id, a);
 		this.op = op;
 		this.id = id;
 		this.a = a;
 	}
 
-	public CallOp(String op, IdConst id) {
-		super(op, id);
+	public CallOp(Location left, Location right, String op, IdConst id) {
+		super(left, right, op, id);
 		this.op = op;
 		this.id = id;
 	}

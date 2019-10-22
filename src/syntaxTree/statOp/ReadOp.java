@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Stat;
 import syntaxTree.Vars;
 import visitor.Visitable;
@@ -10,8 +11,8 @@ public class ReadOp extends Stat implements Visitable {
 	private String op;
 	private Vars v;
 	
-	public ReadOp(String op, Vars v) {
-		super(op, v);
+	public ReadOp(Location left, Location right, String op, Vars v) {
+		super(left, right, op, v);
 		this.op = op;
 		this.v = v;
 	}

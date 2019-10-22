@@ -1,0 +1,34 @@
+<project name="Compiler" default ="generate" basedir=".">
+
+  <property name="cup"      location="."   />
+  <property name="jflex"    location="." />
+  <property name="java"     location="src"       />
+  <property name="classes"  location="bin/cls"   />
+  <property name="result"   location="bin/jar"   />
+  <property name="lib"      location="lib"       />
+  <property name="tools"    location="tools"     />
+
+  <taskdef  name="jflex" classname="jflex.anttask.JFlexTask"   classpath="${tools}/JFlex.jar"   />
+  <taskdef  name="cup"   classname="java_cup.anttask.CUPTask"  classpath="${tools}/java-cup-11b.jar"  />
+
+  <target name="generate">
+    <jflex  file="${jflex}/Lexer.lex"   
+    	destdir="${java}" />
+  	
+    <cup srcfile="${cup}/Parser.cup"      
+    		destdir="${java}"
+          	parser="ParserCup"
+		  	interface="true"
+  	      	locations="true"
+  	      	symbols="LexerSym"
+          	debugsymbols="true" />
+  </target>
+
+  <path id="libraries"> <files includes="${lib}/java-cup-11b-runtime.jar" /> </path>
+
+  <target name="clean">
+    <delete file="${java}/ParserCup.java" />
+    <delete file="${java}/LexerSym.java" />
+    <delete file="${java}/LexerLex.java" />
+  </target>
+</project>

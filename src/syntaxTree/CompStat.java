@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import visitor.Visitable;
@@ -10,8 +11,8 @@ public class CompStat extends Internal implements Visitable {
 	private String op;
 	private Statements s;
 	
-	public CompStat(String op, Statements s) {
-		super(op, s);
+	public CompStat(Location left, Location right, String op, Statements s) {
+		super(left, right, op, s);
 		this.op = op;
 		this.s = s;
 	}

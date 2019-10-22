@@ -2,6 +2,7 @@ package syntaxTree;
 
 import java.util.ArrayList;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import syntaxTree.leaf.IdConst;
@@ -12,8 +13,8 @@ public class Vars extends Internal implements Visitable {
 
 	private ArrayList<IdConst> childList;
 	
-	public Vars(String op) {
-		super(op);
+	public Vars(Location left, Location right, String op) {
+		super(left, right, op);
 		this.childList = new ArrayList<IdConst>();
 	}
 	

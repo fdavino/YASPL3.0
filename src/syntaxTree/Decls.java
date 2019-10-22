@@ -1,6 +1,8 @@
 package syntaxTree;
 
 import java.util.ArrayList;
+
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.wrapper.DeclsWrapper;
 import visitor.Visitable;
@@ -10,8 +12,8 @@ public class Decls extends Internal implements Visitable {
 
 	private ArrayList<DeclsWrapper> childList;
 	
-	public Decls(String op) {
-		super(op);
+	public Decls(Location left, Location right, String op) {
+		super(left, right, op);
 		this.childList = new ArrayList<DeclsWrapper>();
 	}
 	

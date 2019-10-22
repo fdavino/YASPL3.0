@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Args;
 import syntaxTree.Stat;
 import syntaxTree.comp.Leaf;
@@ -13,8 +14,8 @@ public class AssignOp extends Stat implements Visitable {
 	private IdConst id;
 	private Args a;
 	
-	public AssignOp(String op, IdConst id, Args a) {
-		super(op, id, a);
+	public AssignOp(Location left, Location right, String op, IdConst id, Args a) {
+		super(left, right, op, id, a);
 		this.op = op;
 		this.id = id;
 		this.a = a;

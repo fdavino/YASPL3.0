@@ -1,6 +1,8 @@
 package syntaxTree;
 
 import java.util.ArrayList;
+
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Node;
 import visitor.Visitable;
@@ -10,8 +12,8 @@ public class Statements extends Internal implements Visitable {
 
 	private ArrayList<Stat> childList;
 	
-	public Statements(String op) {
-		super(op);
+	public Statements(Location left, Location right, String op) {
+		super(left, right, op);
 		this.childList = new ArrayList<Stat>();
 	}
 	

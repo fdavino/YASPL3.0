@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import visitor.Visitable;
 import visitor.Visitor;
@@ -9,8 +10,8 @@ public class VarInitValue extends Internal implements Visitable {
 	private String op;
 	private Expr e;
 	
-	public VarInitValue(String op, Expr e) {
-		super(op, e);
+	public VarInitValue(Location left, Location right, String op, Expr e) {
+		super(left, right, op, e);
 		this.op = op;
 		this.e = e;
 	}

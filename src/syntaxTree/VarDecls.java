@@ -1,6 +1,8 @@
 package syntaxTree;
 
 import java.util.ArrayList;
+
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.declsOp.VarDecl;
 import visitor.Visitable;
@@ -11,8 +13,8 @@ public class VarDecls extends Internal implements Visitable {
 	private ArrayList<VarDecl> childList;
 	
 	//primo nodo
-	public VarDecls(String op) {
-		super(op);
+	public VarDecls(Location left, Location right, String op) {
+		super(left, right, op);
 		this.childList = new ArrayList<VarDecl>();
 	}
 	

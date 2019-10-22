@@ -1,5 +1,6 @@
 package syntaxTree.wrapper;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.Body;
 import syntaxTree.ParDecls;
 import syntaxTree.VarDeclsInit;
@@ -12,16 +13,16 @@ import visitor.Visitor;
 
 public abstract class DeclsWrapper extends Internal{
 	
-	public DeclsWrapper(String op, IdConst id, ParDecls pd, Body b) {
-		super(op, id, pd, b);
+	public DeclsWrapper(Location left, Location right, String op, IdConst id, ParDecls pd, Body b) {
+		super(left, right, op, id, pd, b);
 	}
 	
-	public DeclsWrapper(String op, IdConst id, Body b) {
-		super(op, id, b);
+	public DeclsWrapper(Location left, Location right, String op, IdConst id, Body b) {
+		super(left, right, op, id, b);
 	}
 
-	public DeclsWrapper(String op, TypeLeaf t, VarDeclsInit vdi) {
-		super(op, t, vdi);
+	public DeclsWrapper(Location left, Location right, String op, TypeLeaf t, VarDeclsInit vdi) {
+		super(left, right, op, t, vdi);
 	}
 
 	public abstract Object accept(Visitor<?> visitor);

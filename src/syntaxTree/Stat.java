@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import syntaxTree.leaf.IdConst;
@@ -9,37 +10,37 @@ import visitor.Visitor;
 public abstract class Stat extends Internal{
 	
 	//ReadOp
-	public Stat(String op, Vars v) {
-		super(op, v);
+	public Stat(Location left, Location right, String op, Vars v) {
+		super(left, right, op, v);
 	}
 	//WriteOp
-	public Stat(String op, Args a) {
-		super(op, a);
+	public Stat(Location left, Location right, String op, Args a) {
+		super(left, right,op, a);
 	}
 	//AssignOp
-	public Stat(String op, IdConst id, Expr e) {
-		super(op, id, e);
+	public Stat(Location left, Location right,  String op, IdConst id, Expr e) {
+		super(left, right,op, id, e);
 	}
 	//CallOp
-	public Stat(String op, IdConst id, Args a) {
-		super(op, id, a);
+	public Stat(Location left, Location right, String op, IdConst id, Args a) {
+		super(left, right,op, id, a);
 	}
 	//CallOp
-	public Stat(String op, IdConst id) {
-		super(op, id);
+	public Stat(Location left, Location right, String op, IdConst id) {
+		super(left, right,op, id);
 	}
 	//IfThenElseOp
-	public Stat(String op, Expr e, CompStat cs1, CompStat cs2) {
-		super(op, e, cs1, cs2);
+	public Stat(Location left, Location right, String op, Expr e, CompStat cs1, CompStat cs2) {
+		super(left, right,op, e, cs1, cs2);
 	}
 	//IfThenOp && WhileOp
-	public Stat(String op, Expr e, CompStat cs) {
-		super(op, e, cs);
+	public Stat(Location left, Location right, String op, Expr e, CompStat cs) {
+		super(left, right,op, e, cs);
 	}
 	
 	//IfThenOp && WhileOp con scope
-	public Stat(String op, Expr e, Body b) {
-		super(op, e, b);
+	public Stat(Location left, Location right, String op, Expr e, Body b) {
+		super(left, right,op, e, b);
 	}
 	
 	public abstract Object accept(Visitor<?> visitor);

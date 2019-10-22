@@ -1,5 +1,6 @@
 package syntaxTree.declsOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.VarDeclsInit;
 import syntaxTree.leaf.TypeLeaf;
 import syntaxTree.wrapper.DeclsWrapper;
@@ -12,8 +13,8 @@ public class VarDecl extends DeclsWrapper implements Visitable {
 	private TypeLeaf t;
 	private VarDeclsInit vdi;
 	
-	public VarDecl(String op, TypeLeaf t, VarDeclsInit vdi) {
-		super(op, t, vdi);
+	public VarDecl(Location left, Location right, String op, TypeLeaf t, VarDeclsInit vdi) {
+		super(left, right, op, t, vdi);
 		this.op = op;
 		this.t = t;
 		this.vdi = vdi;

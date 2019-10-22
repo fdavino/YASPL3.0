@@ -1,5 +1,6 @@
 package syntaxTree.wrapper;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.VarInitValue;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
@@ -10,12 +11,12 @@ import visitor.Visitor;
 public abstract class VarDeclsInitWrapper extends Internal {
 
 	//VarNotInit
-	public VarDeclsInitWrapper(String op, IdConst id) {
-		super(op,id);
+	public VarDeclsInitWrapper(Location left, Location right, String op, IdConst id) {
+		super(left, right, op,id);
 	}
 	//VarInit
-	public VarDeclsInitWrapper(String op, IdConst id, VarInitValue viv) {
-		super(op,id,viv);
+	public VarDeclsInitWrapper(Location left, Location right, String op, IdConst id, VarInitValue viv) {
+		super(left, right, op,id,viv);
 	}
 
 	public abstract Object accept(Visitor<?> visitor);

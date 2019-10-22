@@ -1,5 +1,6 @@
 package syntaxTree.statOp;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.CompStat;
 import syntaxTree.Expr;
 import syntaxTree.Stat;
@@ -13,8 +14,8 @@ public class IfThenElseOp extends Stat implements Visitable {
 	private CompStat cs1;
 	private CompStat cs2;
 	
-	public IfThenElseOp(String op, Expr e, CompStat cs1, CompStat cs2) {
-		super(op, e, cs1, cs2);
+	public IfThenElseOp(Location left, Location right, String op, Expr e, CompStat cs1, CompStat cs2) {
+		super(left, right, op, e, cs1, cs2);
 		this.op = op;
 		this.e = e;
 		this.cs1 = cs1;

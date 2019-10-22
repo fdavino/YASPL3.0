@@ -1,6 +1,8 @@
 package syntaxTree;
 
 import java.util.ArrayList;
+
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.utils.ParDeclSon;
 import visitor.Visitable;
@@ -10,8 +12,8 @@ public class ParDecls extends Internal implements Visitable {
 
 	private ArrayList<ParDeclSon> childList;
 	
-	public ParDecls(String op) {
-		super(op);
+	public ParDecls(Location left, Location right,String op) {
+		super(left, right, op);
 		childList = new ArrayList<ParDeclSon>();
 	}
 	

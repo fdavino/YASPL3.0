@@ -1,5 +1,6 @@
 package syntaxTree;
 
+import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import visitor.Visitable;
 import visitor.Visitor;
@@ -10,8 +11,8 @@ public class Body extends Internal implements Visitable {
 	private VarDecls vd;
 	private Statements s;
 	
-	public Body(String op, VarDecls vd, Statements s) {
-		super(op, vd, s);
+	public Body(Location left, Location right, String op, VarDecls vd, Statements s) {
+		super(left, right, op, vd, s);
 		this.op = op;
 		this.vd = vd;
 		this.s = s;
