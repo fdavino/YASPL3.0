@@ -57,6 +57,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.DecPostOp;
 import syntaxTree.statOp.DecPreOp;
+import syntaxTree.statOp.ForOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
 import syntaxTree.statOp.IncPostOp;
@@ -604,6 +605,28 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		else
 			throw new TypeMismatchException(n.getOp(), Type.BOOL, n.getE().getType(), n);
 		return n.getType();
+	}
+	
+
+	@Override
+	public Object visit(ForOp n) throws RuntimeException {
+		n.getId().accept(this);
+		if((n.getId().getType() == Type.STRING)||(n.getId().getType() == Type.BOOL))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		n.getE1().accept(this);
+		if((n.getE1().getType() == Type.STRING)||(n.getE1().getType() == Type.BOOL))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		n.getE1().accept(this);
+		if((n.getE2().getType() == Type.STRING)||(n.getE2().getType() == Type.BOOL))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		n.getStep().accept(this);
+		
+		stack.push(n.getSymTableRef());
+		currentST = stack.top();
+		
+		n.getB().accept(this);
+		n.setType(Type.VOID);
+		return null;
 	}
 
 	@Override

@@ -61,6 +61,7 @@ public interface Visitor<E> {
 	E visit(IfThenOp n) throws RuntimeException;
 	E visit(ReadOp n) throws RuntimeException;
 	E visit(WhileOp n) throws RuntimeException;
+	E visit(ForOp n) throws RuntimeException;
 	E visit(WriteOp n) throws RuntimeException;
 	E visit(Leaf n) throws RuntimeException;
 	

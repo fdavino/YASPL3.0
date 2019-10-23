@@ -4,6 +4,7 @@ import java_cup.runtime.ComplexSymbolFactory.Location;
 import syntaxTree.comp.Internal;
 import syntaxTree.comp.Leaf;
 import syntaxTree.leaf.IdConst;
+import syntaxTree.leaf.IntConst;
 import visitor.Visitable;
 import visitor.Visitor;
 
@@ -47,6 +48,11 @@ public abstract class Stat extends Internal{
 	//IfThenOp && WhileOp con scope
 	public Stat(Location left, Location right, String op, Expr e, Body b1, Body b2) {
 		super(left, right,op, e, b1, b2);
+	}
+	
+	//IfThenOp && WhileOp con scope
+	public Stat(Location left, Location right, String op, IdConst id, Expr e1, Expr e2, IntConst step, Body b) {
+		super(left, right,op, e1, e2, step, b);
 	}
 	
 	public abstract Object accept(Visitor<?> visitor);

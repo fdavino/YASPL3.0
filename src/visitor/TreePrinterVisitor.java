@@ -45,6 +45,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.DecPostOp;
 import syntaxTree.statOp.DecPreOp;
+import syntaxTree.statOp.ForOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
 import syntaxTree.statOp.IncPostOp;
@@ -427,6 +428,18 @@ public class TreePrinterVisitor implements Visitor<String> {
 		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		toReturn += n.getE().accept(this);
 		toReturn += n.getB().accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+	
+	@Override
+	public String visit(ForOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
+		toReturn += n.getId().accept(this);
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
+		toReturn += n.getB().accept(this);
+		toReturn += n.getStep().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}

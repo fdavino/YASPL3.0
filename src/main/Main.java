@@ -21,7 +21,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		try {
 			ComplexSymbolFactory factory = new ComplexSymbolFactory();
-			FileInputStream fs = new FileInputStream(new File("src/main/example/palindormo.yaspl"));
+			FileInputStream fs = new FileInputStream(new File("src/main/example/test.yaspl"));
 			LexerLex lexer = new LexerLex(factory, fs);
 			ParserCup parser = new ParserCup(lexer, factory);
 			Programma p = (Programma) parser.parse().value;

@@ -54,6 +54,7 @@ import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
 import syntaxTree.statOp.DecPostOp;
 import syntaxTree.statOp.DecPreOp;
+import syntaxTree.statOp.ForOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
 import syntaxTree.statOp.IncPostOp;
@@ -568,6 +569,39 @@ public class CLangCodeGenerator implements Visitor<String> {
 		sb.append("}\n");
 		return sb.toString();
 	}
+	
+	@Override
+	public String visit(ForOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		String id = n.getId().accept(this).toString(); 
+		sb.append("for(");
+		sb.append(id);
+		sb.append("=");
+		sb.append(n.getE1().accept(this));
+		sb.append(";");
+		
+		String stepString = n.getStep().accept(this).toString();
+		int step = Integer.parseInt(stepString);
+		String goalString = n.getE2().accept(this).toString();
+		
+		sb.append(id);
+		if(step >= 0)
+			sb.append(" < ");
+		else 
+			sb.append(" >= ");
+		
+		sb.append(goalString);
+		
+		sb.append(String.format(";%s=%s+%d){\n", id,id,step));
+		
+		stack.push(n.getSymTableRef());
+		currentST = stack.top();
+		
+		sb.append(n.getB().accept(this));
+		sb.append("}\n");
+		
+		return sb.toString();
+	}
 
 	@Override
 	public String visit(WriteOp n) throws RuntimeException {
@@ -748,6 +782,8 @@ public class CLangCodeGenerator implements Visitor<String> {
 		sb.append(";\n");
 		return sb.toString();
 	}
+
+
 
 
 }

@@ -81,6 +81,7 @@ comment = {traditionalComment} | {endOfLineComment}
 "head"			{ return symbol("HEAD", LexerSym.HEAD); }
 "start"			{ return symbol("START", LexerSym.START); }
 ";"				{ return symbol("SEMI", LexerSym.SEMI); }
+":"				{ return symbol("COLON", LexerSym.COLON); }
 "int"			{ return symbol("INT", LexerSym.INT); }
 "bool"			{ return symbol("BOOL", LexerSym.BOOL); }
 "double"		{ return symbol("DOUBLE", LexerSym.DOUBLE); }
@@ -110,6 +111,7 @@ comment = {traditionalComment} | {endOfLineComment}
 "if"			{ return symbol("IF",LexerSym.IF); }
 "then"			{ return symbol("THEN",LexerSym.THEN);  }
 "while"			{ return symbol("WHILE",LexerSym.WHILE); }
+"for"			{ return symbol("FOR", LexerSym.FOR); }
 "do"			{ return symbol("DO",LexerSym.DO); }
 "else"			{ return symbol("ELSE",LexerSym.ELSE); }
 ">"				{ return symbol("GT",LexerSym.GT); } 

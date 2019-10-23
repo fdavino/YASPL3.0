@@ -439,11 +439,11 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(IfThenElseOp n) {
 		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
-		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.stack.push(new SymbolTable("IfScope - hashCode: " + n.hashCode()));
 		this.actualScope = this.stack.top();
 		n.setSymTableRef(actualScope);
 		n.getB1().accept(this);
-		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.stack.push(new SymbolTable("ElseScope - hashCode: " + n.hashCode()));
 		this.actualScope = this.stack.top();
 		n.setSymTableRefElse(actualScope);
 		n.getB2().accept(this);
@@ -454,7 +454,7 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(IfThenOp n) {
 		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
-		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.stack.push(new SymbolTable("IfScope - hashCode: " + n.hashCode()));
 		this.actualScope = this.stack.top();
 		n.setSymTableRef(actualScope);
 		n.getB().accept(this);
@@ -481,6 +481,22 @@ public class SymTableVisitor implements Visitor<Object> {
 		this.actualScope = this.stack.top();
 		n.setSymTableRef(actualScope);
 		n.getB().accept(this);
+		return null;
+	}
+	
+	@Override
+	public Object visit(ForOp n) throws RuntimeException {
+		checkExpr(n.getId(), n.getId());
+		if(checkExpr(n.getE1(), n.getE1()))
+			n.getE1().accept(this);
+		if(checkExpr(n.getE2(), n.getE2()))
+			n.getE2().accept(this);
+		
+		this.stack.push(new SymbolTable("ForScope - hashCode: " + n.hashCode()));
+		this.actualScope = this.stack.top();
+		n.setSymTableRef(actualScope);
+		n.getB().accept(this);
+		
 		return null;
 	}
 
@@ -612,6 +628,8 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 		return flag;
 	}
+
+
 
 
 
