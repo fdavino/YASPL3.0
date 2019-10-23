@@ -7,17 +7,15 @@ import syntaxTree.leaf.IdConst;
 import visitor.Visitable;
 import visitor.Visitor;
 
-public class IncOp extends Stat implements Visitable{
+public class IncPostOp extends Stat implements Visitable{
 
 	private String op;
 	private IdConst id;
-	private boolean pre;
 	
-	public IncOp(Location left, Location right, String op, boolean prefix, IdConst id) {
+	public IncPostOp(Location left, Location right, String op, IdConst id) {
 		super(left,right,op,id);
 		this.op = op;
 		this.id = id;
-		this.pre = prefix;
 	}
 	
 	
@@ -42,18 +40,6 @@ public class IncOp extends Stat implements Visitable{
 
 	public void setId(IdConst id) {
 		this.id = id;
-	}
-
-
-
-	public boolean isPrefix() {
-		return pre;
-	}
-
-
-
-	public void setPrefix(boolean prefix) {
-		this.pre = prefix;
 	}
 
 

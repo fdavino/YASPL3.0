@@ -32,7 +32,6 @@ public interface Visitor<E> {
 	E visit(DivOp n) throws RuntimeException;
 	E visit(MultOp n) throws RuntimeException;
 	E visit(SubOp n) throws RuntimeException;
-	E visit(IncOp n) throws RuntimeException;
 	E visit(UminusOp n) throws RuntimeException;
 	
 	E visit(AndOp n) throws RuntimeException;
@@ -52,6 +51,10 @@ public interface Visitor<E> {
 	E visit(CharConst n) throws RuntimeException;
 	E visit(StringConst n) throws RuntimeException;
 	
+	E visit(IncPostOp n) throws RuntimeException;
+	E visit(IncPreOp n) throws RuntimeException;
+	E visit(DecPostOp n) throws RuntimeException;
+	E visit(DecPreOp n) throws RuntimeException;
 	E visit(AssignOp n) throws RuntimeException;
 	E visit(CallOp n) throws RuntimeException;
 	E visit(IfThenElseOp n) throws RuntimeException;

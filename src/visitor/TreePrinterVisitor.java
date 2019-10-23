@@ -43,9 +43,12 @@ import syntaxTree.relOp.LeOp;
 import syntaxTree.relOp.LtOp;
 import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
+import syntaxTree.statOp.DecPostOp;
+import syntaxTree.statOp.DecPreOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
-import syntaxTree.statOp.IncOp;
+import syntaxTree.statOp.IncPostOp;
+import syntaxTree.statOp.IncPreOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -539,8 +542,32 @@ public class TreePrinterVisitor implements Visitor<String> {
 	}
 
 	@Override
-	public String visit(IncOp n) throws RuntimeException {
-		String toReturn = "<"+n.getOp()+" prefix=\""+n.isPrefix()+" "+ addAttr(n)+">\n";
+	public String visit(IncPostOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+ addAttr(n)+">\n";
+		toReturn += "" + n.getId() +"\n";
+		toReturn += "</"+ n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(IncPreOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+ addAttr(n)+">\n";
+		toReturn += "" + n.getId() +"\n";
+		toReturn += "</"+ n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(DecPostOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+ addAttr(n)+">\n";
+		toReturn += "" + n.getId() +"\n";
+		toReturn += "</"+ n.getOp()+">\n";
+		return toReturn;
+	}
+
+	@Override
+	public String visit(DecPreOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+ addAttr(n)+">\n";
 		toReturn += "" + n.getId() +"\n";
 		toReturn += "</"+ n.getOp()+">\n";
 		return toReturn;
@@ -548,10 +575,5 @@ public class TreePrinterVisitor implements Visitor<String> {
 
 
 	
-	
-	
-	
-
-
 
 }

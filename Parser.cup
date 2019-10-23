@@ -20,10 +20,10 @@ import java.io.*;
 parser code{:
  public void report_error(String msg, Object info){
    if(info instanceof ComplexSymbol){
-    int line = (((ComplexSymbol)info).getLeft().getLine())+1;
-    int col  = (((ComplexSymbol)info).getRight().getColumn())+1;
+    int line = (((ComplexSymbol)info).getLeft().getLine());
+    int col  = (((ComplexSymbol)info).getRight().getColumn());
     String val = (String)((ComplexSymbol)info).value;
-   throw new SyntaxError(val, line, col);
+   throw new SyntaxError(line, col);
    }
   }
  
@@ -47,6 +47,7 @@ terminal RGPAR;
 terminal READ;
 terminal WRITE; 
 terminal INC;
+terminal DEC;
 terminal PLUS;
 terminal MINUS;
 terminal TIMES;
@@ -167,9 +168,11 @@ Body		::=	LGPAR Var_decls:vd Statements:s RGPAR						{: RESULT = new Body(vdxlef
 			
 Stat		::= Vars:vars READ:r SEMI										{: RESULT = new ReadOp(rxleft,rxright,"ReadOp", vars); :}
 			|	Args:args WRITE:w SEMI										{: RESULT = new WriteOp(wxleft,wxright,"WriteOp", args); :}
-			|	ID:id INC SEMI												{: RESULT = new IncOp(idxleft, idxright, "IncOp", false, new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
-			|	INC ID:id SEMI												{: RESULT = new IncOp(idxleft, idxright, "IncOp", true, new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
-			|	ID:id ASSIGN Args:a SEMI 									{: RESULT = new AssignOp(idxleft,idxright,"AssignOp",false, new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value", id)), a); :}
+			|	ID:id INC SEMI												{: RESULT = new IncPostOp(idxleft, idxright, "IncPostOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
+			|	INC ID:id SEMI												{: RESULT = new IncPreOp(idxleft, idxright, "IncPreOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
+			|	ID:id DEC SEMI												{: RESULT = new DecPostOp(idxleft, idxright, "DecPostOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
+			|	DEC ID:id SEMI												{: RESULT = new DecPreOp(idxleft, idxright, "DecPreOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value",id))); :}
+			|	ID:id ASSIGN Args:a SEMI 									{: RESULT = new AssignOp(idxleft,idxright,"AssignOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value", id)), a); :}
 			|	ID:id LPAR Args:args RPAR SEMI								{: RESULT = new CallOp(idxleft,idxright,"CallOpWithArgs", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value", id)), args); :}
 			|	ID:id LPAR RPAR SEMI									 	{: RESULT = new CallOp(idxleft,idxright,"CallOp", new IdConst(idxleft,idxright,"Id", new Leaf(idxleft,idxright,"Value", id))); :}
 			|	IF LPAR Expr:e RPAR THEN Comp_stat:cs1 ELSE Comp_stat:cs2	{: RESULT = new IfThenElseOp(exleft,exright,"IfThenElseOp", e, cs1, cs2); :}

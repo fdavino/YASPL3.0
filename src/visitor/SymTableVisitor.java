@@ -217,7 +217,25 @@ public class SymTableVisitor implements Visitor<Object> {
 	}
 	
 	@Override
-	public Object visit(IncOp n) throws RuntimeException {
+	public Object visit(IncPostOp n) throws RuntimeException {
+		checkExpr(n.getId(), n);
+		return null;
+	}
+	
+	@Override
+	public Object visit(IncPreOp n) throws RuntimeException {
+		checkExpr(n.getId(), n);
+		return null;
+	}
+
+	@Override
+	public Object visit(DecPostOp n) throws RuntimeException {
+		checkExpr(n.getId(), n);
+		return null;
+	}
+
+	@Override
+	public Object visit(DecPreOp n) throws RuntimeException {
 		checkExpr(n.getId(), n);
 		return null;
 	}

@@ -52,9 +52,12 @@ import syntaxTree.relOp.LeOp;
 import syntaxTree.relOp.LtOp;
 import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
+import syntaxTree.statOp.DecPostOp;
+import syntaxTree.statOp.DecPreOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
-import syntaxTree.statOp.IncOp;
+import syntaxTree.statOp.IncPostOp;
+import syntaxTree.statOp.IncPreOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -106,7 +109,7 @@ public class CLangCodeGenerator implements Visitor<String> {
 			List<ParTuple> pars = def.getParam();
 			boolean flag = false;
 			for (int i = 0; i < size; i++) { // size di expr è perforza ugule alla size di pars (per controlli
-												// precedenti)
+				// precedenti)
 				flag = pars.get(i).getParType() != ParType.IN;
 				if (flag)
 					sb.append("&(");
@@ -488,7 +491,7 @@ public class CLangCodeGenerator implements Visitor<String> {
 			String format = temp[0];
 			String value = temp[1];
 			sb.append(String.format("sprintf(%s,\"%s\",%s);\n", id, format, value));
-			
+
 			isWrite = false;
 		}
 		return sb.toString();
@@ -706,19 +709,41 @@ public class CLangCodeGenerator implements Visitor<String> {
 	}
 
 	@Override
-	public String visit(IncOp n) throws RuntimeException {
+	public String visit(IncPostOp n) throws RuntimeException {
 		StringBuilder sb = new StringBuilder();
-		
-		if(n.isPrefix()) { // sembra sbagliato ma per qualche motivo il risultato arriva invertito
-			sb.append(n.getId().accept(this));
-			sb.append("++"); 
-		}
-		else {
-			sb.append("++");
-			sb.append(n.getId().accept(this));
-		}
+		sb.append(n.getId().accept(this));
+		sb.append("++"); 
 		sb.append(";\n");
 		return sb.toString();
 	}
+	
+
+	@Override
+	public String visit(IncPreOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("++");
+		sb.append(n.getId().accept(this)); 
+		sb.append(";\n");
+		return sb.toString();
+	}
+
+	@Override
+	public String visit(DecPostOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		sb.append(n.getId().accept(this)); 
+		sb.append("--");
+		sb.append(";\n");
+		return sb.toString();
+	}
+
+	@Override
+	public String visit(DecPreOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		sb.append("--");
+		sb.append(n.getId().accept(this)); 
+		sb.append(";\n");
+		return sb.toString();
+	}
+
 
 }

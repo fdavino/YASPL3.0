@@ -55,9 +55,12 @@ import syntaxTree.relOp.LeOp;
 import syntaxTree.relOp.LtOp;
 import syntaxTree.statOp.AssignOp;
 import syntaxTree.statOp.CallOp;
+import syntaxTree.statOp.DecPostOp;
+import syntaxTree.statOp.DecPreOp;
 import syntaxTree.statOp.IfThenElseOp;
 import syntaxTree.statOp.IfThenOp;
-import syntaxTree.statOp.IncOp;
+import syntaxTree.statOp.IncPostOp;
+import syntaxTree.statOp.IncPreOp;
 import syntaxTree.statOp.ReadOp;
 import syntaxTree.statOp.WhileOp;
 import syntaxTree.statOp.WriteOp;
@@ -86,15 +89,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		
 		return -1;
 	}
-/*	
-	private SymbolTable.Type[][] sumCompTable = {
-			{Type.INT, Type.STRING, Type.DOUBLE, null, null, null},
-			{Type.STRING, Type.STRING, Type.STRING, Type.STRING, Type.STRING, null},
-			{Type.DOUBLE, Type.STRING, Type.DOUBLE, null, null, null},
-			{null, Type.STRING, null, Type.STRING, null, null},
-			{null, Type.STRING, null, null, null, null},
-			{null, null, null, null, null, null}
-	}; */
+
 
 	private SymbolTable.Type[][] arithOpCompTable = {
 			{Type.INT, null, Type.DOUBLE, null, null, null},
@@ -629,7 +624,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	}
 
 	@Override
-	public Object visit(IncOp n) throws RuntimeException {
+	public Object visit(IncPostOp n) throws RuntimeException {
 		n.getId().accept(this);
 		if(!((n.getId().getType() == Type.INT) || (n.getId().getType() == Type.DOUBLE)))
 			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
@@ -639,6 +634,41 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		}
 			
 	}
+	
+	@Override
+	public Object visit(IncPreOp n) throws RuntimeException {
+		n.getId().accept(this);
+		if(!((n.getId().getType() == Type.INT) || (n.getId().getType() == Type.DOUBLE)))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		else {
+			n.setType(n.getId().getType());
+			return null;
+		}
+	}
+
+	@Override
+	public Object visit(DecPostOp n) throws RuntimeException {
+		n.getId().accept(this);
+		if(!((n.getId().getType() == Type.INT) || (n.getId().getType() == Type.DOUBLE)))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		else {
+			n.setType(n.getId().getType());
+			return null;
+		}
+	}
+
+	@Override
+	public Object visit(DecPreOp n) throws RuntimeException {
+		n.getId().accept(this);
+		if(!((n.getId().getType() == Type.INT) || (n.getId().getType() == Type.DOUBLE)))
+			throw new TypeMismatchException(n.getOp(), n.getId().getType(), n);
+		else {
+			n.setType(n.getId().getType());
+			return null;
+		}
+	}
+
+
 
 
 

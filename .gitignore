@@ -28,9 +28,9 @@ hs_err_pid*
 \.classpath
 
 \.project
-main/*.yaspl
-main/*.log 
-main/*.log.1
-main/*.log.1.lck
-main/*.c
-main/*.xml
+*.yaspl
+*.log 
+*.log.1
+*.log.1.lck
+*.c
+*.xml
