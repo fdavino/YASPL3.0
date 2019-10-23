@@ -1,7 +1,8 @@
 package syntaxTree.statOp;
 
 import java_cup.runtime.ComplexSymbolFactory.Location;
-import syntaxTree.CompStat;
+import semantic.SymbolTable;
+import syntaxTree.Body;
 import syntaxTree.Expr;
 import syntaxTree.Stat;
 import visitor.Visitable;
@@ -11,15 +12,17 @@ public class IfThenElseOp extends Stat implements Visitable {
 
 	private String op;
 	private Expr e;
-	private CompStat cs1;
-	private CompStat cs2;
+	private Body b1;
+	private Body b2;
 	
-	public IfThenElseOp(Location left, Location right, String op, Expr e, CompStat cs1, CompStat cs2) {
-		super(left, right, op, e, cs1, cs2);
+	private SymbolTable symTableRefElse;
+	
+	public IfThenElseOp(Location left, Location right, String op, Expr e, Body b1, Body b2) {
+		super(left, right, op, e, b1, b2);
 		this.op = op;
 		this.e = e;
-		this.cs1 = cs1;
-		this.cs2 = cs2;
+		this.b1 = b1;
+		this.b2 = b2;
 	}
 	
 	@Override
@@ -36,13 +39,23 @@ public class IfThenElseOp extends Stat implements Visitable {
 		return e;
 	}
 
-	public CompStat getCs1() {
-		return cs1;
+	public Body getB1() {
+		return b1;
 	}
 
-	public CompStat getCs2() {
-		return cs2;
+	public Body getB2() {
+		return b2;
 	}
+
+	public SymbolTable getSymTableRefElse() {
+		return symTableRefElse;
+	}
+
+	public void setSymTableRefElse(SymbolTable symTableRefElse) {
+		this.symTableRefElse = symTableRefElse;
+	}
+	
+	
 	
 	
 

@@ -29,6 +29,7 @@ public abstract class Stat extends Internal{
 	public Stat(Location left, Location right, String op, IdConst id) {
 		super(left, right,op, id);
 	}
+	/*
 	//IfThenElseOp
 	public Stat(Location left, Location right, String op, Expr e, CompStat cs1, CompStat cs2) {
 		super(left, right,op, e, cs1, cs2);
@@ -37,10 +38,15 @@ public abstract class Stat extends Internal{
 	public Stat(Location left, Location right, String op, Expr e, CompStat cs) {
 		super(left, right,op, e, cs);
 	}
-	
+	*/
 	//IfThenOp && WhileOp con scope
 	public Stat(Location left, Location right, String op, Expr e, Body b) {
 		super(left, right,op, e, b);
+	}
+	
+	//IfThenOp && WhileOp con scope
+	public Stat(Location left, Location right, String op, Expr e, Body b1, Body b2) {
+		super(left, right,op, e, b1, b2);
 	}
 	
 	public abstract Object accept(Visitor<?> visitor);

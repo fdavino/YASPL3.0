@@ -439,8 +439,14 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(IfThenElseOp n) {
 		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
-		n.getCs1().accept(this);
-		n.getCs2().accept(this);
+		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.actualScope = this.stack.top();
+		n.setSymTableRef(actualScope);
+		n.getB1().accept(this);
+		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.actualScope = this.stack.top();
+		n.setSymTableRefElse(actualScope);
+		n.getB2().accept(this);
 		return null;
 	}
 
@@ -448,7 +454,10 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(IfThenOp n) {
 		if (checkExpr(n.getE(), n))
 			n.getE().accept(this);
-		n.getCs().accept(this);
+		this.stack.push(new SymbolTable("WhileScope - hashCode: " + n.hashCode()));
+		this.actualScope = this.stack.top();
+		n.setSymTableRef(actualScope);
+		n.getB().accept(this);
 		return null;
 	}
 

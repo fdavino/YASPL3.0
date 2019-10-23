@@ -560,8 +560,12 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	@Override
 	public Object visit(IfThenElseOp n) throws RuntimeException {
 		Type expr = (Type) n.getE().accept(this);
-		n.getCs1().accept(this);
-		n.getCs2().accept(this);
+		stack.push(n.getSymTableRef());
+		currentST = stack.top();
+		n.getB1().accept(this);
+		stack.push(n.getSymTableRefElse());
+		currentST = stack.top();
+		n.getB2().accept(this);
 		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
@@ -572,7 +576,9 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 	@Override
 	public Object visit(IfThenOp n) throws RuntimeException {
 		Type expr = (Type) n.getE().accept(this);
-		n.getCs().accept(this);
+		stack.push(n.getSymTableRef());
+		currentST = stack.top();
+		n.getB().accept(this);
 		if(expr == Type.BOOL)
 			n.setType(Type.VOID);
 		else
