@@ -30,6 +30,7 @@ import syntaxTree.VarInitValue;
 import syntaxTree.Vars;
 import syntaxTree.arithOp.AddOp;
 import syntaxTree.arithOp.DivOp;
+import syntaxTree.arithOp.ModOp;
 import syntaxTree.arithOp.MultOp;
 import syntaxTree.arithOp.SubOp;
 import syntaxTree.arithOp.UminusOp;
@@ -294,6 +295,20 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 		}
 		n.setType(Type.VOID);
 		return n.getType();
+	}
+	
+
+	@Override
+	public Object visit(ModOp n) throws RuntimeException {
+		Type t1 = (Type) n.getE1().accept(this);
+		Type t2 = (Type) n.getE2().accept(this);
+		Type tt = ((t1 == Type.INT)&&(t2 == Type.INT))?Type.INT:null;
+		if(tt != null) {
+			n.setType(tt);
+			return tt;
+		}
+		else
+			throw new TypeMismatchException(n.getOp(), Type.INT, n);
 	}
 
 	@Override
@@ -696,6 +711,7 @@ public class TypeCheckerVisitor implements Visitor<Object>{
 			return null;
 		}
 	}
+
 
 
 

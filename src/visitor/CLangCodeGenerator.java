@@ -27,6 +27,7 @@ import syntaxTree.VarInitValue;
 import syntaxTree.Vars;
 import syntaxTree.arithOp.AddOp;
 import syntaxTree.arithOp.DivOp;
+import syntaxTree.arithOp.ModOp;
 import syntaxTree.arithOp.MultOp;
 import syntaxTree.arithOp.SubOp;
 import syntaxTree.arithOp.UminusOp;
@@ -76,7 +77,7 @@ public class CLangCodeGenerator implements Visitor<String> {
 	private SymbolTable currentST;
 
 	private DefTuple def; // sign of the function in exam
-	private TreeMap<String, String> stringInitValue; // list od init value for string variable
+	private TreeMap<String, String> stringInitValue; // list of init value for string variable
 
 	public CLangCodeGenerator() {
 		isWrite = false;
@@ -297,6 +298,15 @@ public class CLangCodeGenerator implements Visitor<String> {
 		res.append(value.toString());
 
 		return res.toString();
+	}
+	
+	@Override
+	public String visit(ModOp n) throws RuntimeException {
+		StringBuilder sb = new StringBuilder();
+		sb.append(n.getE1().accept(this));
+		sb.append(" % ");
+		sb.append(n.getE2().accept(this));
+		return sb.toString();
 	}
 
 	@Override
@@ -535,6 +545,8 @@ public class CLangCodeGenerator implements Visitor<String> {
 		sb.append("if(");
 		sb.append(n.getE().accept(this));
 		sb.append("){\n");
+		stack.push(n.getSymTableRef());
+		currentST = stack.top();
 		sb.append(n.getB().accept(this));
 		sb.append("}\n");
 		return sb.toString();

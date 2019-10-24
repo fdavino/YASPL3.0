@@ -82,6 +82,7 @@ comment = {traditionalComment} | {endOfLineComment}
 "start"			{ return symbol("START", LexerSym.START); }
 ";"				{ return symbol("SEMI", LexerSym.SEMI); }
 ":"				{ return symbol("COLON", LexerSym.COLON); }
+"mod"			{ return symbol("MOD", LexerSym.MOD);}
 "int"			{ return symbol("INT", LexerSym.INT); }
 "bool"			{ return symbol("BOOL", LexerSym.BOOL); }
 "double"		{ return symbol("DOUBLE", LexerSym.DOUBLE); }

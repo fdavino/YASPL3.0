@@ -202,8 +202,10 @@ public class SymTableVisitor implements Visitor<Object> {
 	@Override
 	public Object visit(VarInitValue n) {
 		Expr e = n.getE();
-			if (checkExpr(e, e))
-				e.accept(this);
+		if(actualScope.getName().equals("Globale") && !isConst(e))
+			throw new SemanticException("Nello scope globale è possibile assegnare unicamente valori costanti", n);	
+		if (checkExpr(e, e))
+			e.accept(this);
 		return null;
 	}
 
@@ -242,6 +244,17 @@ public class SymTableVisitor implements Visitor<Object> {
 
 	@Override
 	public Object visit(AddOp n) {
+		if (checkExpr(n.getE1(), n)) {
+			n.getE1().accept(this);
+		}
+		if (checkExpr(n.getE2(), n)) {
+			n.getE2().accept(this);
+		}
+		return null;
+	}
+	
+	@Override
+	public Object visit(ModOp n) throws RuntimeException {
 		if (checkExpr(n.getE1(), n)) {
 			n.getE1().accept(this);
 		}
@@ -628,6 +641,16 @@ public class SymTableVisitor implements Visitor<Object> {
 		}
 		return flag;
 	}
+	
+	private boolean isConst(Expr e) {
+		return (e instanceof IntConst)
+				|| (e instanceof BoolConst)
+				|| (e instanceof DoubleConst)
+				|| (e instanceof StringConst)
+				|| (e instanceof CharConst);
+	}
+
+
 
 
 

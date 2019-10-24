@@ -53,6 +53,7 @@ terminal PLUS;
 terminal MINUS;
 terminal TIMES;
 terminal DIV;
+terminal MOD;
 terminal String INT_CONST;
 terminal String DOUBLE_CONST;
 terminal String STRING_CONST;
@@ -97,12 +98,11 @@ non terminal	ParTypeLeaf				Par_type;
 non terminal	Body				Body; 
 non terminal	Stat				Stat;
 non terminal	Args				Args;
-non terminal	CompStat			Comp_stat;
 non terminal	Expr				Expr;
 /*List of precedences*/ 
 
 precedence nonassoc  ELSE; 
-precedence left PLUS,MINUS,OR;
+precedence left PLUS,MINUS,OR,MOD;
 precedence left TIMES,DIV,AND;
 precedence nonassoc GT, GE, LT, LE, EQ;
 precedence left UMINUS, NOT, COMMA;
@@ -204,6 +204,7 @@ Expr		::=	Expr:e1 MINUS Expr:e2		{: RESULT = new SubOp(e1xleft,e1xright,"SubOp",
 			|	Expr:e1 LE Expr:e2			{: RESULT = new LeOp(e1xleft,e1xright,"LeOp", e1, e2); :}	
 			|	Expr:e1 LT Expr:e2			{: RESULT = new LtOp(e1xleft,e1xright,"LtOp", e1, e2); :}
 			|	Expr:e1 EQ Expr:e2			{: RESULT = new EqOp(e1xleft,e1xright,"EqOp", e1, e2); :}
+			|	Expr:e1 MOD Expr:e2			{: RESULT = new ModOp(e1xleft,e1xright,"ModOp",e1,e2); :}
 			|	MINUS Expr:e 				{: RESULT = new UminusOp(exleft, exright,"UminusOp", e); :} %prec UMINUS			
 			|	NOT Expr:e					{: RESULT = new NotOp(exleft, exright,"NotOp", e); :}
 			|	LPAR Expr:e RPAR			{: RESULT = e; :}

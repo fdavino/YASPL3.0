@@ -17,6 +17,7 @@ import syntaxTree.VarInitValue;
 import syntaxTree.Vars;
 import syntaxTree.arithOp.AddOp;
 import syntaxTree.arithOp.DivOp;
+import syntaxTree.arithOp.ModOp;
 import syntaxTree.arithOp.MultOp;
 import syntaxTree.arithOp.SubOp;
 import syntaxTree.arithOp.UminusOp;
@@ -116,56 +117,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 		return toReturn;
 	}
 
-	/*
-	@Override
-	public String visit(Expr n) {
-		String toReturn = "";
 		
-		if(n instanceof AndOp)
-			toReturn += ((AndOp)n).accept(this);
-		else if(n instanceof NotOp)
-			toReturn += ((NotOp)n).accept(this);
-		else if(n instanceof OrOp)
-			toReturn += ((OrOp)n).accept(this);
-		
-		else if(n instanceof EqOp)
-			toReturn += ((EqOp)n).accept(this);
-		else if(n instanceof GeOp)
-			toReturn += ((GeOp)n).accept(this);
-		else if(n instanceof GtOp)
-			toReturn += ((GtOp)n).accept(this);
-		else if(n instanceof LeOp)
-			toReturn += ((LeOp)n).accept(this);
-		else if(n instanceof LtOp)
-			toReturn += ((LtOp)n).accept(this);
-		
-		else if(n instanceof AddOp)
-			toReturn += ((AddOp)n).accept(this);
-		else if(n instanceof DivOp)
-			toReturn += ((DivOp)n).accept(this);
-		else if(n instanceof MultOp)
-			toReturn += ((MultOp)n).accept(this);
-		else if(n instanceof SubOp)
-			toReturn += ((SubOp)n).accept(this);
-		
-		else if(n instanceof BoolConst)
-			toReturn += ((BoolConst)n).accept(this);
-		else if(n instanceof CharConst)
-			toReturn += ((CharConst)n).accept(this);
-		else if(n instanceof DoubleConst)
-			toReturn += ((DoubleConst)n).accept(this);
-		else if(n instanceof IdConst)
-			toReturn += ((IdConst)n).accept(this);
-		else if(n instanceof IntConst)
-			toReturn += ((IntConst)n).accept(this);
-		else if(n instanceof StringConst)
-			toReturn += ((StringConst)n).accept(this);
-
-		return toReturn;
-	}
-	
-	*/
-	
 	@Override
 	public String visit(ParDecls n) {
 		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
@@ -184,31 +136,7 @@ public class TreePrinterVisitor implements Visitor<String> {
 		return toReturn;
 	}
 
-	/*
-	@Override
-	public String visit(Stat e) {
-		String toReturn = "";
 		
-		if(e instanceof AssignOp)
-			toReturn += ((AssignOp)e).accept(this);
-		else if(e instanceof CallOp)
-			toReturn += ((CallOp)e).accept(this);
-		else if(e instanceof IfThenElseOp)
-			toReturn += ((IfThenElseOp)e).accept(this);
-		else if(e instanceof IfThenOp)
-			toReturn += ((IfThenOp)e).accept(this);
-		else if(e instanceof ReadOp)
-			toReturn += ((ReadOp)e).accept(this);
-		else if(e instanceof WhileOp)
-			toReturn += ((WhileOp)e).accept(this);
-		else if(e instanceof WriteOp)
-			toReturn += ((WriteOp)e).accept(this);
-
-		return toReturn;
-	}
-	
-	*/
-	
 	@Override
 	public String visit(Statements n) {
 		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
@@ -258,6 +186,15 @@ public class TreePrinterVisitor implements Visitor<String> {
 		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
 		for(IdConst e: n.getChildList())
 			toReturn += e.accept(this);
+		toReturn += "</"+n.getOp()+">\n";
+		return toReturn;
+	}
+	
+	@Override
+	public String visit(ModOp n) throws RuntimeException {
+		String toReturn = "<"+n.getOp()+" "+addAttr(n)+">\n";
+		toReturn += n.getE1().accept(this);
+		toReturn += n.getE2().accept(this);
 		toReturn += "</"+n.getOp()+">\n";
 		return toReturn;
 	}

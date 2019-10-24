@@ -29,6 +29,7 @@ public interface Visitor<E> {
 	E visit(Vars n) throws RuntimeException;
 	
 	E visit(AddOp n) throws RuntimeException;
+	E visit(ModOp n) throws RuntimeException;
 	E visit(DivOp n) throws RuntimeException;
 	E visit(MultOp n) throws RuntimeException;
 	E visit(SubOp n) throws RuntimeException;
