@@ -31,26 +31,14 @@ public class SymTableVisitor implements Visitor<Object> {
 	private CustomStack stack;
 	private SymbolTable actualScope;
 
-	private Logger logger = Logger.getLogger("SymbolTable");
-	private FileHandler fh;
-	private SimpleFormatter formatter;
-	private String pathToPrintScope;
-
 	private DefTuple lastCall;
 
 	public SymTableVisitor(String pathToPrintScope) throws SecurityException, IOException {
 		this.stack = new CustomStack();
-		this.pathToPrintScope = pathToPrintScope;
-		this.fh = new FileHandler(this.pathToPrintScope);
-		logger.setUseParentHandlers(false); // remove log message from stdout
-		logger.addHandler(fh);
-		SimpleFormatter formatter = new SimpleFormatter();
-		fh.setFormatter(formatter);
 	}
 
 	public SymTableVisitor() {
 		this.stack = new CustomStack();
-		this.pathToPrintScope = "";
 	}
 
 	@Override
@@ -74,11 +62,6 @@ public class SymTableVisitor implements Visitor<Object> {
 	public Object visit(Body n) {
 		n.getVd().accept(this);
 		n.getS().accept(this);
-		if (pathToPrintScope.equals("")) {
-			System.out.println(this.stack.pop().toString());
-		} else {
-			logger.info(this.stack.pop().toString());
-		}
 		this.actualScope = this.stack.top();
 		return null;
 	}
@@ -173,11 +156,6 @@ public class SymTableVisitor implements Visitor<Object> {
 		n.setSymTableRef(actualScope);
 		n.getD().accept(this);
 		n.getS().accept(this);
-		if (pathToPrintScope.equals("")) {
-			System.out.println(this.stack.top().toString());
-		} else {
-			logger.info(this.stack.top().toString());
-		}
 		this.stack.pop();
 		return n;
 	}
