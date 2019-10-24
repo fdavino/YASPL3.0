@@ -180,8 +180,11 @@ Stat		::= Vars:vars READ:r SEMI										{: RESULT = new ReadOp(rxleft,rxright,"
 			|	IF LPAR Expr:e RPAR THEN Body:b1 ELSE Body:b2	{: RESULT = new IfThenElseOp(exleft,exright,"IfThenElseOp", e, b1, b2); :}
 			|	IF LPAR Expr:e RPAR THEN Body:b		 						{: RESULT = new IfThenOp(exleft,exright,"IfThenOp", e, b); :}
 			|	WHILE LPAR Expr:e RPAR DO Body:b							{: RESULT = new WhileOp(exleft,exright,"WhileOp", e, b); :}
-			|	FOR:f LPAR ID:id COLON Expr:e1 COLON Expr:e2 COLON INT_CONST:ic RPAR Body:b		
-						{: RESULT = new ForOp(fxleft,fxright,"ForOp", new IdConst(idxleft, idxright,"Id",new Leaf(idxleft,idxright,"Value",id)),e1,e2,new IntConst(icxleft, icxright,"IntConst", new Leaf(icxleft, icxright,"Value", ic)),b); :}
+	
+			|	FOR:f  ID:id IN LPAR Expr:e1 COLON Expr:e2 COLON MINUS INT_CONST:ic RPAR Body:b		
+						{: RESULT = new ForOp(fxleft,fxright,"ForOp", new IdConst(idxleft, idxright,"Id",new Leaf(idxleft,idxright,"Value",id)),e1,e2,new IntConst(icxleft, icxright,"IntConst", new Leaf(icxleft, icxright,"Value", "-"+ic)),b); :}
+			|	FOR:f  ID:id IN LPAR Expr:e1 COLON Expr:e2 COLON INT_CONST:ic RPAR Body:b		
+						{: RESULT = new ForOp(fxleft,fxright,"ForOp", new IdConst(idxleft, idxright,"Id",new Leaf(idxleft,idxright,"Value",id)),e1,e2,new IntConst(icxleft, icxright,"IntConst", new Leaf(icxleft, icxright,"Value", ic)),b); :}			
 			;
 			
 Args		::=	Expr:e COMMA Args:arg		{: RESULT = arg.addChild(e); :}

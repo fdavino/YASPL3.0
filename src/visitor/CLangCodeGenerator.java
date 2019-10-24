@@ -592,7 +592,7 @@ public class CLangCodeGenerator implements Visitor<String> {
 		
 		sb.append(goalString);
 		
-		sb.append(String.format(";%s=%s+%d){\n", id,id,step));
+		sb.append(String.format(";%s=%s+(%d)){\n", id,id,step));
 		
 		stack.push(n.getSymTableRef());
 		currentST = stack.top();
